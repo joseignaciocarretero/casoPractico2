@@ -34,6 +34,7 @@ resource "azurerm_network_interface" "myNic1" {
     ip_configuration {
     name                           = "myipconfiguration1"
     subnet_id                      = azurerm_subnet.mySubnet.id 
+    #se podría usar en el allocation "Dynamic" para no poner una ip fija y fuera por dhcp
     private_ip_address_allocation  = "Static"
     private_ip_address             = "10.0.1.10"
     public_ip_address_id           = azurerm_public_ip.myPublicIp1.id

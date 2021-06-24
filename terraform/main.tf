@@ -34,7 +34,7 @@ resource "azurerm_resource_group" "rg" {
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account
 
 resource "azurerm_storage_account" "stAccount" {
-    name                     = var.storageaccount
+    name                     = var.storage_account
     resource_group_name      = azurerm_resource_group.rg.name
     location                 = azurerm_resource_group.rg.location
     account_tier             = "Standard"

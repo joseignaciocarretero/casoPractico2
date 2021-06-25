@@ -1,4 +1,4 @@
-# movido a correccion
+# movido a correccion-vars
 #variable "location" {
 #  type = string
 #  description = "Región de Azure donde crearemos la infraestructura"

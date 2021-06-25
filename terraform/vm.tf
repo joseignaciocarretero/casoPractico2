@@ -10,6 +10,7 @@ resource "azurerm_linux_virtual_machine" "myVM1" {
     network_interface_ids = [ azurerm_network_interface.myNic1.id ]
     disable_password_authentication = true
 
+    #creo la clave pública ssh con el comando "ssh-keygen -t rsa -b 4096"
     admin_ssh_key {
         username   = "adminUsername"
         public_key = file("~/.ssh/id_rsa.pub")
@@ -25,7 +26,8 @@ resource "azurerm_linux_virtual_machine" "myVM1" {
         product   = "centos-8-stream-free"
         publisher = "cognosys"
     }
-
+    
+    #para la práctica uso la misma imagen de centos que se da de ejemplo
     source_image_reference {
         publisher = "cognosys"
         offer     = "centos-8-stream-free"

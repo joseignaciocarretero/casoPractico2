@@ -27,8 +27,8 @@ resource "azurerm_subnet" "mySubnet" {
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface
 
 resource "azurerm_network_interface" "myNic${count.index}" {
-  name                = "nic-${var.vms[count.index]}"  
   count               = length(var.vms)
+  name                = "nic-${var.vms[count.index]}"  
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -51,6 +51,7 @@ resource "azurerm_network_interface" "myNic${count.index}" {
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip
 
 resource "azurerm_public_ip" "myPublicIp${count.index}" {
+  count               = length(var.vms)
   name                = "vmip${count.index}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name

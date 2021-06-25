@@ -11,3 +11,9 @@ variable "vm_size" {
   description = "Tamaño de la máquina virtual"
   default = "Standard_D1_v2" # 3.5 GB, 1 CPU 
 }
+
+variable "vms" {
+  description = "máquinas virtuales a crear"
+  type = list(string)
+  default = ["master","worker01","worker02","nfs"]
+}

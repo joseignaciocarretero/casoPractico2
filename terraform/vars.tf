@@ -5,6 +5,7 @@
 #  default = "West Europe"
 #}
 
+#asumimos que todas las máquinas virtuales tienen el mismo tamaño
 variable "vm_size" {
   type = string
   description = "Tamaño de la máquina virtual"

@@ -52,7 +52,7 @@ resource "azurerm_network_interface" "myNic" {
 
 resource "azurerm_public_ip" "myPublicIp" {
   count               = length(var.vms)
-  name                = "vmip${count.index}"
+  name                = "vmip${var.vms[count.index]}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Dynamic"

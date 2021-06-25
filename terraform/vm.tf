@@ -2,12 +2,13 @@
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine
 
 resource "azurerm_linux_virtual_machine" "myVM" {
+    count               = length(var.vms)
     name                = "${var.vms[count.index]}"
     resource_group_name = azurerm_resource_group.rg.name
     location            = azurerm_resource_group.rg.location
     size                = var.vm_size
     admin_username      = "adminUsername"
-    network_interface_ids = [ azurerm_network_interface.myNic.id ]
+    network_interface_ids = [ azurerm_network_interface.myNic[count.index].id ]
     disable_password_authentication = true
 
     #creo la clave pública ssh con el comando "ssh-keygen -t rsa -b 4096"

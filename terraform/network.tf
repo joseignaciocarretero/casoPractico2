@@ -26,7 +26,7 @@ resource "azurerm_subnet" "mySubnet" {
 # Create NIC
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface
 
-resource "azurerm_network_interface" "myNic${var.vms[count.index]}" {
+resource "azurerm_network_interface" "myNic" {
   count               = length(var.vms)
   name                = "nic-${var.vms[count.index]}"  
   location            = azurerm_resource_group.rg.location

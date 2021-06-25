@@ -1,7 +1,7 @@
 # Creamos una máquina virtual
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine
 
-resource "azurerm_linux_virtual_machine" "myVM${var.vms[count.index]}" {
+resource "azurerm_linux_virtual_machine" "myVM" {
     name                = "${var.vms[count.index]}"
     resource_group_name = azurerm_resource_group.rg.name
     location            = azurerm_resource_group.rg.location

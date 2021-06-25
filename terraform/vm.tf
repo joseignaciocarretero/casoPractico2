@@ -7,7 +7,7 @@ resource "azurerm_linux_virtual_machine" "myVM${var.vms[count.index]}" {
     location            = azurerm_resource_group.rg.location
     size                = var.vm_size
     admin_username      = "adminUsername"
-    network_interface_ids = [ azurerm_network_interface.myNic[count.index].id ]
+    network_interface_ids = [ azurerm_network_interface.myNic.id ]
     disable_password_authentication = true
 
     #creo la clave pública ssh con el comando "ssh-keygen -t rsa -b 4096"

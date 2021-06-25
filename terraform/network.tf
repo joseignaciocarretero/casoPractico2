@@ -50,7 +50,7 @@ resource "azurerm_network_interface" "myNic" {
 # IP pública
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip
 
-resource "azurerm_public_ip" "myPublicIp${var.vms[count.index]}" {
+resource "azurerm_public_ip" "myPublicIp" {
   count               = length(var.vms)
   name                = "vmip${count.index}"
   location            = azurerm_resource_group.rg.location

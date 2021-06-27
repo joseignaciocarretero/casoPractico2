@@ -5,7 +5,7 @@
 #  default = "West Europe"
 #}
 
-#asumimos que todas las máquinas virtuales para Workers y NFS tienen el mismo tamaño
+#asumimos que todas las máquinas virtuales para Worker y NFS tienen el mismo tamaño
 variable "vm_size" {
   type = string
   description = "Tamaño de la máquina virtual para workers y NFS"
@@ -16,7 +16,7 @@ variable "vm_size" {
 variable "vms" {
   description = "máquinas virtuales a crear"
   type = list(string)
-  default = ["worker01","worker02","nfs"]
+  default = ["worker01", "nfs"]
 }
 
 #tamaño para la máquina virtual Master

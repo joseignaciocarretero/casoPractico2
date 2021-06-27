@@ -63,3 +63,43 @@ resource "azurerm_public_ip" "myPublicIp" {
     }
 
 }
+
+# Create NIC para Master
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface
+
+resource "azurerm_network_interface" "myNicMaster" {
+    name                = "nic-Master"  
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+    ip_configuration {
+    name                           = "ipconf-Master"
+    subnet_id                      = azurerm_subnet.mySubnet.id 
+    #se podría usar en el allocation "Dynamic" para no poner una ip fija y fuera por dhcp
+    private_ip_address_allocation  = "Static"
+    private_ip_address             = "10.0.1.50"
+    public_ip_address_id           = azurerm_public_ip.myPublicIpMaster.id
+  }
+
+    tags = {
+        environment = "CP2"
+    }
+
+}
+
+# IP pública para Master
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip
+
+resource "azurerm_public_ip" "myPublicIpMaster" {
+  name                = "vmipMaster"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  allocation_method   = "Dynamic"
+  sku                 = "Basic"
+
+    tags = {
+        environment = "CP2"
+    }
+
+}
+

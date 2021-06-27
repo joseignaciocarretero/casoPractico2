@@ -20,14 +20,14 @@ variable "vms" {
 }
 
 #tamaño para la máquina virtual Master
-variable "vm_size_Master" {
+variable "vm_size_master" {
   type = string
   description = "Tamaño de la máquina virtual para Master"
   default = "Standard_A2_v2" # 4 GB ram, 2 CPU, 20 GB Temporary Disk (SSD) 
 }
 
 #Variable para la máquina virtual Master 
-variable "vms_Master" {
+variable "vms_master" {
   description = "máquinas virtuales a crear"
   type = string
   default = "master"

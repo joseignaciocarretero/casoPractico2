@@ -53,7 +53,7 @@ resource "azurerm_linux_virtual_machine" "myVM_master" {
     name                = "master"
     resource_group_name = azurerm_resource_group.rg.name
     location            = azurerm_resource_group.rg.location
-    size                = var.vm_size_Master
+    size                = var.vm_size_master
     admin_username      = "adminUsername"
     network_interface_ids = [ azurerm_network_interface.myNicMaster.id ]
     disable_password_authentication = true

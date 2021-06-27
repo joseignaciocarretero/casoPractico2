@@ -7,7 +7,7 @@ variable "location" {
 variable "storage_account" {
   type = string
   description = "Nombre para la storage account"
-  default = "storageAccount_envcp2"
+  default = "storageaccount_env_cp2"
 }
 
 variable "public_key_path" {

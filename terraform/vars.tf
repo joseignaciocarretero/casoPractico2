@@ -16,7 +16,7 @@ variable "vm_size" {
 variable "vms" {
   description = "máquinas virtuales a crear"
   type = list(string)
-  default = ["worker01", "nfs"]
+  default = ["worker", "nfs"]
 }
 
 #tamaño para la máquina virtual Master

@@ -12,7 +12,7 @@ variable "vm_size_master" {
   default = "Standard_A2_v2" # 4 GB ram, 2 CPU, 20 GB Temporary Disk (SSD) 
 }
 
-#Variable para la máquina virtual Master/NFS 
+#Variable para la máquina virtual Master/NFS
 variable "vms_master" {
   description = "máquinas virtuales a crear"
   type = string

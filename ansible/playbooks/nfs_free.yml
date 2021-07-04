@@ -1,22 +1,47 @@
-- hosts: master
-  gather_facts: true
 
 
-  tasks:
-    - name: identifica el primer disco libre
-      set_fact:
-        disks: "/dev/{{ item.key }}"
-      when:
-        # si el disco no está particionado tendrá libre 
-        # estas variables de los facts
-        - not item.value.partitions
-        - not item.value.holders
-        - not item.value.links.uuids
-        - not item.value.links.labels
-        # los discos serán /dev/vd? o /dev/sd? filtramos el
-        # resto de resultados
-        - item.key | regex_search ("vd|sd")
-      with_dict: "{{ ansible_devices }}"
-
-    - name: mostrar
-      debug: msg="Disco vacio {{ disks }}"
+- name: Create a new primary partition
+ become: true
+parted:
+ device: /dev/sdc
+ number: 1
+ state: present
+ async: 300
+ poll: 5
+ when: sdc_info.partitions | length == 0
+ register: nfs_partition
+ 
+# Create logical volume
+# https://docs.ansible.com/ansible/latest/collections/community/general/lvol_module.html
+- name: Create Volume Group on /dev/sdc with physical extent size = 10g
+ become: true
+lvg:
+ vg: nfs-vg
+ pvs: /dev/sdc1
+ force: no
+ state: present
+ async: 10
+ poll: 2
+ when: nfs_partition.changed
+ 
+- name: Create a logical volume
+ become: true
+lvol:
+ vg: nfs-vg
+ lv: nfs-lv
+ size: 100%FREE
+ force: no
+ state: present
+ async: 10
+ poll: 2
+ when: nfs_partition.changed
+ 
+- name: Create xfs filesystem on nfs data partition
+ become: true
+filesystem:
+ fstype: xfs
+ dev: /dev/nfs-vg/nfs-lv
+ force: yes
+ async: 300
+ poll: 5
+ when: nfs_partition.changed"

@@ -1,15 +1,16 @@
-
-
-- name: Create a new primary partition
- become: true
-parted:
- device: /dev/sdc
- number: 1
- state: present
- async: 300
- poll: 5
- when: sdc_info.partitions | length == 0
- register: nfs_partition
+- hosts: master
+  gather_facts: false
+  tasks:
+    name: Create a new primary partition
+    become: true
+   parted:
+    device: /dev/sdc
+    number: 1
+    state: present
+    async: 300
+    poll: 5
+    when: sdc_info.partitions | length == 0
+    register: nfs_partition
  
 # Create logical volume
 # https://docs.ansible.com/ansible/latest/collections/community/general/lvol_module.html

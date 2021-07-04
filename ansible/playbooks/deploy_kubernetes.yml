@@ -1,0 +1,9 @@
+- hosts: all
+  gather_facts: false
+  - tasks:
+    # actualizadas las máquinas al último nivel
+    # con delegate_to ejecutamos la tarea en local 
+    - name: actualizamos máquinas al último nivel
+      command: dnf update -y
+      
+

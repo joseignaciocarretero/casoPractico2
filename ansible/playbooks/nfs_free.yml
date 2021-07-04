@@ -9,7 +9,6 @@
       state: present
     async: 300
     poll: 5
-    when: sdc_info.partitions | length == 0
     register: nfs_partition
 
 # Create logical volume

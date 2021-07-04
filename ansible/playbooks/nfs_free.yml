@@ -1,6 +1,24 @@
 - hosts: master
   gather_facts: false
   tasks:
+ 
+# Check if partiton exists
+# https://docs.ansible.com/ansible/latest/collections/community/general/parted_module.html
+  - name: Read device information
+    become: true
+    community.general.parted: device=/dev/sdc unit=MiB
+    register: sdc_info
+    async: 10
+    poll: 2
+ 
+# Create partition
+# https://docs.ansible.com/ansible/latest/collections/community/general/parted_module.html
+  - name: Debug sdc_info
+    ansible.builtin.debug:
+      var: sdc_info.partitions
+    when:
+      - sdc_info.partitions | length == 0
+
   - name: Create a new primary partition
     become: true
     community.general.parted:
@@ -9,6 +27,7 @@
       state: present
     async: 300
     poll: 5
+    when: sdc_info.partitions | length == 0
     register: nfs_partition
 
 # Create logical volume
@@ -46,4 +65,3 @@
     async: 300
     poll: 5
     when: nfs_partition.changed
-

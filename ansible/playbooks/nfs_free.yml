@@ -2,6 +2,15 @@
   gather_facts: false
   tasks:
  
+  Check if partiton exists
+# https://docs.ansible.com/ansible/latest/collections/community/general/parted_module.html
+  - name: Read device information
+    become: true
+    community.general.parted: device=/dev/sdc unit=MiB
+    register: sdc_info
+    async: 10
+    poll: 2
+ 
 # Create partition
 # https://docs.ansible.com/ansible/latest/collections/community/general/parted_module.html
   - name: Debug sdc_info

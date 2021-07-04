@@ -2,15 +2,15 @@
 ansible_user=adminUsername
 
 [master]
-104.40.240.177
+20.101.51.239
 #master.azure
 
 [workers]
-104.40.240.203
-104.40.240.179
+20.101.52.21
+20.101.52.25
 #worker01.azure
 #worker02.azure
 
 [nfs]
 #master.azure
-104.40.240.177
+20.101.51.239

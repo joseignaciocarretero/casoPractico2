@@ -2,7 +2,7 @@
   gather_facts: false
   tasks:
  
-  Check if partiton exists
+# Check if partiton exists
 # https://docs.ansible.com/ansible/latest/collections/community/general/parted_module.html
   - name: Read device information
     become: true

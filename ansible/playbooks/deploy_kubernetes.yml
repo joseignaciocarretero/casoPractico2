@@ -9,6 +9,29 @@
   - name: sincronización horaria
     become: true
     command: timedatectl set-timezone Europe/Madrid
-
+  
+  - name: enable chronyd
+    become: true
+    command: systemctl enable chronyd
     
+  - name: arrancar chronyd
+    become: true
+    command: systemctl start chronyd
 
+  - name: timedatectl set-ntp
+    become: true
+    command: timedatectl set-ntp true
+  
+  - name: SELinux estuviera activado lo desativamos
+    become: true
+    command: sed -i s/=enforcing/=disabled/g /etc/selinux/config
+  
+  - name: instalación de paquetes necesarios
+    become: true
+    command: dnf install nfs-utils nfs4-acl-tools wget -y
+    
+    
+  
+    
+    
+    

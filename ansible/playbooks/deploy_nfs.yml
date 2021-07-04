@@ -1,37 +1,34 @@
-- hosts: all
+- hosts: master
   gather_facts: false
   tasks:
-  # uso become para acceder como superusuario 
-  - name: actualizamos máquinas al último nivel
+  - name: create nfs
     become: true
-    command: dnf update -y
-
-  - name: sincronización horaria
-    become: true
-    command: timedatectl set-timezone Europe/Madrid
-  
-  - name: enable chronyd
-    become: true
-    command: systemctl enable chronyd
+    command: "{{item}}" 
+    with_items:
+    - lsblk
+    - pvcreate /dev/vdb
+    - vgcreate data_vg /dev/vdb
+    - vgdisplay data_vg
+    - lvcreate -l+2559 -n nfs_lv /dev/data_vg
+    - lvs
+    - mkfs.xfs /dev/data_vg/nfs_lv
+    - mkdir /srv/nfs
+    - echo "/dev/data_vg/nfs_lv        /srv/nfs                xfs     defaults        0 0" >> /etc/fstab
+    - mount -a
+    - df -hP
+    - dnf install nfs-utils net-tools -y
+    - systemctl  enable nfs-server
+    - systemctl start nfs-server
+    - cat /etc/exports 
+    - exportfs -r
+    - exportfs -s
     
-  - name: arrancar chronyd
+  - name: open ports
     become: true
-    command: systemctl start chronyd
-
-  - name: timedatectl set-ntp
-    become: true
-    command: timedatectl set-ntp true
-  
-  - name: SELinux estuviera activado lo desativamos
-    become: true
-    command: sed -i s/=enforcing/=disabled/g /etc/selinux/config
-  
-  - name: instalación de paquetes necesarios
-    become: true
-    command: dnf install nfs-utils nfs4-acl-tools wget -y
-    
-    
-  
-    
-    
+    command: "{{item}}" 
+    with_items:    
+    - firewall-cmd --permanent --add-service=nfs
+    - firewall-cmd --permanent --add-service=rpc-bind
+    - firewall-cmd --permanent --add-service=mountd
+    - firewall-cmd --reload
     

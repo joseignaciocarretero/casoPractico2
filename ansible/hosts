@@ -2,15 +2,11 @@
 ansible_user=adminUsername
 
 [master]
-20.101.51.239
-#master.azure
+mastercp2.westeurope.cloudapp.azure.com
 
 [workers]
-20.101.52.21
-20.101.52.25
-#worker01.azure
-#worker02.azure
+worker01cp2.westeurope.cloudapp.azure.com
+worker02cp2.westeurope.cloudapp.azure.com
 
 [nfs]
-#master.azure
-20.101.51.239
+mastercp2.westeurope.cloudapp.azure.com

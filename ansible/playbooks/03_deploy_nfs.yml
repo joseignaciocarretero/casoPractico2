@@ -129,3 +129,12 @@
     async: 10
     poll: 2
     
+  - name: open ports
+    become: true
+    command: "{{item}}" 
+    with_items:    
+    - firewall-cmd --permanent --add-service=nfs
+    - firewall-cmd --permanent --add-service=rpc-bind
+    - firewall-cmd --permanent --add-service=mountd
+    - firewall-cmd --reload    
+    

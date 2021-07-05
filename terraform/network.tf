@@ -96,7 +96,7 @@ resource "azurerm_public_ip" "myPublicIpMaster" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Dynamic"
-  domain_name_label   = "master"
+  domain_name_label   = "${var.vmsmaster}"
   sku                 = "Basic"
 
     tags = {

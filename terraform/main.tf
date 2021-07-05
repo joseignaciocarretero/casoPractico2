@@ -58,8 +58,8 @@ resource "azurerm_managed_disk" "nfs" {
 
 # Asociamos el disco de Persistant Storage a master
 resource "azurerm_virtual_machine_data_disk_attachment" "nfs" {
-  managed_disk_id    = azurerm_managed_disk.nfs
-  virtual_machine_id = azurerm_virtual_machine.myVM_master
+  managed_disk_id    = azurerm_managed_disk.nfs.id
+  virtual_machine_id = azurerm_virtual_machine.myVM_master.id
   lun                = "10"
   caching            = "ReadWrite"
 }

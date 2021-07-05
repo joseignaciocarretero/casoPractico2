@@ -68,54 +68,54 @@
     
 # Check if mount point exists in fstab
 # https://stackoverflow.com/questions/25977410/adding-an-fstab-option-using-ansible
-- name: Check if /dev/nfs-vg/nfs-lv is in fstab
-  become: true
-  ansible.builtin.lineinfile:
-    path: /etc/fstab
-    backup: yes
-    line: "/dev/nfs-vg/nfs-lv\t/srv/nfs\txfs\tdefaults\t0 0"
-    state: present
-  async: 10
-  poll: 2
+  - name: Check if /dev/nfs-vg/nfs-lv is in fstab
+    become: true
+    ansible.builtin.lineinfile:
+      path: /etc/fstab
+      backup: yes
+      line: "/dev/nfs-vg/nfs-lv\t/srv/nfs\txfs\tdefaults\t0 0"
+      state: present
+    async: 10
+    poll: 2
 
 # Mount volume
 # https://docs.ansible.com/ansible/latest/collections/ansible/posix/mount_module.html
-- name: Make sure /srv/nfs is mounted
-  become: true
-  ansible.posix.mount:
-    path: /srv/nfs
-    src: /dev/nfs-vg/nfs-lv
-    fstype: xfs
-    state: mounted
-  async: 10
-  poll: 2
+  - name: Make sure /srv/nfs is mounted  
+    become: true
+    ansible.posix.mount:
+      path: /srv/nfs
+      src: /dev/nfs-vg/nfs-lv
+      fstype: xfs
+      state: mounted
+    async: 10
+    poll: 2
 
-- name: Make sure exportfs accepts LAN
-  become: true
-  ansible.builtin.lineinfile:
-    path: /etc/exports
-    backup: yes
-    line: "/srv/nfs\t{{ subnet_cidr_private }}(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)"
-    create: yes
-    state: present
-  register: exportfs
-  async: 10
-  poll: 2
+  - name: Make sure exportfs accepts LAN
+    become: true
+    ansible.builtin.lineinfile:
+      path: /etc/exports
+      backup: yes
+      line: "/srv/nfs\t{{ subnet_cidr_private }}(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)"
+      create: yes
+      state: present
+    register: exportfs
+    async: 10
+    poll: 2
 
-- name: Restart nfs-kernel-server.service 
-  become: true
-  ansible.builtin.systemd:
-    daemon_reload: yes
-    state: restarted
-    name: nfs-kernel-server.service
-  async: 10
-  poll: 2
-  when: exportfs.changed
+  - name: Restart nfs-kernel-server.service 
+    become: true
+    ansible.builtin.systemd:
+      daemon_reload: yes
+      state: restarted
+      name: nfs-kernel-server.service
+    async: 10
+    poll: 2
+    when: exportfs.changed
 
-- name: Re-export the share
-  become: true
-  command: exportfs -ravs
-  when: exportfs.changed
-  async: 10
-  poll: 2
+  - name: Re-export the share
+    become: true
+    command: exportfs -ravs
+    when: exportfs.changed
+    async: 10
+    poll: 2
     

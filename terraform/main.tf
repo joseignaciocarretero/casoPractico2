@@ -48,11 +48,9 @@ resource "azurerm_storage_account" "stAccount" {
 
 # Creamos un disco en master para usarlo en el nfs
 resource "azurerm_managed_disk" "nfs" {
-  count                = length(var.workers) > 0 ? 1 : 0
-
-  name                 = "${azurerm_virtual_machine.vm_k8s_node["Node01"].name}-data"
-  location             = azurerm_resource_group.rg_k8s.location
-  resource_group_name  = azurerm_resource_group.rg_k8s.name
+  name                 = "nfs-data"
+  location             = azurerm_resource_group.rg.location
+  resource_group_name  = azurerm_resource_group.rg.name
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
   disk_size_gb         = 10

@@ -1,12 +1,17 @@
 - hosts: all
   gather_facts: false
   tasks:
-  - name: Install chrony
+  - name: install chrony
     become: true
-    dnf:
-      name: chrony
-      state: latest
+    command:  dnf install chrony –y
+    
   
+  #- name: Install chrony
+  #  become: true
+  #  dnf:
+  #    name: chrony
+  #    state: latest
+  # 
   - name: Enable Chrony service
     become: true
     ansible.builtin.systemd:

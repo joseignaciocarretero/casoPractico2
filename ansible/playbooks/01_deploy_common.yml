@@ -6,6 +6,7 @@
     dnf:
       name: chrony
       state: latest
+  
   - name: install common components
     become: true
     command: "{{item}}" 

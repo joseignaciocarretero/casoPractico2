@@ -1,6 +1,19 @@
+
+
+
 - hosts: all
   gather_facts: false
   tasks:
+  - name: Install Common packages
+    become: true
+    ansible.builtin.dnf:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - chrony
+    async: 450
+    poll: 5
+  
   - name: install common components
     become: true
     command: "{{item}}" 
@@ -12,4 +25,6 @@
     - dnf install python3 -y
   # - se instala git y ansible en la máquina que se va a usar de controlador de ansible, en este caso ya viene instalada en el CLI de azure 
   # - dnf install git ansible -y
+  
+  
   

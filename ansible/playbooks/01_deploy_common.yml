@@ -1,14 +1,11 @@
 - hosts: all
   gather_facts: false
   tasks:
-  - name: install chrony
-    become: true
-    command: dnf install chrony –y
-  
   - name: install common components
     become: true
     command: "{{item}}" 
     with_items:
+    - dnf install chrony –y
     - systemctl enable chronyd
     - dnf update –y
     - reboot

@@ -29,7 +29,11 @@
   - name: instalación de paquetes necesarios
     become: true
     command: dnf install nfs-utils nfs4-acl-tools wget -y
-    
+  
+  - name: install common components2
+    become: true
+    command: "{{item}}" 
+    with_items:
     # firewall y cortafuegos
     - systemctl enable firewalld
     - systemctl start firewalld

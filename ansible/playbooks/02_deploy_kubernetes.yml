@@ -57,9 +57,12 @@
     
   - name: desactivar swap
     become: true
-    command: swapoff -a
+    command: "{{item}}"
+    with_items:
+    - sysctl --system
+    - swapoff -a
     
-    
+  
   
     
     

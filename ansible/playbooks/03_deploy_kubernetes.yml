@@ -30,17 +30,17 @@
    
    
    # Install kubernetes packages
-    - name: Install Kubernetes
-      become: true
-      ansible.builtin.dnf:
-        name: "{{ packages }}"
-      vars:
-       packages:
-       - kubelet
-       - kubeadm
-       - kubectl
-      async: 450
-      poll: 5
+   - name: Install Kubernetes
+     become: true
+     ansible.builtin.dnf:
+       name: "{{ packages }}"
+     vars:
+      packages:
+      - kubelet
+      - kubeadm
+      - kubectl
+     async: 450
+     poll: 5
    
    - name: active kubernetes
      become: true  

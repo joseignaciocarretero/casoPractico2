@@ -5,7 +5,7 @@
     become: true
     command: "{{item}}" 
     with_items:
-    - dnf install chrony –y	
+    - dnf install chrony –y
     - systemctl enable chronyd
     - dnf update –y
     - reboot

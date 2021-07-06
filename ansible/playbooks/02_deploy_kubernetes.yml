@@ -54,14 +54,15 @@
     - net.bridge.bridge-nf-call-iptables = 1
     async: 10
     poll: 2
-    
+  
+  - name: aplicar cambios
+    become: true
+    command: sysctl --system
+  
   - name: desactivar swap
     become: true
-    command: "{{item}}"
-    with_items:
-    - sysctl --system
-    - swapoff -a
-    
+    command: swapoff -a
+        
   
   
     

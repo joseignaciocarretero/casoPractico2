@@ -95,9 +95,13 @@
     ansible.builtin.lineinfile:
       path: /etc/exports
       backup: yes
-      line: "/srv/nfs\t*(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)"
+      line: "{{item}}"
       create: yes
       state: present
+    with_items:
+    - /srv/nfs\t10.0.1.10(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)
+    - /srv/nfs\t10.0.1.11(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)
+    - /srv/nfs\t10.0.1.50(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)
     register: exportfs
     async: 10
     poll: 2

@@ -28,11 +28,24 @@
         - gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
         - exclude=kubelet kubeadm kubectl
    
-   - name: install kubernetes
+   
+   # Install kubernetes packages
+    - name: Install Kubernetes
+      become: true
+      ansible.builtin.dnf:
+        name: "{{ packages }}"
+      vars:
+       packages:
+       - kubelet
+       - kubeadm
+       - kubectl
+      async: 450
+      poll: 5
+   
+   - name: active kubernetes
      become: true  
      command: "{{item}}" 
      with_items:
-      - "dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes"
       - "systemctl enable kubelet"
       - "systemctl start kubelet"
   

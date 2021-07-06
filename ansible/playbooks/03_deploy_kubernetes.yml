@@ -2,15 +2,15 @@
   gather_facts: false
   tasks:
    - name: "docker"
-      version: 20.10
-      refPaths:
-      - path: vendor/k8s.io/system-validators/validators/docker_validator.go
-        match: latestValidatedDockerVersion
+     version: 20.10
+     refPaths:
+     - path: vendor/k8s.io/system-validators/validators/docker_validator.go
+       match: latestValidatedDockerVersion
    
    - name: install common components
-      become: true  
-      command: "{{item}}" 
-      with_items:
+     become: true  
+     command: "{{item}}" 
+     with_items:
       - dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
       - dnf install docker-ce-20.10.6-3.el8 -y
       - systemctl enable docker

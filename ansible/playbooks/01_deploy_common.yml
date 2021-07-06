@@ -41,6 +41,49 @@
   - name: instalación de paquetes necesarios
     become: true
     command: dnf install nfs-utils nfs4-acl-tools wget -y
+    
+  - name: firewall, modprobe
+    become: true
+    command: "{{item}}" 
+    with_items:
+    # firewall y cortafuegos
+    - systemctl enable firewalld
+    - systemctl start firewalld
+    - modprobe br_netfilter
+    - firewall-cmd --add-masquerade --permanent
+    - firewall-cmd --reload
+    
+  - name: tráfico de cortafuegos
+    become: true
+    ansible.builtin.lineinfile:
+      path: /etc/sysctl.d/k8s.conf
+      backup: yes
+      line: "{{item}}"
+      create: yes
+      state: present
+    with_items:
+    - net.bridge.bridge-nf-call-ip6tables = 1
+    - net.bridge.bridge-nf-call-iptables = 1
+    async: 10
+    poll: 2
+  
+  - name: aplicar cambios
+    become: true
+    command: sysctl --system
+  
+  - name: desactivar swap
+    become: true
+    command: swapoff -a
+    
+  - name: borrar linea swap en fstab
+    become: true
+    ansible.builtin.lineinfile:
+      path: /etc/fstab
+      # String to Search
+      regexp: "swap" 
+      # State is set to Absent to remove if the Searching Line is found
+      state: absent
+      backup: yes
   
    
   

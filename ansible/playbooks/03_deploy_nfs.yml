@@ -106,8 +106,6 @@
     async: 10
     poll: 2
 
- 
-
   - name: install nfs-utils and net-tools and enable nfs-server
     become: true
     command: "{{item}}" 
@@ -115,17 +113,7 @@
     - dnf install nfs-utils net-tools -y
     - systemctl  enable nfs-server
     - systemctl start nfs-server
-    
- # - name: Restart nfs-kernel-server.service 
- #   become: true
- #   ansible.builtin.systemd:
- #     daemon_reload: yes
- #     state: restarted
- #     name: nfs-kernel-server.service
- #   async: 10
- #   poll: 2
- #   when: exportfs.changed
-
+ 
   - name: Re-export the share
     become: true
     command: exportfs -ravs
@@ -136,7 +124,7 @@
   - name: open ports
     become: true
     command: "{{item}}" 
-    with_items:    
+    with_items:
     - firewall-cmd --permanent --add-service=nfs
     - firewall-cmd --permanent --add-service=rpc-bind
     - firewall-cmd --permanent --add-service=mountd

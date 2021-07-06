@@ -1,14 +1,16 @@
 - hosts: all
   gather_facts: false
   tasks:
+   # Docker
+    - name: "docker"
+      version: 20.10
+      refPaths:
+      - path: vendor/k8s.io/system-validators/validators/docker_validator.go
+        match: latestValidatedDockerVersion
+    - name: "docker enabled"        
+      command:  
   
-  
-    
-    
-    
-        
-  
-  
-    
-    
-    
+  dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+  dnf install docker-ce-20.10.6-3.el8 -y  
+  systemctl enable docker  
+  systemctl start docker  

@@ -6,9 +6,9 @@
     command: "{{item}}" 
     with_items:
     - "dnf install chrony -y"
-    - systemctl enable chronyd
-    - dnf update 
-    - dnf install python3 
+    - "systemctl enable chronyd"
+    - "dnf update -y" 
+    - "dnf install python3 -y" 
    # - se instala git y ansible en la máquina que se va a usar de controlador de ansible, en este caso ya viene instalada en el CLI de azure 
    # - dnf install git ansible -y
   

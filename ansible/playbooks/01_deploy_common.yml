@@ -1,21 +1,14 @@
 - hosts: all
   gather_facts: false
   tasks:
-  - name: Install Common packages
+  - name: install chrony
     become: true
-    ansible.builtin.dnf:
-      name: "{{ packages }}"
-    vars:
-      packages:
-      - chrony
-    async: 450
-    poll: 5
+    command: dnf install chrony –y
   
   - name: install common components
     become: true
     command: "{{item}}" 
     with_items:
-    - dnf install chrony –y
     - systemctl enable chronyd
     - dnf update –y
     - reboot

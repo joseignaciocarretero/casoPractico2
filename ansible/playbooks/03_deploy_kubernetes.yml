@@ -32,9 +32,9 @@
      become: true  
      command: "{{item}}" 
      with_items:
-      - dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
-      - systemctl enable kubelet
-      - systemctl start kubelet
+      - "dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes"
+      - "systemctl enable kubelet"
+      - "systemctl start kubelet"
   
 
  

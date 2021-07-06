@@ -12,7 +12,6 @@
     - dnf install python3 -y
   # - se instala git y ansible en la máquina que se va a usar de controlador de ansible, en este caso ya viene instalada en el CLI de azure 
   # - dnf install git ansible -y
-  
   # firewall y cortafuegos
     - systemctl enable firewalld
     - systemctl start firewalld

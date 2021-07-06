@@ -1,11 +1,25 @@
 - hosts: all
   gather_facts: false
   tasks:
-  - name: install chrony
+  - name: Install Common packages
     become: true
-    command:  dnf install chrony –y
-    
-  
+    ansible.builtin.apt:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - apt-transport-https
+      - bash-completion
+      - ca-certificates
+      - chrony
+      - curl
+      - git
+      - net-tools
+      - nfs-common
+      - python3-pip
+      - software-properties-common
+      - vim
+    async: 450
+    poll: 5
   #- name: Install chrony
   #  become: true
   #  dnf:

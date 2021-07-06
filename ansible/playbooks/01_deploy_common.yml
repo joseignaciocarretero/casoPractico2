@@ -7,14 +7,36 @@
       name: chrony
       state: latest
   
-  - name: install common components
+  - name: Enable Chrony service
     become: true
-    command: "{{item}}" 
-    with_items:
-    - systemctl enable chronyd
-    - dnf update –y
+    ansible.builtin.systemd:
+      name: chrony
+      enabled: yes
+    async: 10
+    poll: 2    
+  
+  - name: Ensure Chrony service is running
+    become: true
+    ansible.builtin.systemd:
+      name: chrony
+      state: started
+    async: 10
+    poll: 2
+  
+  - name: Install python3
+    become: true
+    dnf:
+      name: python3
+      state: latest
+  
+  #- name: install common components
+  #  become: true
+  #  command: "{{item}}" 
+  #  with_items:
+   
+  #  - dnf update –y
   #  - reboot
-    - dnf install python3 -y
+  #  - dnf install python3 -y
   # - se instala git y ansible en la máquina que se va a usar de controlador de ansible, en este caso ya viene instalada en el CLI de azure 
   # - dnf install git ansible -y
   

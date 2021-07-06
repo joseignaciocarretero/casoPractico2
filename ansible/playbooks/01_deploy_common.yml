@@ -3,21 +3,11 @@
   tasks:
   - name: Install Common packages
     become: true
-    ansible.builtin.apt:
+    ansible.builtin.dnf:
       name: "{{ packages }}"
     vars:
       packages:
-      - apt-transport-https
-      - bash-completion
-      - ca-certificates
       - chrony
-      - curl
-      - git
-      - net-tools
-      - nfs-common
-      - python3-pip
-      - software-properties-common
-      - vim
     async: 450
     poll: 5
   #- name: Install chrony

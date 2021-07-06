@@ -62,6 +62,20 @@
   - name: desactivar swap
     become: true
     command: swapoff -a
+    
+  - name: borrar linea swap en fstab
+    become: true
+    ansible.builtin.lineinfile:
+      path: /etc/fstab
+      # String to Search
+      regexp: "swap" 
+      # State is set to Absent to remove if the Searching Line is found
+      state: absent
+      backup: yes
+  
+    
+    
+    
         
   
   

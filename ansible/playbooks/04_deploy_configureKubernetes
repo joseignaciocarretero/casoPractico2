@@ -40,5 +40,10 @@
      command: kubeadm init --pod-network-cidr 10.1.0.0/16
      register: output_kubeadm
      
+
+   - name: debug
+     debug: msg="{{output_kubeadm}}"
+     
+     
    
       

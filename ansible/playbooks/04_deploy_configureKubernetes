@@ -36,20 +36,14 @@
       - firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=10.0.1.10/32 accept'
       - firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=10.0.1.11/32 accept'
       - firewall-cmd --reload
-  
-   - name: obtain container localhost ip
+            
+   # la ip pongo la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
+   - name: access container to localhost  
      become: true
-     command: ip a 
-     register: output_ip
-   
-   - name: debug
-     debug: 
-         msg: "{{output_ip.stdout_lines}}"
-         
-   #- name: access container to localhost  
-   #  become: true  
-   #   - firewall-cmd --zone=public --permanent --add-rich-rule 'rule family=ipv4 source address=172.17.0.0/16 accept'
-   #   - firewall-cmd --reload
+     command: "{{item}}"
+     with_items:
+      - firewall-cmd --zone=public --permanent --add-rich-rule 'rule family=ipv4 source address=172.17.0.1/16 accept'
+      - firewall-cmd --reload
      
 
       

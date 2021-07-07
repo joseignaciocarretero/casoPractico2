@@ -18,13 +18,7 @@
      command: "{{item}}" 
      with_items:
       - kubeadm config images pull
-      - firewall-cmd --permanent --add-port=2379-2380/tcp
-      - firewall-cmd --permanent --add-port=10250/tcp
-      - firewall-cmd --permanent --add-port=10251/tcp
-      - firewall-cmd --permanent --add-port=10252/tcp
-      - firewall-cmd --permanent --add-port=10255/tcp
-      - firewall-cmd --reload      
-        
+       
    - name: permit access to workers
      become: true
      command: "{{item}}"

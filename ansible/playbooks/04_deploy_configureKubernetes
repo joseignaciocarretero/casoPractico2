@@ -58,14 +58,12 @@
    #  become: true
    #  ansible.builtin.shell:
    #    cmd: export KUBECONFIG=/etc/kubernetes/admin.conf
-       
-       
-       
+         
    - name: root access kubectl
      become: true
-     ansible.builtin.shell:
-       cmd: export KUBECONFIG=/etc/kubernetes/admin.conf
-      
+     command: "{{item}}"
+      with_items:
+      - "export KUBECONFIG=/etc/kubernetes/admin.conf"
      
    # autorizar al usuario root acceder al cluster
    - name: authorize root to cluster  

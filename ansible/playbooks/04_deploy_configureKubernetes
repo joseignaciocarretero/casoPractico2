@@ -50,6 +50,14 @@
      become: true
      command: export KUBECONFIG=/etc/kubernetes/admin.conf
      
+   # la ip pongo la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
+   - name: access container to localhost  
+     become: true
+     command: "{{item}}"
+     with_items:
+      - mkdir -p /root/.kube
+      - cp -i /etc/kubernetes/admin.conf /root/.kube/config
+      - chown $(id -u):$(id -g) /root/.kube/config
      
      
      

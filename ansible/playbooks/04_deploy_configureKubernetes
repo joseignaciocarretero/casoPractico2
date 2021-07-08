@@ -89,4 +89,13 @@
        line: "cidr: 10.1.0.0/16"
        state: present
        backup: yes
+   
+   # aplicamos custom-resources
+   - name: apply custom-resources  
+     become: true
+     command: kubectl apply -f custom-resources.yaml
+     
+     
+     
+
 

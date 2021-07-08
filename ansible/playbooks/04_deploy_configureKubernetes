@@ -56,16 +56,16 @@
    # para que el usuario root pueda utilizar kubectl para operar el cluster 
    - name: root access kubectl
      become: true
-     command: export KUBECONFIG=/etc/kubernetes/admin.conf
+     command: "export KUBECONFIG=/etc/kubernetes/admin.conf"
      
    # autorizar al usuario root acceder al cluster
    - name: authorize root to cluster  
      become: true
      command: "{{item}}"
      with_items:
-      - mkdir -p /root/.kube
-      - cp -i /etc/kubernetes/admin.conf /root/.kube/config
-      - chown $(id -u):$(id -g) /root/.kube/config
+      - "mkdir -p /root/.kube"
+      - "cp -i /etc/kubernetes/admin.conf /root/.kube/config"
+      - "chown $(id -u):$(id -g) /root/.kube/config"
      
      
      

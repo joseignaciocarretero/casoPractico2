@@ -36,23 +36,17 @@
       - firewall-cmd --reload
       
    # guardamos información del cluster, para saber si se puede conectar o no
-   #- name: Obtain cluster_info
-   #  become: true
-   #  command: kubectl cluster-info dump
-   #  register: cluster_info
-   #  ignore_errors: yes
-   
-   # inicializamos kubernetes (quitar cuando sepa evaluar si ya está inicializado o no)
-   - name: init kubernetes
+   - name: Obtain cluster_info
      become: true
-     command: 'kubeadm reset -f && iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X'
-   
-   
+     command: "kubectl cluster-info dump"
+     register: cluster_info
+     ignore_errors: yes
+        
    # definimos la red de los pods mientras pueda conectarse
    - name: install CNI and define POD net
      become: true
      command: "kubeadm init --pod-network-cidr 10.1.0.0/16"
-   #  when: cluster_info.stderr | length > 0
+     when: cluster_info.stderr | length > 0
      register: output_kubeadm
      
    # imprimimos la salida
@@ -78,6 +72,9 @@
      become: true
      command: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
      
-     
+   # instalando calico fichero de definición
+   - name: calico definition file  
+     become: true
+     command: wget https://docs.projectcalico.org/manifests/custom-resources.yaml
    
       

@@ -56,7 +56,7 @@
    # para que el usuario root pueda utilizar kubectl para operar el cluster 
    - name: root access kubectl
      become: true
-     command: "export KUBECONFIG=/etc/kubernetes/admin.conf"
+     command: export KUBECONFIG=/etc/kubernetes/admin.conf
      
    # autorizar al usuario root acceder al cluster
    - name: authorize root to cluster  

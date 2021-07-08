@@ -36,7 +36,7 @@
       - firewall-cmd --reload
       
    # definimos la red de los pods  
-   - name: Install CNI and define POD net
+   - name: install CNI and define POD net
      become: true
      command: kubeadm init --pod-network-cidr 10.1.0.0/16
      register: output_kubeadm
@@ -44,6 +44,13 @@
    # imprimimos la salida
    - name: debug
      debug: msg="{{output_kubeadm}}"
+     
+   # para que el usuario root pueda utilizar kubectl para operar el cluster 
+   - name: root access kubectl
+     become: true
+     command: export KUBECONFIG=/etc/kubernetes/admin.conf
+     
+     
      
      
    

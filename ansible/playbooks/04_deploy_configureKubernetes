@@ -50,8 +50,8 @@
      become: true
      command: export KUBECONFIG=/etc/kubernetes/admin.conf
      
-   # la ip pongo la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
-   - name: access container to localhost  
+   # autorizar al usuario root acceder al cluster
+   - name: authorize root to cluster  
      become: true
      command: "{{item}}"
      with_items:

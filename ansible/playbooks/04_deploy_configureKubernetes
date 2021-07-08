@@ -62,7 +62,7 @@
    - name: root access kubectl
      become: true
      command: "{{item}}"
-      with_items:
+     with_items:
       - "export KUBECONFIG=/etc/kubernetes/admin.conf"
      
    # autorizar al usuario root acceder al cluster

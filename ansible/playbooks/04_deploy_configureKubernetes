@@ -40,7 +40,8 @@
      become: true
      command: kubeadm init --pod-network-cidr 10.1.0.0/16
      register: output_kubeadm
-     
+     when: output_kubeadm.stderr | length > 0
+          
    # imprimimos la salida
    - name: debug
      debug: msg="{{output_kubeadm}}"

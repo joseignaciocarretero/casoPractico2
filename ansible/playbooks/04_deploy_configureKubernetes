@@ -45,7 +45,7 @@
    # definimos la red de los pods mientras pueda conectarse
    - name: install CNI and define POD net
      become: true
-     command: kubeadm init --pod-network-cidr 10.1.0.0/16
+     command: "kubeadm init --pod-network-cidr 10.1.0.0/16"
      when: cluster_info.stderr | length > 0
      register: output_kubeadm
      

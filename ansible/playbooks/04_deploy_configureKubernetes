@@ -38,7 +38,7 @@
    # guardamos información del cluster, para saber si se puede conectar o no
    - name: Obtain cluster_info
      become: true
-     command:kubectl cluster-info dump
+     command: kubectl cluster-info dump
      register: cluster_info
      ignore_errors: yes
    

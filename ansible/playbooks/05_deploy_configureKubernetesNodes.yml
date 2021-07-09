@@ -1,0 +1,148 @@
+- hosts: master
+  gather_facts: false
+  tasks:
+   - name: configure master kubernetes
+     become: true  
+     command: "{{item}}" 
+     with_items:
+      - firewall-cmd --permanent --add-port=6443/tcp
+      - firewall-cmd --permanent --add-port=2379-2380/tcp
+      - firewall-cmd --permanent --add-port=10250/tcp
+      - firewall-cmd --permanent --add-port=10251/tcp
+      - firewall-cmd --permanent --add-port=10252/tcp
+      - firewall-cmd --permanent --add-port=10255/tcp
+      - firewall-cmd --reload
+      
+   - name: configure kudeadm
+     become: true  
+     command: "{{item}}" 
+     with_items:
+      - kubeadm config images pull
+       
+   - name: permit access to workers
+     become: true
+     command: "{{item}}"
+     with_items:
+      - firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=10.0.1.10/32 accept'
+      - firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=10.0.1.11/32 accept'
+      - firewall-cmd --reload
+            
+   # la ip pongo la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
+   - name: access container to localhost  
+     become: true
+     command: "{{item}}"
+     with_items:
+      - firewall-cmd --zone=public --permanent --add-rich-rule 'rule family=ipv4 source address=172.17.0.1/16 accept'
+      - firewall-cmd --reload
+      
+   # guardamos información del cluster, para saber si se puede conectar o no
+   - name: Obtain cluster_info
+     become: true
+     command: "kubectl cluster-info dump"
+     register: cluster_info
+     ignore_errors: yes
+        
+   # definimos la red de los pods mientras pueda conectarse
+   - name: install CNI and define POD net
+     become: true
+     command: "kubeadm init --pod-network-cidr 10.1.0.0/16"
+     when: cluster_info.stderr | length > 0
+     register: output_kubeadm
+     
+   # imprimimos la salida
+   - name: debug
+     debug: msg="{{output_kubeadm}}"
+     
+   # autorizar al usuario ansible acceder al cluster
+   - name: Create .kube directory
+     become: true
+     file:
+       path: /home/{{ ansible_user }}/.kube
+       owner: "{{ ansible_user }}"
+       group: "{{ ansible_user }}"
+       state: directory
+       
+   # copiamos config al usuario ansible
+   - name: Copy k8s config
+     become: true
+     copy:
+       src: /etc/kubernetes/admin.conf
+       dest: /home/{{ ansible_user }}/.kube/config
+       owner: "{{ ansible_user }}"
+       group: "{{ ansible_user }}"
+       remote_src: yes
+   
+   # autorizar al usuario root acceder al cluster
+   - name: Create .kube root directory
+     become: true
+     file:
+       path: /root/.kube
+       owner: "root"
+       group: "root"
+       state: directory
+   
+   # copiamos config al usuario root
+   - name: Copy k8s to root config
+     become: true
+     copy:
+       src: /etc/kubernetes/admin.conf
+       dest: /root/.kube/config
+       owner: "root"
+       group: "root"
+       remote_src: yes
+   
+   # autorizar al usuario root and ansible acceder al cluster
+   #- name: authorize ansible user and root to cluster  
+   #  become: true
+   #  command: "{{item}}"
+   #  with_items:
+   #   - mkdir -p /root/.kube
+   #   - cp -i /etc/kubernetes/admin.conf /root/.kube/config
+   #   - 'chown $(id -u):$(id -g) /home/{{ ansible_user }}/.kube/config'
+   #   - 'chown $(id -u):$(id -g) /root/.kube/config'
+   
+   # instalando calico
+   - name: install calico  
+     become: true
+     command: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+     
+   # instalando calico fichero de definición
+   - name: calico definition file  
+     become: true
+     command: wget https://docs.projectcalico.org/manifests/custom-resources.yaml
+   
+   #https://www.middlewareinventory.com/blog/ansible-lineinfile-examples/
+   #ponemos la ip del cidr en el fichero custom-resources.yaml  
+   #- name: substitute ipaddress cidr into custom-resources.yaml
+   #  become: true
+   #  lineinfile:
+   #    path: custom-resources.yaml
+   #    # The String to Search
+   #    regexp: "cidr: 192.168.0.0/16" 
+   #    # The String to Replace
+   #    line: "cidr: 10.1.0.0/16"
+   #    state: present
+   #    backup: yes
+   
+   #ponemos la ip del cidr en el fichero custom-resources.yaml  
+   - name: substitute ipaddress cidr into custom-resources.yaml
+     replace:
+       path: ./custom-resources.yaml
+       regexp: "cidr: 192.168.0.0/16"
+       replace: "cidr: 10.1.0.0/16"
+   
+   # instalando calico aplicamos custom-resources
+   - name: apply custom-resources  
+     become: true
+     command: kubectl apply -f custom-resources.yaml
+   
+   # una vez usado, eliminamos el archivo custom resources yaml 
+   - name: Remove custom-resources.yaml
+     file:
+       path: ./custom-resources.yaml
+       state: absent  
+     
+     
+     
+
+

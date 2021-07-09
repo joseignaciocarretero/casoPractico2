@@ -90,14 +90,15 @@
        owner: "root"
        group: "root"
        remote_src: yes
+   
    # autorizar al usuario root acceder al cluster
-   #- name: authorize root to cluster  
-   #  become: true
-   #  command: "{{item}}"
-   #  with_items:
+   - name: authorize root to cluster  
+     become: true
+     command: "{{item}}"
+     with_items:
    #   - mkdir -p /root/.kube
    #   - cp -i /etc/kubernetes/admin.conf /root/.kube/config
-   #   - chown $(id -u):$(id -g) /root/.kube/config
+      - chown "$(id -u):$(id -g) /root/.kube/config"
    
    # instalando calico
    - name: install calico  

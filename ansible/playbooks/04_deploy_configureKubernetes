@@ -57,14 +57,32 @@
    #- name: export kubeconfig
    #  become: true
    #  command: export KUBECONFIG=/etc/kubernetes/admin.conf
-             
+   
+   
+   - name: Create .kube directory
+     become: true
+     file:
+       path: /home/{{ ansible_user }}/.kube
+       owner: "{{ ansible_user }}"
+       group: "{{ ansible_user }}"
+       state: directory
+
+   - name: Copy k8s config
+     become: true
+     copy:
+       src: /etc/kubernetes/admin.conf
+       dest: /home/{{ ansible_user }}/.kube/config
+       owner: "{{ ansible_user }}"
+       group: "{{ ansible_user }}"
+       remote_src: yes
+   
    # autorizar al usuario root acceder al cluster
    - name: authorize root to cluster  
      become: true
      command: "{{item}}"
      with_items:
-      - mkdir -p /root/.kube
-      - cp -i /etc/kubernetes/admin.conf /root/.kube/config
+   #   - mkdir -p /root/.kube
+   #   - cp -i /etc/kubernetes/admin.conf /root/.kube/config
       - chown $(id -u):$(id -g) /root/.kube/config
    
    # instalando calico

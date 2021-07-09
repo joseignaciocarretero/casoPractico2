@@ -92,10 +92,10 @@
        remote_src: yes
    
    # autorizar al usuario root and ansible acceder al cluster
-   - name: authorize ansible user and root to cluster  
-     become: true
-     command: "{{item}}"
-     with_items:
+   #- name: authorize ansible user and root to cluster  
+   #  become: true
+   #  command: "{{item}}"
+   #  with_items:
    #   - mkdir -p /root/.kube
    #   - cp -i /etc/kubernetes/admin.conf /root/.kube/config
    #   - 'chown $(id -u):$(id -g) /home/{{ ansible_user }}/.kube/config'

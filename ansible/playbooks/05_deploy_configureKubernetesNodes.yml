@@ -7,7 +7,9 @@
      with_items:
       - firewall-cmd --zone=public --permanent --add-port={10250,30000-32767}/tcp
       - firewall-cmd --reload
-     
+   # imprimimos la salida
+   - name: debug
+     debug: msg="{{output_kubeadm}}"  
       
    
      

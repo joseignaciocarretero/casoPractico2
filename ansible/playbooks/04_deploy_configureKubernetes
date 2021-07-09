@@ -76,7 +76,7 @@
    - name: Create .kube root directory
      become: true
      file:
-       path: /home/root/.kube
+       path: /root/.kube
        owner: "root"
        group: "root"
        state: directory
@@ -86,19 +86,20 @@
      become: true
      copy:
        src: /etc/kubernetes/admin.conf
-       dest: /home/{{ ansible_user }}/.kube/config
+       dest: /root/.kube/config
        owner: "root"
        group: "root"
        remote_src: yes
    
-   # autorizar al usuario root acceder al cluster
-   #- name: authorize root to cluster  
-   #  become: true
-   #  command: "{{item}}"
-   #  with_items:
+   # autorizar al usuario root and ansible acceder al cluster
+   - name: authorize ansible user and root to cluster  
+     become: true
+     command: "{{item}}"
+     with_items:
    #   - mkdir -p /root/.kube
    #   - cp -i /etc/kubernetes/admin.conf /root/.kube/config
-   #   - chown "$(id -u):$(id -g) /root/.kube/config"
+      - chown $(id -u):$(id -g) /home/{{ ansible_user }}/.kube/config
+      - chown $(id -u):$(id -g) /root/.kube/config
    
    # instalando calico
    - name: install calico  

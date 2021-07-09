@@ -98,8 +98,8 @@
      with_items:
    #   - mkdir -p /root/.kube
    #   - cp -i /etc/kubernetes/admin.conf /root/.kube/config
-      - 'chown $(id -u):$(id -g) /home/{{ ansible_user }}/.kube/config'
-      - 'chown $(id -u):$(id -g) /root/.kube/config'
+   #   - 'chown $(id -u):$(id -g) /home/{{ ansible_user }}/.kube/config'
+   #   - 'chown $(id -u):$(id -g) /root/.kube/config'
    
    # instalando calico
    - name: install calico  
@@ -135,6 +135,12 @@
    - name: apply custom-resources  
      become: true
      command: kubectl apply -f custom-resources.yaml
+   
+   # una vez usado, eliminamos el archivo yaml 
+   - name: Remove custom-resources.yaml
+     file:
+       path: ./custom-resources.yaml
+       state: absent  
      
      
      

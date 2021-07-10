@@ -37,4 +37,9 @@
       shell: "{{item}}" 
       with_items:
        - "chown kubeadmin. /home/kubeadmin/.kube/config"
-       
+    
+    - name: Create entry sudores file
+      copy:
+        content: 'kubeadmin ALL=(ALL:ALL) NOPASSWD:ALL'
+        dest: /etc/sudoers.d/kubeadmin
+        mode: 0440   

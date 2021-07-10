@@ -1,22 +1,22 @@
 - hosts: all
   gather_facts: false
   tasks:
-  - name: Instalar Chrony.
+  - name: Install chrony
     become: true
-    package:
-      name: 
-       - chrony
-      state: latest
+    ansible.builtin.dnf:
+     name: "{{ packages }}"
+    vars:
+     packages:
+     - chrony
+    async: 450
+    poll: 5
   
-  #- name: Install Common packages
-  #  become: true
-  #  ansible.builtin.dnf:
-  #   name: "{{ packages }}"
-  #  vars:
-  #   packages:
-  #   - chrony
-  #  async: 450
-  #  poll: 5
+  - name: install common components
+    become: true
+    shell: "{{item}}" 
+    with_items:
+    - "systemctl enable chronyd"
+    - "dnf update -y"
     
   - name: Set timezone to Europe/Madrid
     become: true
@@ -25,31 +25,26 @@
     async: 10
     poll: 2
 
-  - name: Enable Chrony service
-    become: true
-    ansible.builtin.systemd:
-      name: chrony
-      enabled: yes
-    async: 10
-    poll: 2
-
-  - name: Ensure Chrony service is running
-    become: true
-    ansible.builtin.systemd:
-      name: chrony
-      state: started
-    async: 10
-    poll: 2
-
-
   
-  #become se usa para no tener problema de superusuario
-  - name: install common components
-    become: true
-    command: "{{item}}" 
-    with_items:
-    - "dnf update -y"
-   
+  
+  #- name: Enable Chrony service
+  #  become: true
+  #  ansible.builtin.systemd:
+  #    name: chrony
+  #    enabled: yes
+  #  async: 10
+  #  poll: 2
+
+  #- name: Ensure Chrony service is running
+  #  become: true
+  #  ansible.builtin.systemd:
+  #    name: chrony
+  #    state: started
+  #  async: 10
+  #  poll: 2
+
+
+     
    
   - name: Unconditionally reboot the machine with all defaults
     reboot:

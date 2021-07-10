@@ -1,7 +1,3 @@
-mastercp2.westeurope.cloudapp.azure.com 
-worker01cp2.westeurope.cloudapp.azure.com  
-worker02cp2.westeurope.cloudapp.azure.com 
-
 [all:vars]
 ansible_user=adminUsername
 

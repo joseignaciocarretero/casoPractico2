@@ -1,3 +1,5 @@
+Master
+
 [all:vars]
 ansible_user=adminUsername
 

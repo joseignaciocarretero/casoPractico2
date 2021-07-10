@@ -9,17 +9,25 @@
      - python3
      - chrony
   
-  - name: Enabled service chrony, if not started
+  #- name: Start service chrony, if not started
+  #  become: true
+  #  ansible.builtin.service:
+  #    name: chronyd
+  #    state: started
+  
+  - name: Enable Chrony service
     become: true
-    ansible.builtin.service:
-      name: chronyd
-      state: enabled
-      
-  - name: Start service chrony, if not started
+    ansible.builtin.systemd:
+      name: chrony
+      enabled: yes
+   
+  - name: Ensure Chrony service is running
     become: true
-    ansible.builtin.service:
-      name: chronyd
+    ansible.builtin.systemd:
+      name: chrony
       state: started
+   
+  
   
   - name: Set timezone to Europe/Madrid
     become: true
@@ -29,19 +37,7 @@
   #- name: Unconditionally reboot the machine with all defaults
   #  reboot:
      
-  - name: actualizamos máquinas al último nivel
-    become: true
-    shell: dnf update -y
- 
   
-  - name: enable chronyd
-    become: true
-    command: systemctl enable chronyd
-    
-  - name: arrancar chronyd
-    become: true
-    command: systemctl start chronyd
-
   - name: timedatectl set-ntp
     become: true
     command: timedatectl set-ntp true

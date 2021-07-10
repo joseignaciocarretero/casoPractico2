@@ -58,13 +58,19 @@
      shell: kubeadm token create --print-join-command
      register: token_kubeadm
    
+   - name: Copy join command to local file
+     local_action: copy content="{{ token_kubeadm.stdout_lines[0] }}" dest="./token_join.sh"
+     become: no
+   
+     
+   
    # imprimimos la salida
-   - name: debug gettoken
-     debug: msg="{{token_kubeadm.stdout}}"
+   #- name: debug gettoken
+   #  debug: msg="{{token_kubeadm.stdout}}"
 
-   - name: Register Join command
-     set_fact:
-       kubernetes_join_command: "{{ token_kubeadm.stdout }}"
+   #- name: Register Join command
+   #  set_fact:
+   #    kubernetes_join_command: "{{ token_kubeadm.stdout }}"
    
    # a través de fact guardamos en una variable la salida para poder obtenerla en los nodos
    #- name: save output_kubeadm into fact output_adm

@@ -51,16 +51,21 @@
    #obtenemos el join command para conectarnos al cluster
    - name: Get token
      shell: kubeadm token create --print-join-command
-     register: token_kubeadm
+     register: token_join
         
    # imprimimos la salida
    - name: debug token
-     debug: msg="{{token_kubeadm.stdout}}"
+     debug: msg="{{token_join.stdout}}"
      
+   # copiamos la salida 
+   - name: Copy join command to local file
+     local_action: copy content="{{ token_join.stdout_lines[0] }}" dest="./token_join.sh"
+     become: no
+   
    # a través de fact guardamos en una variable la salida para poder obtenerla en los nodos
    - name: save output_kubeadm into fact output_adm
      set_fact:
-       output_token: "{{token_kubeadm.stdout}}"
+       output_token: "{{token_join.stdout}}"
     
    # autorizar al usuario ansible acceder al cluster
    - name: Create .kube directory

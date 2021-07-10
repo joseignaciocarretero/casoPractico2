@@ -18,13 +18,13 @@
   - name: Enable Chrony service
     become: true
     ansible.builtin.systemd:
-      name: chrony
+      name: chronyd
       enabled: yes
    
   - name: Ensure Chrony service is running
     become: true
     ansible.builtin.systemd:
-      name: chrony
+      name: chronyd
       state: started
    
   

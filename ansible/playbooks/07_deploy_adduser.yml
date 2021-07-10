@@ -12,3 +12,29 @@
      shell: "{{item}}" 
      with_items:
       - "passwd kubeadmin"    
+   
+   # autorizar al usuario ansible acceder al cluster
+   - name: Create .kube directory
+     become: true
+     file:
+       path: /home/kubeadmin/.kube
+       state: directory
+       owner: "kubeadmin"
+       group: "kubeadmin"
+       
+   # copiamos config al usuario ansible
+   - name: Copy k8s config
+     become: true
+     copy:
+       src: /etc/kubernetes/admin.conf
+       dest: /home/kubeadmin/.kube/config
+       owner: "kubeadmin"
+       group: "kubeadmin"
+       remote_src: yes
+       
+    - name: Create .kube directory
+      become: true  
+      shell: "{{item}}" 
+      with_items:
+       - "chown kubeadmin. /home/kubeadmin/.kube/config"
+       

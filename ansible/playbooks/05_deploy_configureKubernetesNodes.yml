@@ -11,11 +11,11 @@
    - name: Copy the join command to server location
      copy: src=token_join.sh dest=/tmp/token_join.sh
 
-   - name: Copy the join command to server location
+   - name: permissions to file
      command: chmod +x /tmp/token_join.sh
 
    - name: Join the node to cluster 
-     command: sh ./tmp/token_join.sh
+     command: sh /tmp/token_join.sh
      
    
      

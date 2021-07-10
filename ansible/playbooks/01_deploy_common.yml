@@ -1,35 +1,30 @@
 - hosts: all
   gather_facts: false
   tasks:
-  - name: Install Chrony 
+  - name: Install dnf packages 
     become: true
     ansible.builtin.dnf:
       name: "{{ item }}"
     with_items:
       - chrony
-      - update -y
+      - python3
     
   - name: Enable Chrony
     become: true
     ansible.builtin.systemd:
       name: chrony
       enabled: yes
-            
-         
   
   #become se usa para no tener problema de superusuario
   - name: install common components
     become: true
     command: "{{item}}" 
     with_items:
-   #- "dnf install chrony -y"
-    - "systemctl enable chronyd"
     - "dnf update -y"
-   #- "reboot"
-    - "dnf install python3 -y" 
-   # - se instala git y ansible en la máquina que se va a usar de controlador de ansible, en este caso ya viene instalada en el CLI de azure 
-   # - dnf install git ansible -y
-   # uso become para acceder como superusuario 
+   
+  - name: Unconditionally reboot the machine with all defaults
+    reboot:
+     
   
   - name: actualizamos máquinas al último nivel
     become: true

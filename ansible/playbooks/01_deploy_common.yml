@@ -1,12 +1,20 @@
 - hosts: all
   gather_facts: false
   tasks:
-  - name: Install Common packages
+  - name: Install Chrony 
     become: true
     ansible.builtin.dnf:
       name: "{{ item }}"
     with_items:
       - chrony
+      - update -y
+    
+  - name: Enable Chrony
+    become: true
+    ansible.builtin.systemd:
+      name: chrony
+      enabled: yes
+            
          
   
   #become se usa para no tener problema de superusuario

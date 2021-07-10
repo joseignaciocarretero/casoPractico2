@@ -1,5 +1,5 @@
 - hosts: master
-  gather_facts: false
+  gather_facts: true
   tasks:
    - name: configure master kubernetes
      become: true  
@@ -49,10 +49,16 @@
      when: cluster_info.stderr | length > 0
      register: output_kubeadm
      
+     
    # imprimimos la salida
    - name: debug
      debug: msg="{{output_kubeadm}}"
-     
+   
+   # a través de fact guardamos en una variable la salida para poder obtenerla en los nodos
+   - name: save output_kubeadm into fact output_adm
+     set_fact:
+       output_adm: "{{ output_kubeadm.stdout }}"
+   
    # autorizar al usuario ansible acceder al cluster
    - name: Create .kube directory
      become: true

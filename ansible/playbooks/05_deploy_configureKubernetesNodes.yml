@@ -9,7 +9,7 @@
       - firewall-cmd --reload
    # imprimimos la salida
    - name: debug
-     debug: msg="{{output_adm}}"  
+     debug: msg="{{kubernetes_join_titi}}"  
       
    
      

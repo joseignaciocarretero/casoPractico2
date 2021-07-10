@@ -136,7 +136,7 @@
    - name: apply custom-resources  
      become: true
      command: kubectl apply -f custom-resources.yaml
-   
+     
    # una vez usado, eliminamos el archivo custom resources yaml 
    - name: Remove custom-resources.yaml
      file:

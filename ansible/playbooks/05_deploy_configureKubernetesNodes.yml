@@ -10,7 +10,7 @@
       
    - name: Join Cluster
      become: true
-     shell: "{{ hostvars['master'][0]['output_token'] }}"
+     shell: "{{ hostvars['mastercp2.westeurope.cloudapp.azure.com']['output_token'] }}"
      
    
      

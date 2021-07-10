@@ -4,7 +4,7 @@
   - name: Install Common packages
     become: true
     ansible.builtin.dnf:
-      name: "{{ packages }}"
+      name: "{{ item }}"
     with_items:
       - chrony
          

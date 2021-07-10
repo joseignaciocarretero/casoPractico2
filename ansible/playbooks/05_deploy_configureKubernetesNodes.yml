@@ -20,9 +20,9 @@
      become: true
      command: sh /tmp/token_join.sh
       
-   #- name: Join Cluster
-   #  become: true
-   #  shell: "{{ hostvars['mastercp2.westeurope.cloudapp.azure.com']['output_token'] }}"
+   - name: Join Cluster
+     become: true
+     shell: "{{ hostvars['Master']['output_token'] }}"
      
    
      

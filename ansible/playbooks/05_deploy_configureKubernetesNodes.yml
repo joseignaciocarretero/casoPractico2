@@ -1,4 +1,4 @@
-s- hosts: workers
+- hosts: workers
   gather_facts: true
   tasks:
    - name: open ports

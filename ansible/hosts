@@ -1,3 +1,7 @@
+kubemaster 
+kubenode1 
+kubenode2 
+
 [all:vars]
 ansible_user=adminUsername
 

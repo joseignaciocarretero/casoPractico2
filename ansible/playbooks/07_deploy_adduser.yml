@@ -12,7 +12,7 @@
      become: true  
      shell: "{{item}}" 
      with_items:
-      - "passwd kubeadmin"
+      - passwd kubeadmin
      ignore_errors: yes 
    
    # autorizar al usuario ansible acceder al cluster

@@ -17,6 +17,12 @@
    - name: Join the node to cluster 
      command: sh /tmp/token_join.sh
      
+   # una vez usado, eliminamos el archivo custom resources yaml 
+   - name: Remove token_join.sh
+     file:
+       path: /tmp/ctoken_join.sh
+       state: absent  
+     
      
      
      

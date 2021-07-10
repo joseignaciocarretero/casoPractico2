@@ -1,9 +1,10 @@
 - hosts: master
   gather_facts: false
   tasks:
-   - name: open ports
+   - name: install ingress controller
      become: true  
      shell: "{{item}}" 
      with_items:
       - "kubectl apply -f https://raw.githubusercontent.com/haproxytech/kubernetes-ingress/v1.5/deploy/haproxy-ingress.yaml"
      
+   

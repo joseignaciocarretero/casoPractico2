@@ -1,0 +1,14 @@
+- hosts: master
+  gather_facts: false
+  tasks:
+   - name: create user for access to the cluster
+     become: true  
+     shell: "{{item}}" 
+     with_items:
+      - "useradd -md /home/kubeadmin kubeadmin"    
+      
+   - name: create user for access to the cluster
+     become: true  
+     shell: "{{item}}" 
+     with_items:
+      - "passwd kubeadmin"    

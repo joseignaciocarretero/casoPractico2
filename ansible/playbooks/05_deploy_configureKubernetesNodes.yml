@@ -8,10 +8,6 @@
       - firewall-cmd --zone=public --permanent --add-port={10250,30000-32767}/tcp
       - firewall-cmd --reload
    
-   - name: Join Cluster
-     become: true
-     shell: "{{ hostvars['mastercp2.westeurope.cloudapp.azure.com']['kubernetes_join_titi'] }}"
-   
    # imprimimos la salida
    - name: debug
      debug: msg="{{ hostvars['master']['kubernetes_join_command']}}"  

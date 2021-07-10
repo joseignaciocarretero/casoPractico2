@@ -1,12 +1,11 @@
 - hosts: all
   gather_facts: false
   tasks:
-  - name: Install chrony
+  - name: Install common packages
     become: true
     ansible.builtin.dnf:
-     name: "{{ packages }}"
-    vars:
-     packages:
+     name: "{{item}}"
+    with_items:
      - python3
      - chrony
     async: 450
@@ -18,41 +17,13 @@
       name: chronyd
       state: started
   
-   
-  - name: install common components
-    become: true
-    shell: "{{item}}" 
-    with_items:
-    #- "systemctl enable chronyd"
-    - "dnf update -y"
-    
   - name: Set timezone to Europe/Madrid
     become: true
     community.general.timezone:
       name: Europe/Madrid
     async: 10
     poll: 2
-
-  
-  
-  #- name: Enable Chrony service
-  #  become: true
-  #  ansible.builtin.systemd:
-  #    name: chrony
-  #    enabled: yes
-  #  async: 10
-  #  poll: 2
-
-  #- name: Ensure Chrony service is running
-  #  become: true
-  #  ansible.builtin.systemd:
-  #    name: chrony
-  #    state: started
-  #  async: 10
-  #  poll: 2
-
-
-     
+   
    
   - name: Unconditionally reboot the machine with all defaults
     reboot:

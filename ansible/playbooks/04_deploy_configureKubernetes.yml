@@ -119,6 +119,7 @@
    - name: install calico  
      become: true
      command: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+     ignore_errors: yes
      
    # instalando calico fichero de definición
    - name: calico definition file  

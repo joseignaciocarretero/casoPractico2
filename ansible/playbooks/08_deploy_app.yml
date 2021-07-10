@@ -1,5 +1,12 @@
 
-
+- name: Copy k8s config
+  become: true
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /home/{{ ansible_user }}/.kube/config
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    remote_src: yes
 
 
 

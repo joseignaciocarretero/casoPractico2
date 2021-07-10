@@ -58,9 +58,9 @@
      shell: kubeadm token create --print-join-command
      register: k8sjc
 
-  - name: Register Join command
-    set_fact:
-      kubernetes_join_command: "{{ k8sjc.stdout }}"
+   - name: Register Join command
+     set_fact:
+       kubernetes_join_command: "{{ k8sjc.stdout }}"
    
    # a través de fact guardamos en una variable la salida para poder obtenerla en los nodos
    #- name: save output_kubeadm into fact output_adm

@@ -8,17 +8,17 @@
       - firewall-cmd --zone=public --permanent --add-port={10250,30000-32767}/tcp
       - firewall-cmd --reload
       
-   - name: Copy the join command to server location
-     become: true
-     copy: src=token_join.sh dest=/tmp/token_join.sh
+   #- name: Copy the join command to server location
+   #  become: true
+   #  copy: src=token_join.sh dest=/tmp/token_join.sh
 
-   - name: Chmod to join 
-     become: true
-     command: chmod +x /tmp/token_join.sh
+   #- name: Chmod to join 
+   #  become: true
+   #  command: chmod +x /tmp/token_join.sh
 
-   - name: Join the node to cluster
-     become: true
-     command: sh /tmp/token_join.sh
+   #- name: Join the node to cluster
+   #  become: true
+   #  command: sh /tmp/token_join.sh
       
    - name: Join Cluster
      become: true

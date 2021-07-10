@@ -2,6 +2,7 @@
   gather_facts: false
   tasks:
   - name: Instalar Chrony.
+    become: true
     package:
       name: 
        - chrony

@@ -47,8 +47,7 @@
      become: true
      command: "kubeadm init --pod-network-cidr 10.1.0.0/16"
      when: cluster_info.stderr | length > 0
-     register: output_kubeadm
-   
+        
    #obtenemos el join command para conectarnos al cluster
    - name: Get token
      shell: kubeadm token create --print-join-command
@@ -120,20 +119,7 @@
    - name: calico definition file  
      become: true
      command: wget https://docs.projectcalico.org/manifests/custom-resources.yaml
-   
-   #https://www.middlewareinventory.com/blog/ansible-lineinfile-examples/
-   #ponemos la ip del cidr en el fichero custom-resources.yaml  
-   #- name: substitute ipaddress cidr into custom-resources.yaml
-   #  become: true
-   #  lineinfile:
-   #    path: custom-resources.yaml
-   #    # The String to Search
-   #    regexp: "cidr: 192.168.0.0/16" 
-   #    # The String to Replace
-   #    line: "cidr: 10.1.0.0/16"
-   #    state: present
-   #    backup: yes
-   
+     
    #ponemos la ip del cidr en el fichero custom-resources.yaml  
    - name: substitute ipaddress cidr into custom-resources.yaml
      replace:

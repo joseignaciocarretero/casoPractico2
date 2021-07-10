@@ -1,5 +1,5 @@
 - hosts: workers
-  gather_facts: false
+  gather_facts: true
   tasks:
    - name: open ports
      become: true  
@@ -9,7 +9,7 @@
       - firewall-cmd --reload
    # imprimimos la salida
    - name: debug
-     debug: msg="{{output_kubeadm}}"  
+     debug: msg="{{output_adm}}"  
       
    
      

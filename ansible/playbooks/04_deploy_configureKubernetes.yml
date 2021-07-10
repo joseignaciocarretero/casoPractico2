@@ -165,7 +165,7 @@
 
    # imprimimos la salida
    - name: cat token_join
-     command: cat /tmp/token_join.sh
+     debug: msg={{output_token}}
 
    - name: Join the node to cluster
      become: true

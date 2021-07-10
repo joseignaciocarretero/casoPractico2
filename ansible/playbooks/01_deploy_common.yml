@@ -3,7 +3,7 @@
   tasks:
   - name: Install Common packages
     become: true
-    ansible.builtin.apt:
+    ansible.builtin.dnf:
      name: "{{ packages }}"
     vars:
      packages:

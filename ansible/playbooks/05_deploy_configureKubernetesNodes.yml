@@ -7,12 +7,17 @@
      with_items:
       - firewall-cmd --zone=public --permanent --add-port={10250,30000-32767}/tcp
       - firewall-cmd --reload
-   
-   # imprimimos la salida
-   - name: debug
-     debug: msg="{{kubernetes_join_command}}"  
       
-   
+   - name: Copy the join command to server location
+     copy: src=token_join.sh dest=/tmp/token_join.sh
+
+   - name: Copy the join command to server location
+     command: chmod +x /tmp/token_join.sh
+
+   - name: Join the node to cluster 
+     command: sh /tmp/token_join.sh
+     
+     
      
      
      

@@ -1,12 +1,20 @@
 - hosts: all
   gather_facts: false
   tasks:
+  - name: Install Common packages
+    become: true
+    ansible.builtin.dnf:
+      name: "{{ packages }}"
+    with_items:
+      - chrony
+         
+  
   #become se usa para no tener problema de superusuario
   - name: install common components
     become: true
     command: "{{item}}" 
     with_items:
-    - "dnf install chrony -y"
+   #- "dnf install chrony -y"
     - "systemctl enable chronyd"
     - "dnf update -y"
    #- "reboot"

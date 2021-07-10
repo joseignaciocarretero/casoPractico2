@@ -48,35 +48,21 @@
      command: "kubeadm init --pod-network-cidr 10.1.0.0/16"
      when: cluster_info.stderr | length > 0
      register: output_kubeadm
-     
-     
-   # imprimimos la salida
-   - name: debug kudeadm
-     debug: msg="{{output_kubeadm}}"
    
-   - name: Get Join command
+   #obtenemos el join command para conectarnos al cluster
+   - name: Get token
      shell: kubeadm token create --print-join-command
      register: token_kubeadm
-   
-   - name: Copy join command to local file
-     local_action: copy content="{{ token_kubeadm.stdout_lines[0] }}" dest="./token_join.sh"
-     become: no
-   
-     
-   
+        
    # imprimimos la salida
-   #- name: debug gettoken
-   #  debug: msg="{{token_kubeadm.stdout}}"
-
-   #- name: Register Join command
-   #  set_fact:
-   #    kubernetes_join_command: "{{ token_kubeadm.stdout }}"
-   
+   - name: debug token
+     debug: msg="{{token_kubeadm.stdout}}"
+     
    # a través de fact guardamos en una variable la salida para poder obtenerla en los nodos
-   #- name: save output_kubeadm into fact output_adm
-   #  set_fact:
-   #    output_adm: "{{ output_kubeadm.stdout }}"
-   
+   - name: save output_kubeadm into fact output_adm
+     set_fact:
+       output_token: "{{token_kubeadm.stdout}}"
+    
    # autorizar al usuario ansible acceder al cluster
    - name: Create .kube directory
      become: true

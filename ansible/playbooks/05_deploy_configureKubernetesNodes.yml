@@ -9,7 +9,7 @@
       - firewall-cmd --reload
    # imprimimos la salida
    - name: debug
-     debug: msg="{{ hostvars['mastercp2.westeurope.cloudapp.azure.com']['kubernetes_join_titi'] }}"  
+     debug: msg="{{ hostvars['mastercp2.westeurope.cloudapp.azure.com']}}"  
       
    
      

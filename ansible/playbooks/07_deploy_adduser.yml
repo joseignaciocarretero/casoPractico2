@@ -42,6 +42,7 @@
        - "chown kubeadmin. /home/kubeadmin/.kube/config"
     
    - name: Create entry sudores file
+     become: true
      copy:
        content: 'kubeadmin ALL=(ALL:ALL) NOPASSWD:ALL'
        dest: /etc/sudoers.d/kubeadmin

@@ -54,10 +54,18 @@
    - name: debug
      debug: msg="{{output_kubeadm}}"
    
+   - name: Get Join command
+     shell: kubeadm token create --print-join-command
+     register: k8sjc
+
+  - name: Register Join command
+    set_fact:
+      kubernetes_join_command: "{{ k8sjc.stdout }}"
+   
    # a través de fact guardamos en una variable la salida para poder obtenerla en los nodos
-   - name: save output_kubeadm into fact output_adm
-     set_fact:
-       output_adm: "{{ output_kubeadm.stdout }}"
+   #- name: save output_kubeadm into fact output_adm
+   #  set_fact:
+   #    output_adm: "{{ output_kubeadm.stdout }}"
    
    # autorizar al usuario ansible acceder al cluster
    - name: Create .kube directory

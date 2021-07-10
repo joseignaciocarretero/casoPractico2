@@ -32,14 +32,14 @@
        group: "kubeadmin"
        remote_src: yes
        
-    - name: Create .kube directory
-      become: true  
-      shell: "{{item}}" 
-      with_items:
+   - name: Create .kube directory
+     become: true  
+     shell: "{{item}}" 
+     with_items:
        - "chown kubeadmin. /home/kubeadmin/.kube/config"
     
-    - name: Create entry sudores file
-      copy:
-        content: 'kubeadmin ALL=(ALL:ALL) NOPASSWD:ALL'
-        dest: /etc/sudoers.d/kubeadmin
-        mode: 0440   
+   - name: Create entry sudores file
+     copy:
+       content: 'kubeadmin ALL=(ALL:ALL) NOPASSWD:ALL'
+       dest: /etc/sudoers.d/kubeadmin
+       mode: 0440   

@@ -9,7 +9,7 @@
       - firewall-cmd --reload
    # imprimimos la salida
    - name: debug
-     debug: msg="{{kubernetes_join_titi}}"  
+     debug: msg="{{ hostvars['kubernetes_join_titi'] }}"  
       
    
      

@@ -11,11 +11,18 @@
     async: 450
     poll: 5
   
+  - name: Start service httpd, if not started
+    become: true
+    ansible.builtin.service:
+      name: chrony
+      state: started
+  
+   
   - name: install common components
     become: true
     shell: "{{item}}" 
     with_items:
-    - "systemctl enable chronyd"
+    #- "systemctl enable chronyd"
     - "dnf update -y"
     
   - name: Set timezone to Europe/Madrid

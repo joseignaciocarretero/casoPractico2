@@ -8,12 +8,9 @@
     with_items:
      - python3
      - chrony
-  
-  #- name: Start service chrony, if not started
-  #  become: true
-  #  ansible.builtin.service:
-  #    name: chronyd
-  #    state: started
+     - nfs-utils
+     - nfs4-acl-tools
+     - wget
   
   - name: Enable Chrony service
     become: true
@@ -27,8 +24,6 @@
       name: chronyd
       state: started
    
-  
-  
   - name: Set timezone to Europe/Madrid
     become: true
     community.general.timezone:
@@ -37,7 +32,6 @@
   #- name: Unconditionally reboot the machine with all defaults
   #  reboot:
      
-  
   - name: timedatectl set-ntp
     become: true
     command: timedatectl set-ntp true
@@ -45,11 +39,7 @@
   - name: SELinux estuviera activado lo desativamos
     become: true
     command: sed -i s/=enforcing/=disabled/g /etc/selinux/config
-  
-  - name: instalación de paquetes necesarios
-    become: true
-    command: dnf install nfs-utils nfs4-acl-tools wget -y
-    
+     
   - name: firewall, modprobe
     become: true
     command: "{{item}}" 

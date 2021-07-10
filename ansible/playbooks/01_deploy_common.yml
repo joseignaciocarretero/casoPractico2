@@ -8,9 +8,13 @@
     with_items:
      - python3
      - chrony
-    async: 450
-    poll: 5
   
+  - name: Enabled service chrony, if not started
+    become: true
+    ansible.builtin.service:
+      name: chronyd
+      state: enabled
+      
   - name: Start service chrony, if not started
     become: true
     ansible.builtin.service:
@@ -21,21 +25,14 @@
     become: true
     community.general.timezone:
       name: Europe/Madrid
-    async: 10
-    poll: 2
-   
-   
-  - name: Unconditionally reboot the machine with all defaults
-    reboot:
+      
+  #- name: Unconditionally reboot the machine with all defaults
+  #  reboot:
      
-  
   - name: actualizamos máquinas al último nivel
     become: true
-    command: dnf update -y
-
-  - name: sincronización horaria
-    become: true
-    command: timedatectl set-timezone Europe/Madrid
+    shell: dnf update -y
+ 
   
   - name: enable chronyd
     become: true

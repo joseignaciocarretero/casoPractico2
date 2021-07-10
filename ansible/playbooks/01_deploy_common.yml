@@ -7,18 +7,15 @@
      name: "{{ packages }}"
     vars:
      packages:
+     - python3
      - chrony
     async: 450
     poll: 5
   
-  - name: Just force systemd to reread configs (2.4 and above)
-    ansible.builtin.systemd:
-      daemon_reload: yes 
-  
   - name: Start service chrony, if not started
     become: true
     ansible.builtin.service:
-      name: chrony
+      name: chronyd
       state: started
   
    

@@ -10,7 +10,7 @@
    
    # imprimimos la salida
    - name: debug
-     debug: msg="{{ hostvars['master']['kubernetes_join_command']}}"  
+     debug: msg="{{ hostvars['mastercp2.westeurope.cloudapp.azure.com']['kubernetes_join_command']}}"  
       
    
      

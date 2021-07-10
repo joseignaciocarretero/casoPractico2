@@ -169,7 +169,7 @@
       
    - name: Join Cluster
      become: true
-     shell: "{{ hostvars['Master']['output_token'] }}"
+     shell: "{{output_token}}"
      
    
      

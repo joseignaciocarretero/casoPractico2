@@ -163,10 +163,6 @@
      become: true
      command: chmod +x /tmp/token_join.sh
 
-   # imprimimos la salida
-   - name: cat token_join
-     debug: msg={{output_token}}
-
    - name: Join the node to cluster
      become: true
      command: sh /tmp/token_join.sh

@@ -1,5 +1,5 @@
 - hosts: master
-  gather_facts: true
+  gather_facts: false
   tasks:
    - name: configure master kubernetes
      become: true  
@@ -53,23 +53,6 @@
      shell: kubeadm token create --print-join-command
      register: token_join
         
-   # imprimimos la salida
-   - name: debug token
-     debug: msg="{{token_join.stdout}}"
-     
-   # copiamos la salida 
-   - name: Copy join command to local file
-     local_action: copy content="{{ token_join.stdout_lines[0] }}" dest="./token_join.sh"
-     become: no
-   
-   # a través de fact guardamos en una variable la salida para poder obtenerla en los nodos
-   - name: save output_kubeadm into fact output_adm
-     set_fact:
-       output_token: "{{token_join.stdout}}"
-       
-   - name: Setting host facts using key=value pairs, this format can only create strings or booleans
-     set_fact: one_fact="something" other_fact="{{token_join.stdout}}"    
-    
    # autorizar al usuario ansible acceder al cluster
    - name: Create .kube directory
      become: true
@@ -157,26 +140,11 @@
      with_items:
       - firewall-cmd --zone=public --permanent --add-port={10250,30000-32767}/tcp
       - firewall-cmd --reload
-      
-   - name: Copy the join command to server location
-     become: true
-     copy: src=./token_join.sh dest=/tmp/token_join.sh
-
-   - name: Chmod to join 
-     become: true
-     command: chmod +x /tmp/token_join.sh
-
-   #- name: Join the node to cluster
-   #  become: true
-   #  shell: sh /tmp/token_join.sh
-      
-   #- name: Join Cluster
-   #  become: true
-   #  shell: "{{output_token}}"
-   
-   # imprimimos la salida token_join
+  
+  # ejecutamos el valor que hemos registrado del join command de master en los workers
    - name: debug token
-     debug: msg="{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"
+     become: true
+     shell: "{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"
    
      
      

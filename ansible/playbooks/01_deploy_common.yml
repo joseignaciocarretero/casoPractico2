@@ -34,7 +34,11 @@
       
   #- name: Unconditionally reboot the machine with all defaults
   #  reboot:
-     
+  - name: timedatectl set-ntp
+    become: true
+    command: timedatectl set-ntp true
+  
+  
   - name: timedatectl set-ntp
     become: true
     command: timedatectl set-ntp true
@@ -43,17 +47,30 @@
     become: true
     command: sed -i s/=enforcing/=disabled/g /etc/selinux/config
      
-  - name: firewall, modprobe
+  - name: Enable and started firewalld
     become: true
-    command: "{{item}}" 
+    ansible.builtin.systemd:
+      name: firewalld
+      enabled: yes
+      state: started
+      daemon_reload: true
+   
+  # modprobe module
+  - name: br_netfilter add
+    become: true
+    community.general.modprobe:
+      name: br_netfilter
+      state: present
+    async: 10
+    poll: 2
+  
+  - name: firewall
+    become: true
+    shell: "{{item}}" 
     with_items:
-    # firewall y cortafuegos
-    - systemctl enable firewalld
-    - systemctl start firewalld
-    - modprobe br_netfilter
-    - firewall-cmd --add-masquerade --permanent
-    - firewall-cmd --reload
-    
+     - firewall-cmd --add-masquerade --permanent
+     - firewall-cmd --reload
+   
   - name: tráfico de cortafuegos
     become: true
     ansible.builtin.lineinfile:
@@ -74,7 +91,7 @@
   
   - name: desactivar swap
     become: true
-    command: swapoff -a
+    shell: swapoff -a
     
   - name: borrar linea swap en fstab
     become: true
@@ -85,6 +102,15 @@
       # State is set to Absent to remove if the Searching Line is found
       state: absent
       backup: yes
+ 
+  
+
+
+
+
+
+
+
   
    
   

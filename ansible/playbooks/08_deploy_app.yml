@@ -7,5 +7,5 @@
    #  community.kubernetes.k8s: 
    #     namespace: webapp-volumes
   - name: Create namespace 
-     become: true
-     shell: kubectl create namespace webapp-volumes
+    become: true
+    shell: kubectl create namespace webapp-volumes

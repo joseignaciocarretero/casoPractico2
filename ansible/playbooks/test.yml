@@ -23,6 +23,6 @@
 - hosts: workers
   tasks:
     - name: create a test file
-      debug: {{hostvars['mastercp2.westeurope.cloudapp.azure.com']['homedir'].stdout}}
+      debug: msg="{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['homedir'].stdout}}"
       
    

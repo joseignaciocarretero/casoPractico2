@@ -1,43 +1,5 @@
 - hosts: master
   gather_facts: false
-  tasks:
-   - name: create user for access to the cluster
-     become: true  
-     ansible.builtin.user:
-         name: kubeadmin
-         create_home: yes
-         password: kubeadmin
-     ignore_errors: yes 
-    
-   # autorizar al usuario ansible acceder al cluster
-   - name: Create .kube directory
-     become: true
-     file:
-       path: /home/kubeadmin/.kube
-       state: directory
-       owner: "kubeadmin"
-       group: "kubeadmin"
-     ignore_errors: yes    
-       
-   # copiamos config al usuario ansible
-   - name: Copy k8s config
-     become: true
-     copy:
-       src: /etc/kubernetes/admin.conf
-       dest: /home/kubeadmin/.kube/config
-       owner: "kubeadmin"
-       group: "kubeadmin"
-       remote_src: yes
-       
-   - name: Create .kube directory
-     become: true  
-     shell: "{{item}}" 
-     with_items:
-       - "chown kubeadmin. /home/kubeadmin/.kube/config"
-    
-   - name: Create entry sudores file
-     become: true
-     copy:
-       content: 'kubeadmin ALL=(ALL:ALL) NOPASSWD:ALL'
-       dest: /etc/sudoers.d/kubeadmin
-       mode: 0440   
+  roles:
+   - adduser
+  

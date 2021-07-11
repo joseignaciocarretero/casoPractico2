@@ -11,12 +11,26 @@
      - nfs-utils
      - nfs4-acl-tools
      - wget
-  
-  - name: Enable Chrony service
-    become: true
-    ansible.builtin.systemd:
+    
+  - name: Start and Enable chrony
+    systemd:
       name: chronyd
+      state: started
       enabled: yes
+      daemon-reload: yes
+  
+  #- name: Start service chronyd, if not started
+  #  ansible.builtin.service:
+  #    name: chronyd
+  #    state: started
+    
+  #- name: Enable Chrony service
+  #  become: true
+  #  ansible.builtin.systemd:
+  #    name: chronyd
+  #    state: started
+  #    enabled: yes
+      
    
   - name: Ensure Chrony service is running
     become: true

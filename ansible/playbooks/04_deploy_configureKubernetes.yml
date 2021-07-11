@@ -150,6 +150,6 @@
    - name: execute join
      become: true  
      command: "{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"     
-     
+     ignore_errors: yes
 
 

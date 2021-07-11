@@ -132,7 +132,7 @@
      
      
 - hosts: workers
-  gather_facts: true
+  gather_facts: false
   tasks:
    - name: open ports
      become: true  
@@ -145,7 +145,11 @@
    - name: debug token
      become: true
      debug: msg="{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"
-       
+     
+   # ejecutamos el valor que hemos registrado del join command de master en los workers 
+   - name: execute join
+     become: true  
+     command: "{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"     
      
 
 

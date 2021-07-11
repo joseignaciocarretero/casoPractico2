@@ -2,7 +2,7 @@
   gather_facts: true
   tasks:
    - name: Setting host facts using key=value pairs, this format can only create strings or booleans
-     set_fact: one_fact="something""    
+     set_fact: one_fact="something"   
            
 - hosts: workers
   gather_facts: false

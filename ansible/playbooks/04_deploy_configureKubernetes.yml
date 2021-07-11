@@ -149,7 +149,7 @@
      
      
 - hosts: workers
-  gather_facts: false
+  gather_facts: true
   tasks:
    - name: open ports
      become: true  
@@ -176,7 +176,7 @@
    
    # imprimimos la salida other_fact
    - name: debug token
-     debug: msg="{{other_fact}}"
+     debug: msg="{{one_fact}}"
    
      
      

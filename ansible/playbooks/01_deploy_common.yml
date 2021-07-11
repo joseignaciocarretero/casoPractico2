@@ -12,6 +12,9 @@
      - nfs-utils
      - nfs4-acl-tools
      - wget
+     #se necesitan para ejecutar el módulo de ansible k8s:
+     - openshift
+     - PyYAML
      
   - name: Update dnf repository
     become: true

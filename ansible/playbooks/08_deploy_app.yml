@@ -1,13 +1,13 @@
 - hosts: master
   gather_facts: false
   tasks:
-   # Creamos un namespace
+  # creamos un namespace
   - name: Create namespace 
     become: true
     shell: kubectl create namespace webapp-volumes
     ignore_errors: yes
   
-   copiamos nfs-pv-yaml al directorio de master
+  # copiamos nfs-pv-yaml al directorio de master
   - name: Copy nfs-pv.yaml to master
     become: true
     copy:

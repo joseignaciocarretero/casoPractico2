@@ -52,10 +52,10 @@
   - name: Copy first-app.yaml to master
     become: true
     copy:
-      src: first-app.yaml.yaml 
+      src: first-app.yaml
       dest: ./
   
-  # aplicamos webapp-volumes
+  # aplicamos first_app
   - name: Apply first-app.yaml
     become: true
     shell: kubectl apply -f first-app.yaml

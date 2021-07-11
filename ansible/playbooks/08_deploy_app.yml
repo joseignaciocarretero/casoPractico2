@@ -5,9 +5,7 @@
   - name: Create a k8s namespace
     become: true 
     community.kubernetes.k8s:
-      name: webapp-volumes
-      api_version: v1
-      kind: Namespace
+      namespace: webapp-volumes
       state: present
     
   #- name: Create namespace 

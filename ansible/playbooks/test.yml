@@ -3,6 +3,9 @@
   tasks:
    - name: Setting host facts using key=value pairs, this format can only create strings or booleans
      set_fact: one_fact="something"   
+   
+   - name: debug token
+     debug: msg="{{one_fact}}"  
            
 - hosts: workers
   gather_facts: false

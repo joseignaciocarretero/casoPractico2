@@ -3,10 +3,18 @@
   tasks:
    - name: create user for access to the cluster
      become: true  
-     shell: "{{item}}" 
-     with_items:
-      - "useradd -md /home/kubeadmin kubeadmin"    
+     ansible.builtin.user:
+         name: kubeadmin
+         create_home: yes
+         password: kubeadin
      ignore_errors: yes 
+   
+   #- name: create user for access to the cluster
+   #  become: true  
+   #  shell: "{{item}}" 
+   #  with_items:
+   #   - "useradd -md /home/kubeadmin kubeadmin"    
+   #  ignore_errors: yes 
      
    - name: create password for kubeadmin
      become: true  

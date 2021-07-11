@@ -66,6 +66,9 @@
    - name: save output_kubeadm into fact output_adm
      set_fact:
        output_token: "{{token_join.stdout}}"
+       
+   - name: Setting host facts using key=value pairs, this format can only create strings or booleans
+     set_fact: one_fact="something" other_fact="{{token_join.stdout}}"    
     
    # autorizar al usuario ansible acceder al cluster
    - name: Create .kube directory
@@ -163,14 +166,17 @@
      become: true
      command: chmod +x /tmp/token_join.sh
 
-   - name: Join the node to cluster
-     become: true
-     shell: sh /tmp/token_join.sh
+   #- name: Join the node to cluster
+   #  become: true
+   #  shell: sh /tmp/token_join.sh
       
    #- name: Join Cluster
    #  become: true
    #  shell: "{{output_token}}"
-     
+   
+   # imprimimos la salida other_fact
+   - name: debug token
+     debug: msg="{{other_fact}}"
    
      
      

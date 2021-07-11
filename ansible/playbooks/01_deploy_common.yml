@@ -13,6 +13,7 @@
      - nfs4-acl-tools
      - wget
      - python3-pip
+     - ca-certificates
      
   #instalo openshift y PyYAML porque lo necesitamos para ejecutar el módulo de ansible k8s
   - name: Install pip packages

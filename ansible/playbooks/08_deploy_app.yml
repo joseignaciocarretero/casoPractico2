@@ -54,21 +54,21 @@
     become: true
     community.kubernetes.k8s:
       state: present
-      src: ./files/nfs-pv.yaml
+      src: nfs-pv.yaml
   
   # aplicamos nfs-pvc 
   - name: Apply nfs-pvc.yaml
     become: true
     community.kubernetes.k8s:
       state: present
-      src: ./files/nfs-pvc.yaml
+      src: nfs-pvc.yaml
     
   # aplicamos webapp-volumes 
   - name: Apply webapp-volumes.yaml
     become: true
     community.kubernetes.k8s:
       state: present
-      src: ./files/webapp-volumes.yaml   
+      src: webapp-volumes.yaml   
     
     
     

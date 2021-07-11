@@ -47,6 +47,18 @@
   - name: Apply webapp-volumes.yaml
     become: true
     shell: kubectl apply -f webapp-volumes.yaml
+    
+  # copiamos first_app.yaml al directorio de master
+  - name: Copy first-app.yaml to master
+    become: true
+    copy:
+      src: first-app.yaml.yaml 
+      dest: ./
+  
+  # aplicamos webapp-volumes
+  - name: Apply first-app.yaml
+    become: true
+    shell: kubectl apply -f first-app.yaml.yaml
    
     
     

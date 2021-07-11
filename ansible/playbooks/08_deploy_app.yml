@@ -19,8 +19,10 @@
       dest: ./
   
   # aplicamos nfs-pv
-  - name: Appy nfs-pv.yaml
+  - name: Apply nfs-pv.yaml
     become: true
     shell: kubectl apply -f nfs-pv.yaml
+    
+    
        
        

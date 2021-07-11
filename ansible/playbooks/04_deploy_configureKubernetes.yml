@@ -7,7 +7,8 @@
      ansible.posix.firewalld: 
        permanent: yes
        port: "{{item}}"
-     with_items:
+       state: enabled
+     loop:
       - 6443/tcp
       - 2379-2380/tcp
       - 10250/tcp

@@ -16,10 +16,12 @@
       - 10252/tcp
       - 10255/tcp
    
-   - name: reload service firewalld
+   #Reiniciamos el firewall
+   - name: Restart service 
      systemd:
+       state: restarted
+       daemon_reload: yes
        name: firewalld
-       state: reloaded 
    
    
    

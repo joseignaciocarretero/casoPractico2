@@ -144,9 +144,8 @@
   # ejecutamos el valor que hemos registrado del join command de master en los workers
    - name: debug token
      become: true
-     shell: "{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"
-   
-     
+     debug: msg="{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"
+       
      
 
 

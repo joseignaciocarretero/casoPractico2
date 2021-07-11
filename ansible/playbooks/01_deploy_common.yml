@@ -12,9 +12,17 @@
      - nfs-utils
      - nfs4-acl-tools
      - wget
-     #se necesitan para ejecutar el módulo de ansible k8s:
+     - pip
+     
+  #instalo openshift y PyYAML porque lo necesitamos para ejecutar el módulo de ansible k8s
+  - name: Install pip packages
+    become: true
+    ansible.builtin.pip:
+     name: "{{item}}"
+     state: latest    
+    with_items:
      - openshift
-     - PyYAML
+     - pyyaml
      
   - name: Update dnf repository
     become: true

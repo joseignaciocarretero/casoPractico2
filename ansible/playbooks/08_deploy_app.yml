@@ -22,7 +22,18 @@
   - name: Apply nfs-pv.yaml
     become: true
     shell: kubectl apply -f nfs-pv.yaml
-    
+       
+  # copiamos nfs- al directorio de master
+  - name: Copy nfs-pvc.yaml to master
+    become: true
+    copy:
+      src: nfs-pvc.yaml 
+      dest: ./
+  
+  # aplicamos nfs-pv
+  - name: Apply nfs-pvc.yaml
+    become: true
+    shell: kubectl apply -f nfs-pvc.yaml
     
        
        

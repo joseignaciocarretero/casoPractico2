@@ -2,29 +2,30 @@
   gather_facts: false
   tasks:
   # creamos un namespace
-  - name: Create a k8s namespace
-    become: true 
-    community.kubernetes.k8s:
-      namespace: webapp-volumes
-      state: present
-    
-  #- name: Create namespace 
-  #  become: true
-  #  shell: kubectl create namespace webapp-volumes
-  #  ignore_errors: yes
+  - name: Create namespace 
+    become: true
+    shell: kubectl create namespace webapp-volumes
+    ignore_errors: yes
   
   # copiamos nfs-pv-yaml al directorio de master
-  - name: Copy nfs-pv.yaml to master
-    become: true
-    copy:
-      src: nfs-pv.yaml 
-      dest: ./
+  #- name: Copy nfs-pv.yaml to master
+  #  become: true
+  #  copy:
+  #    src: nfs-pv.yaml 
+  #    dest: ./
   
   # aplicamos nfs-pv
-  - name: Apply nfs-pv.yaml
+  #- name: Apply nfs-pv.yaml
+  #  become: true
+  #  shell: kubectl apply -f nfs-pv.yaml
+   
+  - name: Create a Deployment by reading the definition from a local file
     become: true
-    shell: kubectl apply -f nfs-pv.yaml
-      
+    community.kubernetes.k8s:
+      state: present
+      src: nfs-pv.yaml
+   
+   
   # copiamos nfs-pvc.yaml al directorio de master
   - name: Copy nfs-pvc.yaml to master
     become: true

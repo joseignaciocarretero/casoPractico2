@@ -165,7 +165,7 @@
 
    - name: Join the node to cluster
      become: true
-     command: sh /tmp/token_join.sh
+     shell: sh /tmp/token_join.sh
       
    #- name: Join Cluster
    #  become: true

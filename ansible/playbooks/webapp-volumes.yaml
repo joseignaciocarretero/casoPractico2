@@ -6,7 +6,7 @@ metadata:
   labels:
     app: webapp-volumes
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: webapp-volumes

@@ -7,10 +7,10 @@
    #  community.kubernetes.k8s: 
    #     namespace: webapp-volumes
      
-  #- name: Create namespace 
-  #  become: true
-  #  shell: kubectl create namespace webapp-volumes
-  #  ignore_errors: yes
+  - name: Create namespace 
+    become: true
+    shell: kubectl create namespace webapp-volumes
+    ignore_errors: yes
   
   # copiamos nfs-pv-yaml al directorio de master
   #- name: Copy nfs-pv.yaml to master
@@ -48,14 +48,7 @@
   #  become: true
   #  shell: kubectl apply -f webapp-volumes.yaml
   
-  # Creamos un namespace
-  - name: Create a k8s namespace
-    become: true
-    community.kubernetes.k8s:
-      name: webapp-volumes
-      kind: Namespace
-      state: present
-   
+     
   # aplicamos nfs-pv 
   - name: Apply nfs-pv.yaml
     become: true

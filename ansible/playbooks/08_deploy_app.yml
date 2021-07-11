@@ -1,26 +1,9 @@
-master:
-
-kubectl create namespace webapp-volumes
-
-creamos fichero
-: apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: nfs-pv
-  namespace: webapp-volumes
-spec:
-  capacity:
-    storage: 10Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Recycle
-  storageClassName: nfs
-  mountOptions:
-    - hard
-    - nfsvers=4.1
-  nfs:
-    path: /srv/nfs
-    server: 192.168.1.115
-
+- hosts: master
+  gather_facts: false
+  tasks:
+   # Creamos un namespace
+   - name: Create namespace 
+     become: true
+     community.kubernetes.k8s: 
+        namespace: webapp-volumes
 

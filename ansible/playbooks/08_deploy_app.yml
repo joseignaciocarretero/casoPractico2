@@ -11,14 +11,15 @@
     shell: kubectl create namespace webapp-volumes
     ignore_errors: yes
   
-  # copiamos config al usuario ansible
+  # copiamos nfa-yaml al directorio de master
   - name: Copy nfs-pv.yaml to master
     become: true
     copy:
       src: nfs-pv.yaml 
       dest: ./
-         
-  - name: Copy nfs-pv.yaml to master
+  
+  # aplicamos nfs-pv
+  - name: Appy nfs-pv.yaml
     become: true
     shell: kubectl apply -f nfs-pv.yaml
        

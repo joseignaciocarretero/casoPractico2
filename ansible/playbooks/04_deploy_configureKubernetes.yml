@@ -174,10 +174,10 @@
    #  become: true
    #  shell: "{{output_token}}"
    
-   # imprimimos la salida other_fact
+   # imprimimos la salida token_join
    - name: debug token
-     debug: msg="{{one_fact}}"
-   token_join
+     debug: msg="{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"
+   
      
      
 

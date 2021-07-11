@@ -50,10 +50,10 @@
   
   # aplicamos webapp-volumes 
   - name: Apply webapp-volumes.yaml
-     become: true
-     community.kubernetes.k8s:
-       state: present
-       src: ./webapp-volumes.yaml   
+    become: true
+    community.kubernetes.k8s:
+      state: present
+      src: ./webapp-volumes.yaml   
     
     
     

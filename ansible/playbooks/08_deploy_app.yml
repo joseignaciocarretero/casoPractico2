@@ -9,7 +9,7 @@
   - name: Create namespace 
     become: true
     shell: kubectl create namespace webapp-volumes
-    ignore
+    ignore_errors: yes
   
   # copiamos config al usuario ansible
   - name: Copy nfs-pv.yaml to master

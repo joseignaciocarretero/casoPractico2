@@ -177,7 +177,7 @@
    # imprimimos la salida other_fact
    - name: debug token
      debug: msg="{{one_fact}}"
-   
+   token_join
      
      
 

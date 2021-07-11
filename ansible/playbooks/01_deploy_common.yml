@@ -5,6 +5,7 @@
     become: true
     ansible.builtin.dnf:
      name: "{{item}}"
+     state: latest    
     with_items:
      - python3
      - chrony
@@ -12,25 +13,20 @@
      - nfs4-acl-tools
      - wget
      
-  - name: Update dnf repository cache
+  - name: Update dnf repository
     become: true
     ansible.builtin.dnf:
+      update_only: yes 
       update_cache: yes
      
-  - name: Enable Chrony service
+  - name: Enable and started Chrony service
     become: true
     ansible.builtin.systemd:
       name: chronyd
       enabled: yes
       state: started
       daemon_reload: true
-    
-  - name: Ensure Chrony service is running
-    become: true
-    ansible.builtin.systemd:
-      name: chronyd
-      state: started
-       
+         
   - name: Set timezone to Europe/Madrid
     become: true
     community.general.timezone:

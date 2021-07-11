@@ -146,7 +146,7 @@
      
      
 - hosts: workers
-  gather_facts: true
+  gather_facts: false
   tasks:
    - name: open ports
      become: true  

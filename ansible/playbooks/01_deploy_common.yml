@@ -17,23 +17,20 @@
     ansible.builtin.dnf:
       update_cache: yes
      
-    
   - name: Enable Chrony service
     become: true
     ansible.builtin.systemd:
       name: chronyd
       enabled: yes
-    async: 10
-    poll: 2
-
+      state: started
+      daemon_reload: true
+    
   - name: Ensure Chrony service is running
     become: true
     ansible.builtin.systemd:
       name: chronyd
       state: started
-    async: 10
-    poll: 2
-   
+       
   - name: Set timezone to Europe/Madrid
     become: true
     community.general.timezone:

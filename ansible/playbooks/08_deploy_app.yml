@@ -2,8 +2,10 @@
   gather_facts: false
   tasks:
    # Creamos un namespace
-   - name: Create namespace 
+   #- name: Create namespace 
+   #  become: true
+   #  community.kubernetes.k8s: 
+   #     namespace: webapp-volumes
+  - name: Create namespace 
      become: true
-     community.kubernetes.k8s: 
-        namespace: webapp-volumes
-
+     shell: kubectl create namespace webapp-volumes

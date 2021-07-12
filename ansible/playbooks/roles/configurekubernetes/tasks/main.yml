@@ -11,29 +11,16 @@
    - 10251/tcp
    - 10252/tcp
    - 10255/tcp
-   
-#Reiniciamos el firewall
-- name: Restart service 
-  become: true
-  command: firewall-cmd --reload
-      
+     
 - name: configure kudeadm
   become: true  
   command: "{{item}}" 
   with_items:
    - kubeadm config images pull
-    
-#- name: permit access to workers
-#  become: true
-#  command: "{{item}}"
-#  with_items:
-#   - firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=10.0.1.10/32 accept'
-#   - firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=10.0.1.11/32 accept'
-#   - firewall-cmd --reload
-          
-
+       
+# permitir accesso a workers 10.0.1.10/32, 10.0.1.11/32
 # la ip pongo la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
-- name: access container to localhost  
+- name: permit access to workers and access container to localhost  
   become: true
   ansible.posix.firewalld:
     zone: public
@@ -45,14 +32,11 @@
    - 'rule family=ipv4 source address=10.0.1.11/32 accept'
    - 'rule family=ipv4 source address=172.17.0.1/16 accept'
  
-# la ip pongo la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
+# volvemos a cargar el firewall
 - name: access container to localhost  
   become: true
   command: "firewall-cmd --reload"
-  #with_items:
- #  - firewall-cmd --zone=public --permanent --add-rich-rule 'rule family=ipv4 source address=172.17.0.1/16 accept'
- #  - firewall-cmd --reload
-    
+ 
 # guardamos información del cluster, para saber si se puede conectar o no
 - name: Obtain cluster_info
   become: true
@@ -108,18 +92,9 @@
     owner: "root"
     group: "root"
     remote_src: yes
- 
-# autorizar al usuario root and ansible acceder al cluster
-#- name: authorize ansible user and root to cluster  
-#  become: true
-#  command: "{{item}}"
-#  with_items:
-#   - mkdir -p /root/.kube
-#   - cp -i /etc/kubernetes/admin.conf /root/.kube/config
-#   - 'chown $(id -u):$(id -g) /home/{{ ansible_user }}/.kube/config'
-#   - 'chown $(id -u):$(id -g) /root/.kube/config'
    
 # instalando calico
+# añado el ignore_errors por si el servicio ya estuviera instalado, que continue con las siguientes tareas
 - name: install calico  
   become: true
   command: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml

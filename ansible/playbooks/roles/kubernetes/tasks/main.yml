@@ -1,11 +1,20 @@
-# instalamos docker
-- name: install docker
+# añadimos el repo de docker
+- name: add repo docker
   become: true  
   command: "{{item}}" 
   with_items:
    - dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
-   - dnf install docker-ce-20.10.6-3.el8 -y
-   
+#   - dnf install docker-ce-20.10.6-3.el8 -y
+
+# instalamos docker
+- name: Install common packages
+  become: true
+  ansible.builtin.dnf:
+   name: "{{item}}"
+   state: latest    
+  with_items:
+   - docker-ce-20.10.6-3.el8
+  
 # activamos servicio de docker
 - name: Enable Docker service
   become: true

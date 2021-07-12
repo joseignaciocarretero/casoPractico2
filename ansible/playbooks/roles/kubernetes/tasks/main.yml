@@ -4,7 +4,6 @@
   command: "{{item}}" 
   with_items:
    - dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
-#   - dnf install docker-ce-20.10.6-3.el8 -y
 
 # instalamos docker
 - name: Install common packages
@@ -22,14 +21,14 @@
     name: docker
     enabled: yes
 
-#arrancamos servicio docker 
+# arrancamos servicio docker 
 - name: Ensure Docker service is running
   become: true
   ansible.builtin.systemd:
     name: docker
     state: started
 
-#configuramos el repo de kubernetes       
+# configuramos el repo de kubernetes       
 - name: configurar repo de kubernetes
   become: true
   ansible.builtin.lineinfile:
@@ -48,7 +47,7 @@
      - "gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
      - "exclude=kubelet kubeadm kubectl"
   
-#instalamos kubelet
+# instalamos kubelet kubeadm y kubectl
 - name: install and active kubernetes
   become: true  
   command: "{{item}}" 
@@ -62,7 +61,7 @@
     name: kubelet
     enabled: yes
 
-#arrancamos servicio kubelet 
+# arrancamos servicio kubelet 
 - name: Ensure kubelet service is running
   become: true
   ansible.builtin.systemd:

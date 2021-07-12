@@ -47,14 +47,27 @@
      - "gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
      - "exclude=kubelet kubeadm kubectl"
   
+
 # instalamos kubelet kubeadm y kubectl
-- name: install and active kubernetes
-  become: true  
-  command: "{{item}}" 
+- name: install kubelet kubeadm y kubectl
+  become: true
+  ansible.builtin.dnf:
+   name: "{{item}}"
+   state: latest    
+   disable_excludes: kubernetes 
   with_items:
-   - "dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes"
+   - kubelet
+   - kubeadm
+   - kubectl
+
+# instalamos kubelet kubeadm y kubectl
+#- name: install and active kubernetes
+#  become: true  
+#  command: "{{item}}" 
+#  with_items:
+#   - "dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes"
    
-# activamos servicio de kubelet
+# activamos servicio de kubelet al arrancar
 - name: Enable kubelet service
   become: true
   ansible.builtin.systemd:
@@ -62,7 +75,7 @@
     enabled: yes
 
 # arrancamos servicio kubelet 
-- name: Ensure kubelet service is running
+- name: Service kubelet started
   become: true
   ansible.builtin.systemd:
     name: kubelet

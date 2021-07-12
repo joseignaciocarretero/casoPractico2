@@ -39,6 +39,7 @@
     zone: public
     permanent: yes
     rich_rule: 'rule family=ipv4 source address=172.17.0.1/16 accept'
+    state: enabled
  
 # la ip pongo la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
 - name: access container to localhost  

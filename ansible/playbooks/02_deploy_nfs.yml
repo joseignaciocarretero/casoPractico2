@@ -1,5 +1,5 @@
 - hosts: master
   gather_facts: false
   roles:
-     -nfs
+    - nfs
 

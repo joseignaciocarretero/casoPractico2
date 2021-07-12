@@ -31,12 +31,21 @@
    - firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=10.0.1.11/32 accept'
    - firewall-cmd --reload
           
+
+# la ip pongo la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
+- name: access container to localhost  
+  become: true
+  ansible.posix.firewalld:
+    zone: public
+    permanent: yes
+    rich_rule: 'rule family=ipv4 source address=172.17.0.1/16 accept'
+ 
 # la ip pongo la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
 - name: access container to localhost  
   become: true
   command: "{{item}}"
   with_items:
-   - firewall-cmd --zone=public --permanent --add-rich-rule 'rule family=ipv4 source address=172.17.0.1/16 accept'
+ #  - firewall-cmd --zone=public --permanent --add-rich-rule 'rule family=ipv4 source address=172.17.0.1/16 accept'
    - firewall-cmd --reload
     
 # guardamos información del cluster, para saber si se puede conectar o no

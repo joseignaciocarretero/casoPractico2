@@ -23,13 +23,13 @@
   with_items:
    - kubeadm config images pull
     
-- name: permit access to workers
-  become: true
-  command: "{{item}}"
-  with_items:
-   - firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=10.0.1.10/32 accept'
-   - firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=10.0.1.11/32 accept'
-   - firewall-cmd --reload
+#- name: permit access to workers
+#  become: true
+#  command: "{{item}}"
+#  with_items:
+#   - firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=10.0.1.10/32 accept'
+#   - firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=10.0.1.11/32 accept'
+#   - firewall-cmd --reload
           
 
 # la ip pongo la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
@@ -38,16 +38,20 @@
   ansible.posix.firewalld:
     zone: public
     permanent: yes
-    rich_rule: 'rule family=ipv4 source address=172.17.0.1/16 accept'
+    rich_rule: "{{item}}"
     state: enabled
+  with_items:   
+   - 'rule family=ipv4 source address=10.0.1.10/32 accept'
+   - 'rule family=ipv4 source address=10.0.1.11/32 accept'
+   - 'rule family=ipv4 source address=172.17.0.1/16 accept'
  
 # la ip pongo la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
 - name: access container to localhost  
   become: true
-  command: "{{item}}"
-  with_items:
+  command: "firewall-cmd --reload"
+  #with_items:
  #  - firewall-cmd --zone=public --permanent --add-rich-rule 'rule family=ipv4 source address=172.17.0.1/16 accept'
-   - firewall-cmd --reload
+ #  - firewall-cmd --reload
     
 # guardamos información del cluster, para saber si se puede conectar o no
 - name: Obtain cluster_info

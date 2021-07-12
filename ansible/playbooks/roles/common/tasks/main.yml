@@ -1,3 +1,4 @@
+#instalamos paquetes comunes
 - name: Install common packages
   become: true
   ansible.builtin.dnf:

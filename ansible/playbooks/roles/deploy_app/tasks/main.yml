@@ -1,39 +1,31 @@
-# con el módulo de k8s me daba connection refused, he optado por crear el namespace desde linea de comandos.
+# con el módulo de k8s me daba "Failed to get client due to HTTPConnectionPool(host='localhost', port=80): Max retries exceeded with url: /version"  
+# he optado por crear el namespace desde linea de comandos.
 # si el namespace ya existiera, hago que no se pare la ejecución de las task añadiendo un ignore_errors
 # creamos un namespace
-#- name: Create namespace 
-#  become: true
-#  shell: kubectl create namespace webapp-volumes
-#  ignore_errors: yes
-
-- name: Create a k8s namespace
+- name: Create namespace 
   become: true
-  community.kubernetes.k8s:
-    name: webapp-volumes
-    api_version: v1
-    kind: Namespace
-    state: present
-  
+  shell: kubectl create namespace webapp-volumes
+  ignore_errors: yes
   
 # intento ejecutar el deployment con el módulo de k8s pero no encuentra el fichero en local: Does the file exist?"}
 # opto por copiar el archivo al nodo destino y ejecutarlo desde la shell
-#- name: Create a Deployment by reading the definition from a local file
-#  become: true
-#  community.kubernetes.k8s:
-#    state: present
-#    src: "./nfs-pv.yaml"
+- name: Create a Deployment by reading the definition from a local file
+  become: true
+  community.kubernetes.k8s:
+    state: present
+    src: "./nfs-pv.yaml"
   
 # copiamos nfs-pv-yaml al directorio de master
-- name: Copy nfs-pv.yaml to master
-  become: true
-  copy:
-    src: nfs-pv.yaml 
-    dest: ./
+#- name: Copy nfs-pv.yaml to master
+#  become: true
+#  copy:
+#    src: nfs-pv.yaml 
+#    dest: ./
   
 # aplicamos nfs-pv
-- name: Apply nfs-pv.yaml
-  become: true
-  shell: kubectl apply -f nfs-pv.yaml
+#- name: Apply nfs-pv.yaml
+#  become: true
+#  shell: kubectl apply -f nfs-pv.yaml
     
 # copiamos nfs-pvc.yaml al directorio de master
 - name: Copy nfs-pvc.yaml to master

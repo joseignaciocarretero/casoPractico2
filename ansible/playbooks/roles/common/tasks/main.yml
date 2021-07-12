@@ -41,13 +41,10 @@
   community.general.timezone:
     name: Europe/Madrid
       
-#- name: Unconditionally reboot the machine with all defaults
-#  reboot:
 - name: timedatectl set-ntp
   become: true
   command: timedatectl set-ntp true
   
-
 - name: timedatectl set-ntp
   become: true
   command: timedatectl set-ntp true

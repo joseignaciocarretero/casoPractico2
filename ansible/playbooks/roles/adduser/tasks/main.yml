@@ -1,3 +1,4 @@
+# creamos usuario para acceder al cluster
 - name: create user for access to the cluster
   become: true  
   ansible.builtin.user:
@@ -6,7 +7,7 @@
       password: kubeadmin
   ignore_errors: yes 
   
-# autorizar al usuario ansible acceder al cluster
+# creación del directorio .kube
 - name: Create .kube directory
   become: true
   file:
@@ -16,7 +17,7 @@
     group: "kubeadmin"
   ignore_errors: yes    
      
-# copiamos config al usuario ansible
+# copiamos config al usuario kubeadmin
 - name: Copy k8s config
   become: true
   copy:
@@ -26,7 +27,7 @@
     group: "kubeadmin"
     remote_src: yes
        
-- name: Create .kube directory
+- name: Chown kubeadmin 
   become: true  
   shell: "{{item}}" 
   with_items:

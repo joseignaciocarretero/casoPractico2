@@ -4,5 +4,5 @@
 - name: install ingress controller
   become: true  
   community.kubernetes.k8s:
-    src: "https://raw.githubusercontent.com/haproxytech/kubernetes-ingress/v1.5/deploy/haproxy-ingress.yaml"
+    src: https://raw.githubusercontent.com/haproxytech/kubernetes-ingress/v1.5/deploy/haproxy-ingress.yaml
 

@@ -1,10 +1,20 @@
+#abrimos puertos firewall
 - name: open ports
   become: true  
-  shell: "{{item}}" 
-  with_items:
-   - firewall-cmd --zone=public --permanent --add-port={10250,30000-32767}/tcp
-   - firewall-cmd --reload
-
+  ansible.posix.firewalld: 
+    zone: public
+    permanent: yes
+    port: "{{item}}"
+    state: enabled
+  loop:
+   - 10250/tcp
+   - 30000-32767/tcp
+ 
+#volvemos a cargar el firewall 
+- name: reload firewall
+  become: true  
+  shell: "firewall-cmd --reload" 
+  
 # mostramos que la variable guardada en el master la veo desde el worker
 - name: debug token
   become: true

@@ -13,7 +13,7 @@
   become: true
   community.kubernetes.k8s:
     state: present
-    src: "./nfs-pv.yaml"
+    src: nfs-pv.yaml
   
 # copiamos nfs-pv-yaml al directorio de master
 #- name: Copy nfs-pv.yaml to master

@@ -48,7 +48,7 @@
      - "exclude=kubelet kubeadm kubectl"
   
 
-# instalamos kubelet kubeadm y kubectl
+# instalamos kubeadm y kubectl
 - name: install kubelet kubeadm y kubectl
   become: true
   ansible.builtin.dnf:
@@ -56,16 +56,15 @@
    state: latest    
    disable_excludes: kubernetes 
   with_items:
-   - kubelet
    - kubeadm
    - kubectl
 
-# instalamos kubelet kubeadm y kubectl
-#- name: install and active kubernetes
-#  become: true  
-#  command: "{{item}}" 
-#  with_items:
-#   - "dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes"
+# instalamos kubelet 
+- name: install and active kubernetes
+  become: true  
+  command: "{{item}}" 
+  with_items:
+   - "dnf install -y kubelet --disableexcludes=kubernetes"
    
 # activamos servicio de kubelet al arrancar
 - name: Enable kubelet service

@@ -100,10 +100,17 @@
   command: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
   ignore_errors: yes
   
-# instalando calico fichero de definición
-- name: calico definition file  
+# descargamos calico fichero de manifiesto
+- name: Download foo.conf
   become: true
-  command: wget https://docs.projectcalico.org/manifests/custom-resources.yaml
+  get_url:
+    url: https://docs.projectcalico.org/manifests/custom-resources.yaml
+    dest: ./custom-resources.yaml
+    mode: '0440'
+
+#- name: calico definition file  
+#  become: true
+#  command: wget https://docs.projectcalico.org/manifests/custom-resources.yaml
   
 #ponemos la ip del cidr en el fichero custom-resources.yaml  
 - name: substitute ipaddress cidr into custom-resources.yaml

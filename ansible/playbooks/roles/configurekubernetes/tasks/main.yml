@@ -101,7 +101,7 @@
   ignore_errors: yes
   
 # descargamos calico fichero de manifiesto
-- name: Download foo.conf
+- name: download custom-resources.yaml
   become: true
   get_url:
     url: https://docs.projectcalico.org/manifests/custom-resources.yaml

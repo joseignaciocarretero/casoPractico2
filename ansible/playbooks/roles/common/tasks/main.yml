@@ -1,4 +1,4 @@
-#instalamos paquetes comunes
+# instalamos paquetes comunes
 - name: Install common packages
   become: true
   ansible.builtin.dnf:
@@ -13,7 +13,7 @@
    - python3-pip
    - ca-certificates
      
-#instalo openshift y PyYAML porque lo necesitamos para ejecutar el módulo de ansible k8s
+# instalo openshift y PyYAML 
 - name: Install pip packages
   become: true
   ansible.builtin.pip:
@@ -23,12 +23,14 @@
    - openshift
    - pyyaml
      
+# actualizamos repositorio dnf
 - name: Update dnf repository
   become: true
   ansible.builtin.dnf:
     update_only: yes 
     update_cache: yes
      
+# activamos y arrancamos servicio chrony
 - name: Enable and started Chrony service
   become: true
   ansible.builtin.systemd:
@@ -37,6 +39,7 @@
     state: started
     daemon_reload: true
          
+# seteamos el timezone a Europa/Madrid
 - name: Set timezone to Europe/Madrid
   become: true
   community.general.timezone:
@@ -45,15 +48,12 @@
 - name: timedatectl set-ntp
   become: true
   command: timedatectl set-ntp true
-  
-- name: timedatectl set-ntp
-  become: true
-  command: timedatectl set-ntp true
 
 - name: SELinux estuviera activado lo desativamos
   become: true
   command: sed -i s/=enforcing/=disabled/g /etc/selinux/config
    
+# activamos y arrancamos servicio chrony
 - name: Enable and started firewalld
   become: true
   ansible.builtin.systemd:
@@ -71,11 +71,20 @@
   async: 10
   poll: 2
   
+# añadimos masquerade 
+- name: firewall masquerade
+  become: yes
+  ansible.posix.firewalld:
+    masquerade: yes
+    state: enabled
+    permanent: yes
+  
+# volvemos a cargar firewall
 - name: firewall
   become: true
   shell: "{{item}}" 
   with_items:
-   - firewall-cmd --add-masquerade --permanent
+#   - firewall-cmd --add-masquerade --permanent
    - firewall-cmd --reload
  
 - name: tráfico de cortafuegos

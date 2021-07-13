@@ -117,14 +117,10 @@
     replace: "cidr: 10.1.0.0/16"
    
 # instalando calico aplicamos custom-resources
-#- name: apply custom-resources  
-#  become: true
-#  command: kubectl apply -f custom-resources.yaml
-  
-- name: Apply metrics-server manifest to the cluster.
-  community.kubernetes.k8s:
-    state: present
-    src: ./custom-resources.yaml
+- name: apply custom-resources  
+  become: true
+  command: kubectl apply -f custom-resources.yaml
+
   
 # una vez usado, eliminamos el archivo custom resources yaml 
 - name: Remove custom-resources.yaml

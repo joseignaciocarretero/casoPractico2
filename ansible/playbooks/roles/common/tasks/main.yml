@@ -53,7 +53,7 @@
   become: true
   command: sed -i s/=enforcing/=disabled/g /etc/selinux/config
    
-# activamos y arrancamos servicio chrony
+# activamos y arrancamos servicio firewall
 - name: Enable and started firewalld
   become: true
   ansible.builtin.systemd:

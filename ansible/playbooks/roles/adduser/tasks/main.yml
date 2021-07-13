@@ -27,12 +27,14 @@
     group: "kubeadmin"
     remote_src: yes
        
+# permisos
 - name: Chown kubeadmin 
   become: true  
   shell: "{{item}}" 
   with_items:
     - "chown kubeadmin. /home/kubeadmin/.kube/config"
     
+# creamos entrada en el fichero kubeadmin
 - name: Create entry sudores file
   become: true
   copy:

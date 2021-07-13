@@ -1,1 +1,11 @@
-main
+# copiamos nfs-pv-yaml al directorio de master
+- name: Copy nfs-pv.yaml to master
+  become: true
+  copy:
+    src: apple.yaml 
+    dest: ./
+  
+# aplicamos nfs-pv
+- name: Apply apple.yaml
+  become: true
+  shell: kubectl apply -f apple.yaml

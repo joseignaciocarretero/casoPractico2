@@ -70,21 +70,13 @@
     state: present
   async: 10
   poll: 2
-
-# añadimos masquerade al firewall
-- name: firewall masquerade
-  become: true
-  ansible.posix.firewalld:
-    masquerade: yes
-    state: enabled
-    permanent: yes
     
 # volvemos a cargar firewall
 - name: firewall
   become: true
   shell: "{{item}}" 
   with_items:
-#   - firewall-cmd --add-masquerade --permanent
+   - firewall-cmd --add-masquerade --permanent
    - firewall-cmd --reload
  
 - name: tráfico de cortafuegos

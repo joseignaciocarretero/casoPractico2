@@ -106,7 +106,7 @@
   get_url:
     url: https://docs.projectcalico.org/manifests/custom-resources.yaml
     dest: ./
-#    mode: '0440'
+    mode: 'u+rwx'
 
 #- name: calico definition file  
 #  become: true

@@ -1,1 +1,12 @@
-main
+# copiamos first-app.yaml al directorio de master
+- name: Copy first-app.yaml to master
+  become: true
+  copy:
+    src: first-app.yaml 
+    dest: ./
+  
+# aplicamos first-app.yaml
+- name: Apply first-app.yaml
+  become: true
+  shell: kubectl apply -f first-app.yaml
+  

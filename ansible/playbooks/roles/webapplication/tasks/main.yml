@@ -1,1 +1,43 @@
-main
+# creamos un namespace
+- name: Create namespace 
+  become: true
+  shell: kubectl create namespace webapp-routed
+  ignore_errors: yes
+  
+# copiamos nfs-pv-yaml al directorio de master
+- name: Copy first-routed-webapp.yaml to master
+  become: true
+  copy:
+    src: first-routed-webapp.yaml 
+    dest: ./
+  
+# aplicamos first-routed-webapp.yaml
+- name: Apply first-routed-webapp.yaml
+  become: true
+  shell: kubectl apply -f first-routed-webapp.yaml
+   
+# copiamos ingress.yaml al directorio de master
+- name: Copy ingress.yaml to master
+  become: true
+  copy:
+    src: ingress.yaml
+    dest: ./
+  
+# aplicamos ingress.yaml
+- name: Apply ingress.yaml
+  become: true
+  shell: kubectl apply -f ingress.yaml
+  
+
+# copiamos  configmap.yaml al directorio de master
+- name: Copy  configmap.yaml to master
+  become: true
+  copy:
+    src: configmap.yaml
+    dest: ./
+  
+# aplicamos  configmap.yaml
+- name: Apply configmap.yaml
+  become: true
+  shell: kubectl apply -f configmap.yaml
+  

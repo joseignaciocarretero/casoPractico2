@@ -1,1 +1,4 @@
-dd
+- hosts: master
+  gather_facts: false
+  roles:
+    - test

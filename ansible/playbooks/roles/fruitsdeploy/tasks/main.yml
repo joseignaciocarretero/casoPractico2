@@ -9,3 +9,16 @@
 - name: Apply apple.yaml
   become: true
   shell: kubectl apply -f apple.yaml
+  
+# copiamos ingress.yaml al directorio de master
+- name: Copy ingress.yaml to master
+  become: true
+  copy:
+    src: ingress.yaml 
+    dest: ./
+  
+# creamos ingress en el cluster
+- name: Apply ingress.yaml
+  become: true
+  shell: kubectl create -f ingress.yaml  
+ 

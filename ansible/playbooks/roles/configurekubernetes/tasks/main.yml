@@ -105,8 +105,8 @@
   become: true
   get_url:
     url: https://docs.projectcalico.org/manifests/custom-resources.yaml
-    dest: ./custom-resources.yaml
-    mode: '0440'
+#    dest: ./custom-resources.yaml
+#    mode: '0440'
 
 #- name: calico definition file  
 #  become: true

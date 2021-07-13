@@ -1,4 +1,4 @@
-# copiamos nfs-pv-yaml al directorio de master
+# copiamos apple-yaml al directorio de master
 - name: Copy apple.yaml to master
   become: true
   copy:

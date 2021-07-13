@@ -22,7 +22,7 @@
     enabled: yes
 
 # arrancamos servicio docker 
-- name: Ensure Docker service is running
+- name: arrancamos servicio Docker
   become: true
   ansible.builtin.systemd:
     name: docker
@@ -49,7 +49,7 @@
   
 
 # instalamos kubeadm y kubectl
-- name: install kubelet kubeadm y kubectl
+- name: install kubeadm y kubectl
   become: true
   ansible.builtin.dnf:
    name: "{{item}}"

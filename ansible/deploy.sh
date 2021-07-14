@@ -8,4 +8,4 @@ ansible-playbook -i hosts playbooks/03_deploy_kubernetes.yml
 ansible-playbook -i hosts playbooks/04_deploy_configureKubernetes.yml
 ansible-playbook -i hosts playbooks/06_deploy_ingress.yml
 ansible-playbook -i hosts playbooks/07_deploy_adduser.yml
-ansible-playbook -i hosts playbooks/08_deploy_app.yml
+ansible-playbook -i hosts playbooks/deploy_webapplication.yml

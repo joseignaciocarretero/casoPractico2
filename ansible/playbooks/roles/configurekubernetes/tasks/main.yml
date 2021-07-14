@@ -12,6 +12,9 @@
    - 10251/tcp
    - 10252/tcp
    - 10255/tcp
+   - 8285/udp
+   - 8472/udp
+   - 30000-32767/tcp
      
 - name: configure kudeadm
   become: true  
@@ -29,6 +32,7 @@
     rich_rule: "{{item}}"
     state: enabled
   with_items:   
+   - 'rule family=ipv4 source address=10.0.1.50/32 accept'
    - 'rule family=ipv4 source address=10.0.1.10/32 accept'
    - 'rule family=ipv4 source address=10.0.1.11/32 accept'
    - 'rule family=ipv4 source address=172.17.0.1/16 accept'
@@ -53,9 +57,42 @@
   command: "kubeadm init --pod-network-cidr 10.244.0.0/16"
   when: cluster_info.stderr | length > 0
 
+- name: Create .kube directory
+  become: true
+  ansible.builtin.file:
+    path: /root/.kube
+    state: directory
+    mode: "0700"
+
+- name: Copy kubernetes config
+  become: true
+  ansible.builtin.copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /root/.kube/config
+    owner: root
+    group: root
+    mode: "0600"
+    remote_src: yes
+
+
+- name: Create User .kube directory
+  ansible.builtin.file:
+    path: /home/{{ ansible_user }}/.kube
+    state: directory
+    mode: "0700"
+
+- name: Copy User kubernetes config
+  become: true
+  ansible.builtin.copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /home/{{ ansible_user }}/config
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0600"
+    remote_src: yes
+
 # instalar el CNI
 - name: install CNI
-  become: true
   command: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
   
   

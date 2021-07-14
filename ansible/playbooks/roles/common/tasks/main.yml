@@ -30,28 +30,26 @@
     update_only: yes 
     update_cache: yes
      
-- name: Enable Chrony service
-  become: true
-  ansible.builtin.systemd:  
-    name: chronyd
-    enabled: yes
-  ignore_errors: yes
+#- name: Enable Chrony service
+#  become: true
+#  ansible.builtin.systemd:  
+#    name: chronyd
+#    enabled: yes
 
-- name: Ensure Chrony service is running
-  become: true
-  ansible.builtin.systemd:
-    name: chronyd
-    state: started
-  ignore_errors: yes
-
-# activamos y arrancamos servicio chrony
-#- name: Enable and started Chrony service
+#- name: Ensure Chrony service is running
 #  become: true
 #  ansible.builtin.systemd:
 #    name: chronyd
-#    enabled: yes
-#    state: restarted
-#    daemon_reload: true
+#    state: started
+
+# activamos y arrancamos servicio chrony
+- name: Enable and started Chrony service
+  become: true
+  ansible.builtin.systemd:
+    name: chronyd
+    enabled: yes
+    state: restarted
+    daemon_reload: true
          
 # seteamos el timezone a Europa/Madrid
 - name: Set timezone to Europe/Madrid

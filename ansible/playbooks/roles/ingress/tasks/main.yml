@@ -1,3 +1,7 @@
 - name: install ingress controller
   become: true  
   shell: kubectl apply -f https://raw.githubusercontent.com/haproxytech/kubernetes-ingress/v1.5/deploy/haproxy-ingress.yaml
+
+- name: install externalIp and LoadBalancer
+  become: true
+  shell: 'kubectl patch service controller-ingress-nginx-controller -p '{"spec":{"externalIPs":["10.0.1.50"]},"loadBalancerIP": "10.0.1.50", "type": "loadBalancer"}''

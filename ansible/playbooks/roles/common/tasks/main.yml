@@ -29,27 +29,28 @@
   ansible.builtin.dnf:
     update_only: yes 
     update_cache: yes
+    state: latest
      
-#- name: Enable Chrony service
-#  become: true
-#  ansible.builtin.systemd:  
-#    name: chronyd
-#    enabled: yes
+- name: Enable Chrony service
+  become: true
+  ansible.builtin.systemd:  
+    name: chronyd
+    enabled: yes
 
-#- name: Ensure Chrony service is running
-#  become: true
-#  ansible.builtin.systemd:
-#    name: chronyd
-#    state: started
-
-# activamos y arrancamos servicio chrony
-- name: Enable and started Chrony service
+- name: Started Chrony service
   become: true
   ansible.builtin.systemd:
     name: chronyd
-    enabled: yes
-    state: restarted
-    daemon_reload: true
+    state: started
+
+# activamos y arrancamos servicio chrony
+#- name: Enable and started Chrony service
+#  become: true
+#  ansible.builtin.systemd:
+#    name: chronyd
+#    enabled: yes
+#    state: restarted
+    
          
 # seteamos el timezone a Europa/Madrid
 - name: Set timezone to Europe/Madrid
@@ -65,6 +66,15 @@
   become: true
   command: sed -i s/=enforcing/=disabled/g /etc/selinux/config
    
+- name: Reboot host and wait for it to restart
+  reboot:
+    msg: "Reboot initiated by Ansible"
+    connect_timeout: 5
+    reboot_timeout: 600
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: whoami
+
 # activamos y arrancamos servicio firewall
 - name: Enable and started firewalld
   become: true

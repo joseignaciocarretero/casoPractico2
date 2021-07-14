@@ -36,7 +36,7 @@
   ansible.builtin.systemd:
     name: chronyd
     enabled: yes
-    state: started
+    state: restarted
     daemon_reload: true
          
 # seteamos el timezone a Europa/Madrid

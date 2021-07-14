@@ -35,12 +35,14 @@
   ansible.builtin.systemd:  
     name: chronyd
     enabled: yes
+  ignore_errors: yes
 
 - name: Ensure Chrony service is running
   become: true
   ansible.builtin.systemd:
     name: chronyd
     state: started
+  ignore_errors: yes
 
 # activamos y arrancamos servicio chrony
 #- name: Enable and started Chrony service

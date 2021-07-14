@@ -48,9 +48,15 @@
 # definimos la red de los pods mientras pueda conectarse
 - name: install CNI and define POD net
   become: true
-  command: "kubeadm init --pod-network-cidr 10.1.0.0/16"
+  command: "kubeadm init --pod-network-cidr 10.244.0.0/16"
   when: cluster_info.stderr | length > 0
-      
+
+# instalar el CNI
+- name: install CNI
+  become: true
+  command: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
+  
+  
 #obtenemos el join command para conectarnos al cluster
 - name: Get token
   shell: kubeadm token create --print-join-command

@@ -4,5 +4,5 @@
 
 - name: install externalIp and LoadBalancer
   become: true
-  shell: 'kubectl patch service haproxy-ingress -p '{"spec":{"externalIPs":["10.0.1.50"]},"loadBalancerIP": "10.0.1.50", "type": "loadBalancer"}' -n haproxy-controller'
+  shell: "kubectl patch service haproxy-ingress -p '{"spec":{"externalIPs":["10.0.1.50"]},"loadBalancerIP": "10.0.1.50", "type": "loadBalancer"}' -n haproxy-controller"
  # shell: 'kubectl patch service controller-ingress-nginx-controller -p '{"spec":{"externalIPs":["10.0.1.50"]},"loadBalancerIP": "10.0.1.50", "type": "loadBalancer"}''

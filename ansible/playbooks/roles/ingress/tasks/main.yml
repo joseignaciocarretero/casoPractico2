@@ -2,7 +2,7 @@
   become: true  
   shell: kubectl apply -f https://raw.githubusercontent.com/haproxytech/kubernetes-ingress/v1.5/deploy/haproxy-ingress.yaml
 
-- name: install externalIp and LoadBalancer
+- name: patch externalIp and LoadBalancer
   become: true
   shell: |
      kubectl patch service haproxy-ingress -p '{"spec":{"externalIPs":["{{ private_lan_master }}"]},"loadBalancerIP": "{{ private_lan_master }}", "type": "loadBalancer"}' -n haproxy-controller  

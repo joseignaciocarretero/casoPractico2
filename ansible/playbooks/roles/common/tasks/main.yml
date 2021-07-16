@@ -85,7 +85,7 @@
   async: 10
   poll: 2
 
-# add masquerade firewall
+# añade masquerade firewall
 - name: firewall
   become: true
   ansible.posix.firewalld:
@@ -94,7 +94,7 @@
     permanent: yes
     zone: dmz
 
-# reload firewall
+# recargamos firewall
 - name: reload firewall  
   become: true
   shell: firewall-cmd --reload

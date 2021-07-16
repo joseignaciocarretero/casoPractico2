@@ -99,7 +99,7 @@
 - name: install CNI
   community.kubernetes.k8s:
     state: present
-    src: | https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml  
+    src: https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml  
   
 #obtenemos el join command para conectarnos al cluster
 - name: Get token

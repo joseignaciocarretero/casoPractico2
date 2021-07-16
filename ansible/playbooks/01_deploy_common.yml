@@ -1,3 +1,5 @@
+## Playbook para tareas comunes en master y workers ##
+
 - hosts: all
   gather_facts: false
   roles:

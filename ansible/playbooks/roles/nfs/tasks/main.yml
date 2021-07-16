@@ -97,6 +97,7 @@
   - /srv/nfs 10.0.1.10(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)
   - /srv/nfs 10.0.1.11(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)
   - /srv/nfs 10.0.1.50(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)
+  - /srv/nfs 10.244.0.0/16(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)
   register: exportfs
   async: 10
   poll: 2

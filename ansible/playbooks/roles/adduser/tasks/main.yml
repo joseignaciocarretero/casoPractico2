@@ -30,9 +30,8 @@
 # permisos
 - name: Chown kubeadmin 
   become: true  
-  shell: "{{item}}" 
-  with_items:
-    - "chown kubeadmin. /home/kubeadmin/.kube/config"
+  shell: | 
+     chown kubeadmin. /home/kubeadmin/.kube/config
     
 # creamos entrada en el fichero kubeadmin
 - name: Create entry sudores file

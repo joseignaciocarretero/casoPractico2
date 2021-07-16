@@ -125,7 +125,7 @@
   shell: swapoff -a
     
 # borramos del fichero fstab el swap    
-- name: delete swap lien in fstab
+- name: delete swap line in fstab
   become: true
   ansible.builtin.lineinfile:
     path: /etc/fstab

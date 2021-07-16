@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# añadir tantas líneas como sean necesarias para el correcto despligue
 ansible-playbook -i hosts playbooks/01_deploy_common.yml
 ansible-playbook -i hosts playbooks/02_deploy_nfs.yml
 ansible-playbook -i hosts playbooks/03_deploy_kubernetes.yml

@@ -1,10 +1,3 @@
-# casoPractico2
-Caso Práctico2
-
-
-
-
-# origen readme
 Corrección automática
 Para la corección automática el repositorio deberá tener la siguiente estructura:
 

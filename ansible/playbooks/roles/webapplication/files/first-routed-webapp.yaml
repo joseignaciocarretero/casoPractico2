@@ -17,16 +17,24 @@ spec:
     spec:
       containers:
       - name: webapp-routed
-        image: quay.io/rhte_2019/webapp:v1
+        image: httpd:latest
         ports:
         - containerPort: 80
         readinessProbe:
           httpGet:
             path: /
-            port: 80 
+            port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
           successThreshold: 1
+        volumeMounts:
+        - name: storage-webapp-routed
+          mountPath: /usr/local/apache2/htdocs/
+      volumes:
+      - name: storage-webapp-routed
+        hostPath:
+          path: /srv/nfs
+          type: Directory
 ---
 apiVersion: v1
 kind: Service

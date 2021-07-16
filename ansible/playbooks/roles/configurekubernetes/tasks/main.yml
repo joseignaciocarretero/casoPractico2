@@ -93,21 +93,8 @@
     remote_src: yes
 
 # instalar el CNI
-#- name: install CNI
-#  command: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
-
-# Download and apply manifest
-- name: Download metrics-server manifest to the cluster.
-  ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-    dest: ~/kube-flannel.yml
-    mode: '0664'
-
-- name: Apply metrics-server manifest to the cluster.
-  community.kubernetes.k8s:
-    state: present
-    src: ~/kube-flannel.yml
-
+- name: install CNI
+  command: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
 
 #obtenemos el join command para conectarnos al cluster
 - name: Get token

@@ -18,4 +18,4 @@
   
 - name: execute patch
   become: true
-  shell: sh proxy.sh
+  shell: proxy.sh

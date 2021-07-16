@@ -99,9 +99,22 @@
 - name: install CNI
   community.kubernetes.k8s:
     state: present
-    src: |
+    remote_src: |
       https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml  
-  
+
+# Download and apply manifest
+#- name: Download metrics-server manifest to the cluster.
+#  ansible.builtin.get_url:
+#    url: https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+#    dest: ~/metrics-server.yaml
+#    mode: '0664'
+
+#- name: Apply metrics-server manifest to the cluster.
+#  community.kubernetes.k8s:
+#    state: present
+#    src: ~/metrics-server.yaml
+
+
 #obtenemos el join command para conectarnos al cluster
 - name: Get token
   shell: kubeadm token create --print-join-command

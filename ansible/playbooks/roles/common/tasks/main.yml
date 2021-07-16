@@ -60,6 +60,7 @@
   command: sed -i s/=enforcing/=disabled/g /etc/selinux/config
    
 - name: Reboot 
+  become: true
   reboot:
     reboot_timeout: 3600
     test_command: whoami

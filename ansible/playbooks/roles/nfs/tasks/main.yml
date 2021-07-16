@@ -142,29 +142,13 @@
   async: 10
   poll: 2
     
-# añadimos los servicios al firewall
-- name: add service to firewall (nfs, rpc-bind. mountd)    
+# añadimos al firewall y recargamos
+- name: add service to firewall (nfs, rpc-bind. mountd) and reload firewall
   become: true
-  ansible.posix.firewalld:
-     permanent: yes
-     service: "{{item}}"
-  with_items: 
-    - "nfs"
-    - "rpc-bind"
-    - "mountd"
-
-# recargamos el firewall
-- name: Reload firewall
-  become: true
-  command: firewall-cmd --reload
-  
-
-#- name: open ports
-#  become: true
-#  command: "{{item}}" 
-#  with_items:
-#  - firewall-cmd --permanent --add-service=nfs
-#  - firewall-cmd --permanent --add-service=rpc-bind
-#  - firewall-cmd --permanent --add-service=mountd
-#  - firewall-cmd --reload    
+  command: "{{item}}" 
+  with_items:
+  - firewall-cmd --permanent --add-service=nfs
+  - firewall-cmd --permanent --add-service=rpc-bind
+  - firewall-cmd --permanent --add-service=mountd
+  - firewall-cmd --reload    
 

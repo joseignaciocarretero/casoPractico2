@@ -45,7 +45,7 @@
   command: "firewall-cmd --reload"
  
 # obtenemos información del cluster, para saber si se puede conectar o no. 
-# activo ignore_errors para que no pare la ejecución si el cluster ya estuviera creado
+# activo ignore_errors para que no pare la ejecución si el cluster no existiera
 - name: Obtain cluster_info
   become: true
   command: "kubectl cluster-info dump"
@@ -58,6 +58,7 @@
   command: "kubeadm init --pod-network-cidr 10.244.0.0/16"
   when: cluster_info.stderr | length > 0
 
+# usuario root
 - name: Create .kube directory
   become: true
   ansible.builtin.file:
@@ -75,7 +76,7 @@
     mode: "0600"
     remote_src: yes
 
-
+# usuario de ansible
 - name: Create User .kube directory
   ansible.builtin.file:
     path: /home/{{ ansible_user }}/.kube

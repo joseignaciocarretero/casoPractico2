@@ -1,4 +1,4 @@
-#abrimos puertos firewall
+# abrimos puertos firewall
 - name: open ports
   become: true  
   ansible.posix.firewalld: 
@@ -12,7 +12,7 @@
    - 8472/udp
    - 30000-32767/tcp
  
-#volvemos a cargar el firewall 
+# volvemos a cargar el firewall 
 - name: reload firewall
   become: true  
   shell: "firewall-cmd --reload" 

@@ -1,4 +1,4 @@
-# Permitir acceso
+# Permitir acceso a puertos 
 - name: configure master kubernetes
   become: true  
   ansible.posix.firewalld: 
@@ -22,8 +22,8 @@
   with_items:
    - kubeadm config images pull
        
-# permitir accesso a workers 10.0.1.10/32, 10.0.1.11/32
-# la ip pongo la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
+# permitir accesso a workers 10.0.1.10/32, 10.0.1.11/32 y master 10.0.1.50
+# la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
 - name: permit access to workers and access container to localhost  
   become: true
   ansible.posix.firewalld:
@@ -44,7 +44,8 @@
   become: true
   command: "firewall-cmd --reload"
  
-# guardamos información del cluster, para saber si se puede conectar o no
+# obtenemos información del cluster, para saber si se puede conectar o no. 
+# activo ignore_errors para que no pare la ejecución si el cluster ya estuviera creado
 - name: Obtain cluster_info
   become: true
   command: "kubectl cluster-info dump"
@@ -92,9 +93,13 @@
     remote_src: yes
 
 # instalar el CNI
+#- name: install CNI
+#  command: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
+
 - name: install CNI
-  command: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
-  
+  community.kubernetes.k8s:
+    state: present
+    src: | https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml  
   
 #obtenemos el join command para conectarnos al cluster
 - name: Get token

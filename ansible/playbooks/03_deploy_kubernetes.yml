@@ -1,3 +1,4 @@
+# playbook para la instalación de kubernetes en master y workers
 - hosts: all
   gather_facts: false
   roles:

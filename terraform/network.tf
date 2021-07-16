@@ -48,6 +48,9 @@ resource "azurerm_network_interface" "myNic" {
 }
 
 # IP pública
+# Usamos domain_name_label en los nodos, para poder acceder de una manera más cómoda a las máquinas 
+# ya que no cambia su valor
+# añado la "coletilla" cp2 al domain_name_label, porque no se puede duplicar y "chocaba" con otro nombre existente
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip
 
 resource "azurerm_public_ip" "myPublicIp" {
@@ -66,6 +69,7 @@ resource "azurerm_public_ip" "myPublicIp" {
 }
 
 # Create NIC para Master
+# Fijo el master a la ip privada 10.0.1.50, tendríamos hasta 49 workers por delante
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface
 
 resource "azurerm_network_interface" "myNicMaster" {
@@ -76,7 +80,6 @@ resource "azurerm_network_interface" "myNicMaster" {
     ip_configuration {
     name                           = "ipconf-Master"
     subnet_id                      = azurerm_subnet.mySubnet.id 
-    #se podría usar en el allocation "Dynamic" para no poner una ip fija y fuera por dhcp
     private_ip_address_allocation  = "Static"
     private_ip_address             = "10.0.1.50"
     public_ip_address_id           = azurerm_public_ip.myPublicIpMaster.id

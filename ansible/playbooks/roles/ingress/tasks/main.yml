@@ -6,3 +6,13 @@
   become: true
   command: "kubectl patch service haproxy-ingress -p '{"spec":{"externalIPs":["10.0.1.50"]},"loadBalancerIP": "10.0.1.50", "type": "loadBalancer"}' -n haproxy-controller"
  # shell: 'kubectl patch service controller-ingress-nginx-controller -p '{"spec":{"externalIPs":["10.0.1.50"]},"loadBalancerIP": "10.0.1.50", "type": "loadBalancer"}''
+
+- name: patch externalIp and loadBalancer
+  template:
+    src: haproxy.sh.j2
+    dest: ./
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  

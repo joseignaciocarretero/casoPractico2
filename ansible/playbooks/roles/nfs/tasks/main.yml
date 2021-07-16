@@ -1,5 +1,4 @@
-# Check if partiton exists
-# https://docs.ansible.com/ansible/latest/collections/community/general/parted_module.html
+# Lee información del device
 - name: Read device information
   become: true
   community.general.parted: device=/dev/sdc unit=MiB
@@ -7,14 +6,14 @@
   async: 10
   poll: 2
  
-# Create partition
-# https://docs.ansible.com/ansible/latest/collections/community/general/parted_module.html
+# Debugamos el valor del particionamiento
 - name: Debug sdc_info
   ansible.builtin.debug:
     var: sdc_info.partitions
   when:
     - sdc_info.partitions | length == 0
 
+# Creamos partición primaria si no existen particiones
 - name: Create a new primary partition
   become: true
   community.general.parted:
@@ -26,9 +25,8 @@
   when: sdc_info.partitions | length == 0
   register: nfs_partition
 
-# Create logical volume
-# https://docs.ansible.com/ansible/latest/collections/community/general/lvol_module.html 
-- name: Create Volume Group on /dev/sdc with physical extent size = 10g
+# Creación de un volume group /dev/sdc
+- name: Create volume group 
   become: true  
   community.general.lvg:
     vg: nfs-vg
@@ -39,6 +37,7 @@
   poll: 2
   when: nfs_partition.changed
 
+# Creación de un volumen lógico
 - name: Create a logical volume
   become: true
   community.general.lvol:
@@ -51,6 +50,7 @@
   poll: 2
   when: nfs_partition.changed
 
+# creación de los filesystem para nfs
 - name: Create xfs filesystem on nfs data partition
   become: true
   community.general.filesystem:
@@ -73,8 +73,7 @@
   async: 10
   poll: 2
 
-# Mount volume
-# https://docs.ansible.com/ansible/latest/collections/ansible/posix/mount_module.html
+# Monta volumen
 - name: Make sure /srv/nfs is mounted  
   become: true
   ansible.posix.mount:
@@ -85,6 +84,7 @@
   async: 10
   poll: 2
 
+# damos acceso a /srv/nfs en el master y los workers
 - name: Make sure exportfs accepts LAN
   become: true
   ansible.builtin.lineinfile:
@@ -101,13 +101,37 @@
   async: 10
   poll: 2
 
-- name: install nfs-utils and net-tools and enable nfs-server
+# instalamos paquetes utilidades y herramientas 
+- name: Install nfs-utils and net-tools
   become: true
-  command: "{{item}}" 
+  dnf:
+    name: "{{item}}"
+    state: latest
   with_items:
-  - dnf install nfs-utils net-tools -y
-  - systemctl  enable nfs-server
-  - systemctl start nfs-server
+  - nfs-utils
+  - net-tools
+
+# activamos servicio nfs-server 
+- name: Enable service nfs-server
+  become: true
+  ansible.builtin.systemd:
+    name: nfs-server
+    enabled: yes
+
+# arrancamos el nfs-server
+- name: Make sure a service unit is running
+  become: true
+  ansible.builtin.systemd:
+    state: started
+    name: nfs-server    
+
+#- name: install nfs-utils and net-tools and enable nfs-server
+#  become: true
+#  command: "{{item}}" 
+#  with_items:
+#  - dnf install nfs-utils net-tools -y
+#  - systemctl  enable nfs-server
+#  - systemctl start nfs-server
 
 - name: Re-export the share
   become: true
@@ -116,12 +140,27 @@
   async: 10
   poll: 2
     
-- name: open ports
+- name: add service to nfs, rpc-bind. mountd    
   become: true
-  command: "{{item}}" 
+  ansible.posix.firewalld:
+     permanent: yes
+     service: "{{item}}"
   with_items:
-  - firewall-cmd --permanent --add-service=nfs
-  - firewall-cmd --permanent --add-service=rpc-bind
-  - firewall-cmd --permanent --add-service=mountd
-  - firewall-cmd --reload    
+    - nfs
+    - rpc-bind
+    - mountd
+
+- name: Reload firewall
+  become: true
+  command: firewall-cmd --reload
+  
+
+#- name: open ports
+#  become: true
+#  command: "{{item}}" 
+#  with_items:
+#  - firewall-cmd --permanent --add-service=nfs
+#  - firewall-cmd --permanent --add-service=rpc-bind
+#  - firewall-cmd --permanent --add-service=mountd
+#  - firewall-cmd --reload    
 

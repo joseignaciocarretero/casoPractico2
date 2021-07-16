@@ -140,38 +140,5 @@
     group: "root"
     remote_src: yes
    
-# instalando calico
-# añado el ignore_errors por si el servicio ya estuviera instalado, que continue con las siguientes tareas
-#- name: install calico  
-#  become: true
-#  command: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
-#  ignore_errors: yes
-  
-# descargamos calico fichero de manifiesto
-#- name: download custom-resources.yaml
-#  become: true
-#  get_url:
-#    url: https://docs.projectcalico.org/manifests/custom-resources.yaml
-#    dest: ./
-#    mode: '666'
 
-#ponemos la ip del cidr en el fichero custom-resources.yaml  
-#- name: substitute ipaddress cidr into custom-resources.yaml
-#  replace:
-#    path: ./custom-resources.yaml
-#    regexp: "cidr: 192.168.0.0/16"
-#    replace: "cidr: 10.1.0.0/16"
-   
-# instalando calico aplicamos custom-resources
-#- name: apply custom-resources  
-#  become: true
-#  command: kubectl apply -f custom-resources.yaml
-
-  
-# una vez usado, eliminamos el archivo custom resources yaml 
-#- name: Remove custom-resources.yaml
-#  file:
-#    path: ./custom-resources.yaml
-#    state: absent  
-     
      

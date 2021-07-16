@@ -1,3 +1,6 @@
+
+# Hago que compartan playbook estos dos roles, porque en una de las tareas del rol se comparte una variable #
+
 - hosts: master
   gather_facts: false
   roles:

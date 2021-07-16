@@ -55,11 +55,12 @@
   become: true
   command: timedatectl set-ntp true
 
-- name: SELinux estuviera activado lo desativamos
+# SELinux desactivamos
+- name: SELinux disable
   become: true
   command: sed -i s/=enforcing/=disabled/g /etc/selinux/config
 
-# reiniciamos nodo
+# reiniciamos nodo y esperamos con whoami a que la máquina esté lista
 - name: Reboot 
   become: true
   reboot:
@@ -98,7 +99,7 @@
   become: true
   shell: firewall-cmd --reload
   
-#tráfico de cortafuegos 
+# tráfico de cortafuegos 
 - name: bridge config
   become: true
   ansible.builtin.lineinfile:
@@ -118,7 +119,7 @@
   become: true
   command: sysctl --system
 
-#desactivamos swap
+# desactivamos swap
 - name: deactivate swap
   become: true
   shell: swapoff -a

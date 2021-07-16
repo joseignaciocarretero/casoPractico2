@@ -1,3 +1,5 @@
+## Rol para la configuración de kubernetes, en este caso en master ##
+
 # Permitir acceso a puertos 
 - name: configure master kubernetes
   become: true  
@@ -93,7 +95,7 @@
     mode: "0600"
     remote_src: yes
 
-# instalar el CNI
+# instalar el CNI, flannel
 - name: install CNI
   command: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
 

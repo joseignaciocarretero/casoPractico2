@@ -41,3 +41,10 @@
   become: true
   shell: kubectl apply -f configmap.yaml
   
+# copiamos index.html al directorio de carpeta compartida /srv/nfs de la que se accederá desde Apache
+- name: Copy index.html to /srv/nfs
+  become: true
+  copy:
+    src: index.html
+    dest: /srv/nfs  
+  

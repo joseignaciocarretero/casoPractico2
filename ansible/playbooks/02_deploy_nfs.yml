@@ -1,3 +1,4 @@
+## playbook para la creación del nfs ##
 - hosts: master
   gather_facts: false
   roles:

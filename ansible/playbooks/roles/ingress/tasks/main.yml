@@ -3,7 +3,7 @@
   become: true  
   shell: kubectl apply -f https://raw.githubusercontent.com/haproxytech/kubernetes-ingress/v1.5/deploy/haproxy-ingress.yaml
 
-# ponemos la externalIps y el loadBalancerIP al haproxy-ingress 
+# ponemos la externalIps y el loadBalancerIP al servicio haproxy-ingress 
 - name: patch externalIp and LoadBalancer
   become: true
   shell: |

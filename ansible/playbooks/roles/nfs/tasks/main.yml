@@ -147,11 +147,11 @@
   become: true
   ansible.posix.firewalld:
      permanent: yes
-     service: {{item}}
+     service: "{{item}}"
   with_items: 
-    - nfs
-    - rpc-bind
-    - mountd
+    - "nfs"
+    - "rpc-bind"
+    - "mountd"
 
 # recargamos el firewall
 - name: Reload firewall

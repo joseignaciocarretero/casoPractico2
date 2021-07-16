@@ -1,5 +1,6 @@
 
-# Hago que compartan playbook estos dos roles, porque en una de las tareas del rol se comparte una variable #
+# Playbook que configura kubernetes en los host master y workers
+# Hago que compartan playbook estos dos roles, porque en una de las tareas del rol se comparte una variable 'token_join'#
 
 - hosts: master
   gather_facts: false

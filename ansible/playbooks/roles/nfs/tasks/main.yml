@@ -147,8 +147,8 @@
   become: true
   ansible.posix.firewalld:
      permanent: yes
-     service: "{{item}}"
-  with_items: |
+     service: {{item}}
+  with_items: 
     - nfs
     - rpc-bind
     - mountd

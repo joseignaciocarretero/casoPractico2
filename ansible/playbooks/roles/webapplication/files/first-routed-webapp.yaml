@@ -1,3 +1,5 @@
+# Despliegue de la aplicación, es un servidor Apache
+# mapeamos la carpeta del servidor apache /usr/local/apache2/htdocs/ contra la carpeta /srv/nfs del nodo (volumen compartido)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -36,6 +38,7 @@ spec:
           path: /srv/nfs
      
 ---
+# creamos el servicio 
 apiVersion: v1
 kind: Service
 metadata:

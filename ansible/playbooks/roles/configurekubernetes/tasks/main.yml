@@ -96,7 +96,7 @@
 - name: install CNI
   command: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
 
-#obtenemos el join command para conectarnos al cluster
+# obtenemos el join command para conectarnos al cluster, nos hará falta este token_join para enlazar en los workers
 - name: Get token
   shell: kubeadm token create --print-join-command
   register: token_join

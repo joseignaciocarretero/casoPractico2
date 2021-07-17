@@ -1,20 +1,26 @@
 # creamos un namespace
 - name: Create namespace 
   become: true
-  shell: kubectl create namespace webapp-routed
+  shell: kubectl create namespace miweb-apache
   ignore_errors: yes
   
-# copiamos first-routed-webapp.yaml al directorio de master
-- name: Copy first-routed-webapp.yaml to master
+# copiamos miweb-apache.yaml al directorio de master
+- name: Copy miweb-apache.yaml to master
   become: true
   copy:
-    src: first-routed-webapp.yaml 
+    src: miweb-apache.yaml 
     dest: ./
   
-# aplicamos first-routed-webapp.yaml
-- name: Apply first-routed-webapp.yaml
+# aplicamos miweb-apache.yaml
+- name: Apply miweb-apache.yaml
   become: true
-  shell: kubectl apply -f first-routed-webapp.yaml
+  shell: kubectl apply -f miweb-apache.yaml
+  
+# una vez aplicado, eliminamos el archivo para que no quede en el nodo 
+- name: Remove miweb-apache.yaml
+  file:
+    path: ./miweb-apache.yaml
+    state: absent   
   
 # copiamos service.yaml al directorio de master
 - name: Copy service.yaml to master
@@ -27,7 +33,13 @@
 - name: Apply service.yaml
   become: true
   shell: kubectl apply -f service.yaml  
-   
+
+# una vez aplicado, eliminamos el archivo para que no quede en el nodo 
+- name: Remove service.yaml
+  file:
+    path: ./service.yaml
+    state: absent     
+  
 # copiamos ingress.yaml al directorio de master
 - name: Copy ingress.yaml to master
   become: true
@@ -40,7 +52,12 @@
   become: true
   shell: kubectl apply -f ingress.yaml
   
-
+# una vez aplicado, eliminamos el archivo para que no quede en el nodo 
+- name: Remove ingress.yaml
+  file:
+    path: ./ingress.yaml
+    state: absent   
+  
 # copiamos  configmap.yaml al directorio de master
 - name: Copy  configmap.yaml to master
   become: true
@@ -53,6 +70,12 @@
   become: true
   shell: kubectl apply -f configmap.yaml
   
+# una vez aplicado, eliminamos el archivo para que no quede en el nodo 
+- name: Remove configmap.yaml
+  file:
+    path: ./configmap.yaml
+    state: absent   
+    
 # copiamos index.html al directorio de carpeta compartida /srv/nfs de la que se accederá desde Apache
 - name: Copy index.html to /srv/nfs
   become: true

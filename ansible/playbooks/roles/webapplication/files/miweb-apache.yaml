@@ -17,7 +17,7 @@ spec:
     - nfsvers=4.1
   nfs:
     path: /srv/nfs/
-    server: 20.101.145.142
+    server: mastercp2.westeurope.cloudapp.azure.com
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

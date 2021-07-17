@@ -18,21 +18,35 @@ En mi caso, tanto la creación de la infraestructura en azure como el despliegue
    Nota: si se tuviera que eliminar la infraestructura creada usar: sh destroy-infraestructure.sh
 6. Copiar la clave pública para el acceso por ssh que hemos generado en el apartado 4 a los nodos:
       - cd
-      - ssh-copy-id -i .ssh/id_rsa.pub adminUsername@mastercp2.westeurope.cloudapp.azure.com
-      - ssh-copy-id -i .ssh/id_rsa.pub adminUsername@worker01cp2.westeurope.cloudapp.azure.com
-      - ssh-copy-id -i .ssh/id_rsa.pub adminUsername@worker02cp2.westeurope.cloudapp.azure.com
+      - ssh-copy-id -i .ssh/id_rsa.pub adminUsername@mastercp2.westeurope.cloudapp.azure.com (Confirmar con "yes")
+      - ssh-copy-id -i .ssh/id_rsa.pub adminUsername@worker01cp2.westeurope.cloudapp.azure.com (Confirmar con "yes")
+      - ssh-copy-id -i .ssh/id_rsa.pub adminUsername@worker02cp2.westeurope.cloudapp.azure.com (Confirmar con "yes")
+    
     Ya podríamos acceder a los nodos por ssh ejemplo master:
       - ssh adminUsername@mastercp2.westeurope.cloudapp.azure.com
  7. cd casoPractico2/ansible
  8. Crearemos el despliegue de la aplicación con ansible, en este caso se trata de un servidor apache con volúmenes compartido:
-      - sh deploy.sh
+      - sh deploy.sh (confirmar con "yes")
  9. Ya tendríamos creado el servidor web, en este caso nginx, con un volumen compartido /srv/nfs entre los nodos
  10. Comprobamos la creación:
         - curl -I http://mastercp2.westeurope.cloudapp.azure.com/miweb
 
-# Problemas encontrados
-- Limitación de la cuenta de student de azure, no permite más de cpus
-        
+  Para no tener problemas de host, al crear las máquinas les he asignado un nombre de dns. De esta forma si se reinican o se crean unas nuevas, no me cambia el     nombre. Uso el nombre dns para identificar el nodo en ansible.
+
+# Pasos para la eliminación de la infraestructura en azure
+  Si tuvieramos que eliminar toda la infraestructura creada:
+  - sh destroy.sh (confirmar con "yes)
+
+# Problemas encontrados durante la práctica
+- Limitación de la cuenta de student de azure, no permite más de 4 vCPUs. Opto por un master/NFS, worker01 y worker02. El master hace de nfs.
+- Empecé usando la opción de SDN de Cálico, pero no me recordé que daba problemas de compatibilidad desde Azure. Así cambié de a flannel.
+- Tuve problemas con la apertura de puertos al usar flannel, lo solucioné revisando la documentación que proporcionó usted y en su página web porque en su página web pone los puertos que se tienen que abrir
+  https://stackoverflow.com/questions/60708270/how-can-i-use-flannel-without-disabing-firewalld-kubernetes
+- El módulo de ansible k8s me da errores al llamar a él. He optado por usar módulos como shell o command, para llamar al kubectl
+
+
+
+
 
 # Corrección automática
 

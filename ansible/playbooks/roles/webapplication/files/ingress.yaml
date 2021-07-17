@@ -10,7 +10,7 @@ metadata:
       haproxy.org/path-rewrite: "/"
 spec:
   rules:
-  - host: foo.bar
+  - host: *
     http:
       paths:
       - path: /webapp

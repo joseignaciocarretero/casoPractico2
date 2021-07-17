@@ -14,14 +14,14 @@ variable "vm_size_master" {
 
 #Variable para la máquina virtual Master/NFS
 variable "vms_master" {
-  description = "máquinas virtuales a crear"
+  description = "máquina virtual a crear master"
   type = string
   default = "master"
 }
 
 #Variable para Máquinas virtuales nodos
 variable "vms" {
-  description = "máquinas virtuales a crear"
+  description = "máquinas virtuales a crear workers"
   type = list(string)
   default = ["worker01", "worker02"]
 }

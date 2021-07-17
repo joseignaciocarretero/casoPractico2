@@ -1,1 +1,41 @@
+# Despliegue de la aplicación, es un servidor Apache
+# mapeamos la carpeta del servidor apache /usr/local/apache2/htdocs/ contra la carpeta /srv/nfs del nodo (volumen compartido)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: miweb-apache
+  namespace: miweb-apache
+  labels:
+    app: miweb-apache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: miweb-apache
+  template:
+    metadata:
+      labels:
+        app: miweb-apache
+    spec:
+      containers:
+      - name: miweb-apache
+        image: httpd:latest
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+        volumeMounts:
+        - name: storage-miweb-apache
+          mountPath: /usr/local/apache2/htdocs/
+      volumes:
+      - name: storage-miweb-apache
+        hostPath:
+          path: /srv/nfs
+   
+
 

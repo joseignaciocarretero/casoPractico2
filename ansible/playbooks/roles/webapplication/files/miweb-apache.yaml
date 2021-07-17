@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: nfs-pv
-  namespace: miweb-apache
+  namespace: miweb-server
 spec:
   capacity:
     storage: 10Gi
@@ -23,7 +23,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: nfs-pvc
-  namespace: miweb-apache
+  namespace: miweb-server
 spec:
   storageClassName: nfs
   accessModes:
@@ -37,22 +37,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: miweb-apache
-  namespace: miweb-apache
+  name: miweb-server
+  namespace: miweb-server
   labels:
-    app: miweb-apache
+    app: miweb-server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: miweb-apache
+      app: miweb-server
   template:
     metadata:
       labels:
-        app: miweb-apache
+        app: miweb-server
     spec:
       containers:
-      - name: miweb-apache
+      - name: miweb-server
         image: httpd:latest
         ports:
         - containerPort: 80
@@ -64,10 +64,10 @@ spec:
           periodSeconds: 5
           successThreshold: 1
         volumeMounts:
-        - name: storage-miweb-apache
+        - name: storage-miweb-server
           mountPath: /usr/local/apache2/htdocs/
       volumes:
-      - name: storage-miweb-apache
+      - name: storage-miweb-server
         hostPath:
           path: /srv/nfs
 

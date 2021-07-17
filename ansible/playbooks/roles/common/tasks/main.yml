@@ -38,6 +38,7 @@
   become: true
   ansible.builtin.systemd:  
     name: chronyd
+    state: started
     enabled: yes
 
 # arrancamos chrony

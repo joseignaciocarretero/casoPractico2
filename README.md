@@ -20,7 +20,9 @@
  8. cd casoPractico2/ansible
  9. Crearemos el despliegue de la aplicación con ansible, en este caso se trata de un servidor apache con volúmenes compartido:
       - sh deploy.sh
- 10. Ya tendríamos creado el servidor ansible, con un volumen compartido /srv/nfs entre los nodos 
+ 10. Ya tendríamos creado el servidor ansible, con un volumen compartido /srv/nfs entre los nodos
+ 11. Comprobamos la creación:
+        - curl http://mastercp2.westeurope.cloudapp.azure.com/miweb 
         
 
 # Corrección automática

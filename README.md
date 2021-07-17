@@ -25,19 +25,17 @@ En mi caso, tanto la creación de la infraestructura en azure como el despliegue
     Ya podríamos acceder a los nodos por ssh ejemplo master:
       - ssh adminUsername@mastercp2.westeurope.cloudapp.azure.com
  7. cd casoPractico2/ansible
- 8. Crearemos el despliegue de la aplicación con ansible, en este caso se trata de un servidor apache con volúmenes compartido:
+ 8. Crearemos el despliegue de la aplicación con ansible, en este caso se trata de un servidor web nginx con volúmenes compartido:
       - sh deploy.sh (confirmar con "yes")
- 9. Ya tendríamos creado el servidor web, en este caso nginx, con un volumen compartido /srv/nfs entre los nodos
+ 9. Ya tendríamos creado el servidor web, con un volumen compartido /srv/nfs entre los nodos
  10. Comprobamos la creación:
         - curl -I http://mastercp2.westeurope.cloudapp.azure.com/miweb
 
-  Para no tener problemas de host, al crear las máquinas les he asignado un nombre de dns. De esta forma si se reinican o se crean unas nuevas, no me cambia el     nombre. Uso el nombre dns para identificar el nodo en ansible.
+  Para no tener problemas de host, al crear las máquinas les he asignado un nombre de dns. De esta forma si se reinican o se crean unas nuevas, no me cambia el     valor del host. Uso el nombre dns para identificar el nodo en ansible.
   
-  Nota: si se tuviera que eliminar la infraestructura creada usar: sh destroy-infraestructure.sh
-
 # Pasos para la eliminación de la infraestructura en azure
   Si tuvieramos que eliminar toda la infraestructura creada:
-  - sh destroy.sh (confirmar con "yes)
+  - sh destroy-infraestructure.sh (confirmar con "yes)
 
 # Problemas encontrados durante la práctica
 - Limitación de la cuenta de student de azure, no permite más de 4 vCPUs. Opto por un master/NFS, worker01 y worker02. El master hace de nfs.

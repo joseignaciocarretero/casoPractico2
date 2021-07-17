@@ -26,31 +26,18 @@
    - pyyaml
      
 # actualizamos repositorio dnf
-#- name: Update dnf repository
-#  become: true
-#  ansible.builtin.dnf:
-#    update_only: yes 
-#    update_cache: yes
-#    state: latest
-
-# actualizamos    
 - name: Update dnf repository
   become: true  
   shell: | 
      dnf update -y
      
-# activamos chrony
+# activamos y arrancamos chrony
 - name: Enable Chrony service
   become: true
   ansible.builtin.systemd:  
     name: chronyd
     enabled: yes
     state: started
-
-# arrancamos chrony
-- name: Started Chrony service
-  become: true
-  command: systemctl start chronyd
         
 # seteamos el timezone a Europa/Madrid
 - name: Set timezone to Europe/Madrid
@@ -80,11 +67,7 @@
   ansible.builtin.systemd:
     name: firewalld
     enabled: yes
-    
-# arrancamos servicio firewall   
-- name: Enable and started firewalld
-  become: true
-  command: systemctl start firewalld
+    state: started
       
 # modprobe module
 - name: br_netfilter add

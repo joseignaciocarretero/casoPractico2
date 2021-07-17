@@ -36,7 +36,8 @@
 # actualizamos    
 - name: Update dnf repository
   become: true  
-  shell: dnf update -y
+  shell: | 
+     dnf update -y
      
 # activamos chrony
 - name: Enable Chrony service

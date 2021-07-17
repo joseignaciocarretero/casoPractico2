@@ -57,7 +57,7 @@
 # definimos la red de los pods mientras pueda conectarse
 - name: Define POD net cidr
   become: true
-  command: "kubeadm init --pod-network-cidr 10.244.0.0/16"
+  command: "kubeadm init --apiserver-advertise-address=10.0.1.50 --pod-network-cidr 10.244.0.0/16"
   when: cluster_info.stderr | length > 0
 
 # usuario root

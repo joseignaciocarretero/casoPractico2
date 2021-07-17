@@ -45,7 +45,12 @@ En mi caso, tanto la creación de la infraestructura en azure como el despliegue
 - El módulo de ansible k8s me da errores al llamar a él. He optado por usar módulos como shell o command, para llamar al kubectl
 
 
-## Original ##
+
+
+
+
+
+
 # Corrección automática
 
 Para la corección automática el repositorio deberá tener la siguiente estructura:

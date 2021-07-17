@@ -13,7 +13,7 @@ spec:
   - host: *
     http:
       paths:
-      - path: /webapp
+      - path: /miweb
         pathType: "Prefix"
         backend:
           service:

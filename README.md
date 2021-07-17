@@ -1,4 +1,4 @@
-# Pasos Creación infraestructura y despliegue de la aplicación
+# Pasos creación infraestructura y despliegue de la aplicación
 1. He optado por trabajar desde azure cli, directamente desde azure. Ya viene instalado ansible y terraform. Si no se trabajara desde el propio cli de azure, sino desde una máquina local, por ejemplo, habría que instalarse ansible, y terraform.
  En mi caso, tanto la creación de la infraestructura en azure como el despliegue, lo ejecutaré desde la propia máquina de azure.
      - Aunque ya venía instalada una versión de ansible, he tenido que instalarla desde el repo epel-release de esta forma:

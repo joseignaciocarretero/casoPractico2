@@ -126,14 +126,6 @@
     state: started
     name: nfs-server    
 
-#- name: install nfs-utils and net-tools and enable nfs-server
-#  become: true
-#  command: "{{item}}" 
-#  with_items:
-#  - dnf install nfs-utils net-tools -y
-#  - systemctl  enable nfs-server
-#  - systemctl start nfs-server
-
 # exportfs
 - name: Re-export the share
   become: true

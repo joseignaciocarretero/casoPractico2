@@ -23,6 +23,23 @@
     state: enabled
     permanent: yes
  
+# permitir accesso a workers 10.0.1.10/32, 10.0.1.11/32 y master 10.0.1.50
+# la ip por defecto de la dirección de red del inteface de docker (172.17.0.1)
+- name: permit access to workers and access container to localhost  
+  become: true
+  ansible.posix.firewalld:
+    zone: public
+    permanent: yes
+    rich_rule: "{{item}}"
+    state: enabled
+  with_items:   
+   - 'rule family=ipv4 source address=10.0.1.50/32 accept'
+   - 'rule family=ipv4 source address=10.0.1.10/32 accept'
+   - 'rule family=ipv4 source address=10.0.1.11/32 accept'
+   - 'rule family=ipv4 source address=172.17.0.1/16 accept'
+   - 'rule family=ipv4 source address=10.244.0.1/16 accept'
+   - 'rule family=ipv4 source address=10.96.0.1/32 accept'
+ 
 # volvemos a cargar el firewall 
 - name: reload firewall
   become: true  

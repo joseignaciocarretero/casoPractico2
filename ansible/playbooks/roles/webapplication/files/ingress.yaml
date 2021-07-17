@@ -10,7 +10,7 @@ metadata:
       haproxy.org/path-rewrite: "/"
 spec:
   rules:
-  - host: *
+  - host: "*"
     http:
       paths:
       - path: /miweb

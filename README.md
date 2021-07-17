@@ -46,6 +46,9 @@ En mi caso, tanto la creación de la infraestructura en azure como el despliegue
   https://stackoverflow.com/questions/60708270/how-can-i-use-flannel-without-disabing-firewalld-kubernetes
 - El módulo de ansible k8s me da errores al llamar a él. He optado por usar módulos como shell o command, para llamar al kubectl
 
+# Referencias 
+- Página de ansible: https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
+- 
 
 
 

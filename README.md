@@ -1,3 +1,27 @@
+# Pasos Creación infraestructura y despliegue de la aplicación
+1. He optado por trabajar desde azure cli, directamente desde azure. Ya viene instalado ansible y terraform. Si no se trabajara desde el propio cli de azure, sino desde una máquina local, por ejemplo, habría que instalarse ansible, y terraform.
+ En mi caso, tanto la creación de la infraestructura en azure como el despliegue, lo ejecutaré desde la propia máquina de azure.
+     - Aunque ya venía instalada una versión de ansible, he tenido que instalarla desde el repo epel-release de esta forma:
+                dnf install epel-release -y
+                dnf install ansible git tree jq -y
+                
+3. Bajarse el repo: git clone http://joseixxxxxxx
+4. Creamos la key para poder acceder a los nodos por ssh: ssh-keygen -t rsa -b 4096
+5. Entrar en la carpeta casoPractico2/terraform: cd casoPractico2/terraform
+6. Ejecutar el comando que inicializa y crea la infraestructura en azure: sh create-infraestructure.sh
+   Nota: si se tuviera que eliminar la infraestructura creada usar: sh destroy-infraestructure.sh
+7. Copiar la clave pública para el acceso por ssh que hemos generado en el apartado 4 a los nodos:
+      - cd
+      - ssh-copy-id -i .ssh/id_rsa.pub adminUsername@mastercp2.westeurope.cloudapp.azure.com
+      - ssh-copy-id -i .ssh/id_rsa.pub adminUsername@worker01cp2.westeurope.cloudapp.azure.com
+      - ssh-copy-id -i .ssh/id_rsa.pub adminUsername@worker02cp2.westeurope.cloudapp.azure.com
+    Ya podríamos acceder a los nodos por ssh ejemplo master:
+      - ssh adminUsername@mastercp2.westeurope.cloudapp.azure.com
+ 8. cd casoPractico2/ansible
+ 9. Crearemos el despliegue de la aplicación con ansible, en este caso se trata de un servidor apache con volúmenes compartido:
+      - sh deploy.sh
+        
+
 # Corrección automática
 
 Para la corección automática el repositorio deberá tener la siguiente estructura:

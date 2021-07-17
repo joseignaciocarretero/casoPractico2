@@ -1,1 +1,77 @@
+#-----------          
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv
+  namespace: miweb-server
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: nfs
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /srv/nfs/
+    server: mastercp2.westeurope.cloudapp.azure.com
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc
+  namespace: miweb-server
+spec:
+  storageClassName: nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi   
+
+# Despliegue de la aplicación, es un servidor Apache
+# mapeamos la carpeta del servidor apache /usr/local/apache2/htdocs/ contra la carpeta /srv/nfs del nodo (volumen compartido)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: miweb-server
+  namespace: miweb-server
+  labels:
+    app: miweb-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: miweb-server
+  template:
+    metadata:
+      labels:
+        app: miweb-server
+    spec:
+      containers:
+      - name: miweb-server
+        image: httpd:latest
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+        volumeMounts:
+        - name: storage-miweb-server
+          mountPath: /usr/local/apache2/htdocs/
+      volumes:
+      - name: storage-miweb-server
+        hostPath:
+          path: /srv/nfs
+
+
+
+
 

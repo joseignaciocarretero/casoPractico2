@@ -5,7 +5,7 @@
         - dnf install epel-release -y
         - dnf install ansible git tree jq -y
                 
-3. Bajarse el repo: git clone http://joseixxxxxxx
+3. Bajarse el repo: git clone https://github.com/joseignaciocarretero/casoPractico2
 4. Creamos la key para poder acceder a los nodos por ssh: ssh-keygen -t rsa -b 4096
 5. Entrar en la carpeta casoPractico2/terraform: cd casoPractico2/terraform
 6. Ejecutar el comando que inicializa y crea la infraestructura en azure: sh create-infraestructure.sh

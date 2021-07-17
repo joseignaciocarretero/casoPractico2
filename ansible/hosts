@@ -2,6 +2,7 @@
 ansible_user=adminUsername
 ansible_python_interpreter=/usr/bin/python3
 private_ip_master= 10.0.1.50
+master_host=mastercp2.westeurope.cloudapp.azure.com
 
 [master]
 mastercp2.westeurope.cloudapp.azure.com

@@ -1,28 +1,36 @@
+# Pasos para trabajar con Azure Cli
+1. Creación de cuenta education  en azure con cuenta unir
+2. He optado por trabajar desde azure cli, directamente desde azure. Abrir shell(cli) de azure desde la misma web
+3. Configuramos la subscripción y creamos el service principal
+4. Autenticación en azure con terraform, se ponen los datos obtenidos en la creación del servicio principal y la configuración de la subscripción: como el subscriptionid, client_id, client_secret y el tenant_id
+
 # Pasos creación infraestructura y despliegue de la aplicación
-1. He optado por trabajar desde azure cli, directamente desde azure. Ya viene instalado ansible y terraform. Si no se trabajara desde el propio cli de azure, sino desde una máquina local, por ejemplo, habría que instalarse ansible, y terraform.
- En mi caso, tanto la creación de la infraestructura en azure como el despliegue, lo ejecutaré desde la propia máquina de azure.
-     - Aunque ya venía instalada una versión de ansible, he tenido que instalarla desde el repo epel-release de esta forma:
-        - dnf install epel-release -y
-        - dnf install ansible git tree jq -y
-                
-3. Bajarse el repo: git clone https://github.com/joseignaciocarretero/casoPractico2
-4. Creamos la key para poder acceder a los nodos por ssh: ssh-keygen -t rsa -b 4096
-5. Entrar en la carpeta casoPractico2/terraform: cd casoPractico2/terraform
-6. Ejecutar el comando que inicializa y crea la infraestructura en azure: sh create-infraestructure.sh
+1. Al trabajar directamente desde azure, ya viene instalado ansible y terraform en su cli. Si no se trabajara desde el propio cli de azure, sino desde una máquina local, por ejemplo, habría que instalarse ansible, y terraform.
+En mi caso, tanto la creación de la infraestructura en azure como el despliegue, lo ejecutaré desde la propia máquina de azure.
+   - Aunque ya venía instalada una versión de ansible, he tenido que instalarla desde el repo epel-release de esta forma:
+       - dnf install epel-release -y
+       - dnf install ansible git tree jq -y
+2. Bajarse el repo: git clone https://github.com/joseignaciocarretero/casoPractico2
+3. Creamos la key para poder acceder a los nodos por ssh: ssh-keygen -t rsa -b 4096
+4. Entrar en la carpeta casoPractico2/terraform: cd casoPractico2/terraform
+5. Ejecutar el comando que inicializa y crea la infraestructura en azure: sh create-infraestructure.sh
    Nota: si se tuviera que eliminar la infraestructura creada usar: sh destroy-infraestructure.sh
-7. Copiar la clave pública para el acceso por ssh que hemos generado en el apartado 4 a los nodos:
+6. Copiar la clave pública para el acceso por ssh que hemos generado en el apartado 4 a los nodos:
       - cd
       - ssh-copy-id -i .ssh/id_rsa.pub adminUsername@mastercp2.westeurope.cloudapp.azure.com
       - ssh-copy-id -i .ssh/id_rsa.pub adminUsername@worker01cp2.westeurope.cloudapp.azure.com
       - ssh-copy-id -i .ssh/id_rsa.pub adminUsername@worker02cp2.westeurope.cloudapp.azure.com
     Ya podríamos acceder a los nodos por ssh ejemplo master:
       - ssh adminUsername@mastercp2.westeurope.cloudapp.azure.com
- 8. cd casoPractico2/ansible
- 9. Crearemos el despliegue de la aplicación con ansible, en este caso se trata de un servidor apache con volúmenes compartido:
+ 7. cd casoPractico2/ansible
+ 8. Crearemos el despliegue de la aplicación con ansible, en este caso se trata de un servidor apache con volúmenes compartido:
       - sh deploy.sh
- 10. Ya tendríamos creado el servidor ansible, con un volumen compartido /srv/nfs entre los nodos
- 11. Comprobamos la creación:
-        - curl http://mastercp2.westeurope.cloudapp.azure.com/miweb 
+ 9. Ya tendríamos creado el servidor web, en este caso nginx, con un volumen compartido /srv/nfs entre los nodos
+ 10. Comprobamos la creación:
+        - curl -I http://mastercp2.westeurope.cloudapp.azure.com/miweb
+
+# Problemas encontrados
+- Limitación de la cuenta de student de azure, no permite más de cpus
         
 
 # Corrección automática

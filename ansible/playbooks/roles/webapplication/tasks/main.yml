@@ -4,7 +4,7 @@
   shell: kubectl create namespace webapp-routed
   ignore_errors: yes
   
-# copiamos nfs-pv-yaml al directorio de master
+# copiamos first-routed-webapp.yaml al directorio de master
 - name: Copy first-routed-webapp.yaml to master
   become: true
   copy:

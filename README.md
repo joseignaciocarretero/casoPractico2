@@ -38,7 +38,7 @@ En mi caso, tanto la creación de la infraestructura en azure como el despliegue
   - sh destroy-infraestructure.sh (confirmar con "yes)
 
 # Problemas encontrados durante la práctica
-- Limitación de la cuenta de student de azure, no permite más de 4 vCPUs. Opto por un master/NFS, worker01 y worker02. El master hace de nfs.
+- Limitación de la cuenta de student de azure, no permite más de 4 vCPUs. Opto por un master/NFS(2CPUs), worker01(1 CPU) y worker02(1 CPU). El master hace de    nfs.
 - Al dar de alta recursos en azure, no pueden duplicarse el nombre.  
   Añadí la "coletilla" cp2 al nombre en todos los nodos.
 - Empecé usando la opción de SDN de Cálico, pero no me recordé que daba problemas de compatibilidad desde Azure. Así cambié de a flannel.

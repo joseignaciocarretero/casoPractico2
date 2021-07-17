@@ -43,7 +43,7 @@
 # arrancamos chrony
 - name: Started Chrony service
   become: true
-  ansible.builtin.systemd:
+  ansible.builtin.service:
     name: chronyd
     state: started
         

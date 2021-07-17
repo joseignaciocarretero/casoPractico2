@@ -10,7 +10,8 @@ metadata:
       haproxy.org/path-rewrite: "/"
 spec:
   rules:
-  - http:
+  - host: mastercp2.westeurope.cloudapp.azure.com
+    http:
       paths:
       - path: /miweb
         pathType: "Prefix"

@@ -10,9 +10,18 @@
     state: enabled
   loop:
    - 10250/tcp
+   - 10255/tcp
    - 8285/udp
    - 8472/udp
    - 30000-32767/tcp
+
+# añade masquerade firewall
+- name: firewall
+  become: true
+  ansible.posix.firewalld:
+    masquerade: yes
+    state: enabled
+    permanent: yes
  
 # volvemos a cargar el firewall 
 - name: reload firewall

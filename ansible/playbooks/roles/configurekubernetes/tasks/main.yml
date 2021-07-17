@@ -80,6 +80,7 @@
 
 # usuario de ansible
 - name: Create User .kube directory
+  become: true
   ansible.builtin.file:
     path: /home/{{ ansible_user }}/.kube
     state: directory
@@ -97,11 +98,13 @@
 
 # instalar el CNI, flannel
 - name: install CNI
+  become: true
   shell: |
     kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
 # obtenemos el join command para conectarnos al cluster, nos hará falta este token_join para enlazar en los workers
 - name: Get token
+  become: true
   shell: kubeadm token create --print-join-command
   register: token_join
      

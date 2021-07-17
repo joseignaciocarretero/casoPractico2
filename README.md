@@ -48,12 +48,11 @@ En mi caso, tanto la creación de la infraestructura en azure como el despliegue
 
 # Referencias 
 - Página de ansible: https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
-- 
+- ....
 
-
-
-
-
+# Leyenda de instrucciones usadas en la práctica
+....
+....
 
 
 # Corrección automática

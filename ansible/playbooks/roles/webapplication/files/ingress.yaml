@@ -2,10 +2,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: webapp-ingress
-  namespace: webapp-routed
+  name: miweb-ingress
+  namespace: miweb-apache
   labels:
-    app: webapp-routed
+    app: miweb-apache
   annotations:
       haproxy.org/path-rewrite: "/"
 spec:
@@ -17,6 +17,6 @@ spec:
         pathType: "Prefix"
         backend:
           service:
-            name: webapp-service
+            name: miweb-service
             port:
               number: 80

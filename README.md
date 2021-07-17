@@ -12,7 +12,7 @@ En mi caso, tanto la creación de la infraestructura en azure como el despliegue
        - dnf install ansible git tree jq -y
 2. Bajarse el repo: git clone https://github.com/joseignaciocarretero/casoPractico2
 3. Creamos la key para poder acceder a los nodos por ssh: ssh-keygen -t rsa -b 4096
-   Confirmamos y no ponemos password
+   (Confirmamos y no ponemos password)
 4. Entrar en la carpeta casoPractico2/terraform: cd casoPractico2/terraform
 5. Ejecutar el comando que inicializa y crea la infraestructura en azure: sh create-infraestructure.sh
    Nota: si se tuviera que eliminar la infraestructura creada usar: sh destroy-infraestructure.sh

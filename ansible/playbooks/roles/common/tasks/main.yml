@@ -43,9 +43,14 @@
 # arrancamos chrony
 - name: Started Chrony service
   become: true
-  ansible.builtin.systemd:
-    name: chrony
-    state: started
+  command: systemctl start chronyd
+   
+# arrancamos chrony
+#- name: Started Chrony service
+#  become: true
+#  ansible.builtin.systemd:
+#    name: chronyd
+#    state: started
         
 # seteamos el timezone a Europa/Madrid
 - name: Set timezone to Europe/Madrid

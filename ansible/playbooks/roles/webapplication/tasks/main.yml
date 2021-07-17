@@ -1,3 +1,4 @@
+# Rol para el despliegue de la aplicación
 # creamos un namespace
 - name: Create namespace 
   become: true

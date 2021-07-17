@@ -15,7 +15,7 @@ En mi caso, tanto la creación de la infraestructura en azure como el despliegue
    (Confirmamos y no ponemos password)
 4. Entrar en la carpeta casoPractico2/terraform: cd casoPractico2/terraform
 5. Ejecutar el comando que inicializa y crea la infraestructura en azure: sh create-infraestructure.sh
-   Nota: si se tuviera que eliminar la infraestructura creada usar: sh destroy-infraestructure.sh
+   A parte de crear la infraestructura, permite el acceso del usuario por ssh a los nodos. En este caso adminUsername. 
 6. Copiar la clave pública para el acceso por ssh que hemos generado en el apartado 4 a los nodos:
       - cd
       - ssh-copy-id -i .ssh/id_rsa.pub adminUsername@mastercp2.westeurope.cloudapp.azure.com (Confirmar con "yes")
@@ -32,6 +32,8 @@ En mi caso, tanto la creación de la infraestructura en azure como el despliegue
         - curl -I http://mastercp2.westeurope.cloudapp.azure.com/miweb
 
   Para no tener problemas de host, al crear las máquinas les he asignado un nombre de dns. De esta forma si se reinican o se crean unas nuevas, no me cambia el     nombre. Uso el nombre dns para identificar el nodo en ansible.
+  
+  Nota: si se tuviera que eliminar la infraestructura creada usar: sh destroy-infraestructure.sh
 
 # Pasos para la eliminación de la infraestructura en azure
   Si tuvieramos que eliminar toda la infraestructura creada:

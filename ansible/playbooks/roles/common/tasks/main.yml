@@ -44,13 +44,6 @@
 - name: Started Chrony service
   become: true
   command: systemctl start chronyd
-   
-# arrancamos chrony
-#- name: Started Chrony service
-#  become: true
-#  ansible.builtin.systemd:
-#    name: chronyd
-#    state: started
         
 # seteamos el timezone a Europa/Madrid
 - name: Set timezone to Europe/Madrid
@@ -80,9 +73,12 @@
   ansible.builtin.systemd:
     name: firewalld
     enabled: yes
-    state: started
-    daemon_reload: true
-   
+    
+# arrancamos servicio firewall   
+- name: Enable and started firewalld
+  become: true
+  command: systemctl start firewalld
+      
 # modprobe module
 - name: br_netfilter add
   become: true

@@ -10,8 +10,8 @@ metadata:
       haproxy.org/path-rewrite: "/"
 spec:
   rules:
-  - host: {{ansible_hostname}} 
-    http:
+  #- host: "{{ansible_hostname}}" 
+  - http:
       paths:
       - path: /miweb
         pathType: "Prefix"

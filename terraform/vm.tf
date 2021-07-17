@@ -14,7 +14,7 @@ resource "azurerm_linux_virtual_machine" "myVM" {
     #creo la clave pública ssh con el comando "ssh-keygen -t rsa -b 4096"
     admin_ssh_key {
         username   = var.ssh_user
-        public_key = file("~/.ssh/id_rsa.pub")
+        public_key = file(var.public_key_path)
     }
 
     os_disk {
@@ -61,7 +61,7 @@ resource "azurerm_linux_virtual_machine" "myVM_master" {
     #creo la clave pública ssh con el comando "ssh-keygen -t rsa -b 4096"
     admin_ssh_key {
         username   = var.ssh_user
-        public_key = file("~/.ssh/id_rsa.pub")
+        public_key = file(var.public_key_path)
     }
 
     os_disk {

@@ -10,7 +10,7 @@ metadata:
       haproxy.org/path-rewrite: "/"
 spec:
   rules:
-  - host: foo.bar
+  - host: "{{master_host}}"
     http:
       paths:
       - path: /miweb

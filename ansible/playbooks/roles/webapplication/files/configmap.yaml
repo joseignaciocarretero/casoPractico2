@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: haproxy-configmap
-  namespace: miweb-apache
+  namespace: miweb-server
 data:
   servers-increment: "42"
   ssl-redirect: "OFF"

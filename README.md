@@ -40,14 +40,12 @@ En mi caso, tanto la creación de la infraestructura en azure como el despliegue
 # Problemas encontrados durante la práctica
 - Limitación de la cuenta de student de azure, no permite más de 4 vCPUs. Opto por un master/NFS, worker01 y worker02. El master hace de nfs.
 - Empecé usando la opción de SDN de Cálico, pero no me recordé que daba problemas de compatibilidad desde Azure. Así cambié de a flannel.
-- Tuve problemas con la apertura de puertos al usar flannel, lo solucioné revisando la documentación que proporcionó usted y en su página web porque en su página web pone los puertos que se tienen que abrir
+- Tuve problemas con la apertura de puertos al usar flannel, lo solucioné revisando la documentación que proporcionó usted y vi solución en una página de stackoverflow
   https://stackoverflow.com/questions/60708270/how-can-i-use-flannel-without-disabing-firewalld-kubernetes
 - El módulo de ansible k8s me da errores al llamar a él. He optado por usar módulos como shell o command, para llamar al kubectl
 
 
-
-
-
+## Original ##
 # Corrección automática
 
 Para la corección automática el repositorio deberá tener la siguiente estructura:

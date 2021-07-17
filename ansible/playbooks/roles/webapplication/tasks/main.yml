@@ -15,6 +15,18 @@
 - name: Apply first-routed-webapp.yaml
   become: true
   shell: kubectl apply -f first-routed-webapp.yaml
+  
+# copiamos service.yaml al directorio de master
+- name: Copy service.yaml to master
+  become: true
+  copy:
+    src: service.yaml 
+    dest: ./
+  
+# aplicamos service.yaml
+- name: Apply service.yaml
+  become: true
+  shell: kubectl apply -f service.yaml  
    
 # copiamos ingress.yaml al directorio de master
 - name: Copy ingress.yaml to master

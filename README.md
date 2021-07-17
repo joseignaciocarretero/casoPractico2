@@ -39,6 +39,8 @@ En mi caso, tanto la creación de la infraestructura en azure como el despliegue
 
 # Problemas encontrados durante la práctica
 - Limitación de la cuenta de student de azure, no permite más de 4 vCPUs. Opto por un master/NFS, worker01 y worker02. El master hace de nfs.
+- Al dar de alta recursos en azure con terraform, el nombre no puede repetirse.  
+  Añadí la "coletilla" cp2 al nombre en todos los nodos.
 - Empecé usando la opción de SDN de Cálico, pero no me recordé que daba problemas de compatibilidad desde Azure. Así cambié de a flannel.
 - Tuve problemas con la apertura de puertos al usar flannel, lo solucioné revisando la documentación que proporcionó usted y vi solución en una página de stackoverflow
   https://stackoverflow.com/questions/60708270/how-can-i-use-flannel-without-disabing-firewalld-kubernetes

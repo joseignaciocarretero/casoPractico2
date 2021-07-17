@@ -5,6 +5,33 @@
   shell: kubectl create namespace miweb-server
   ignore_errors: yes
   
+# persistencia del volumen
+# copiamos nfs-pv.yaml al directorio de master
+- name: Copy nfs-pv.yaml to master
+  become: true
+  copy:
+    src: nfs-pv.yaml
+    dest: ./
+  
+# aplicamos nfs-pv.yaml
+- name: Apply nfs-pv.yaml
+  become: true
+  shell: kubectl apply -f nfs-pv.yaml
+
+# claim para la persistencia del volumen
+# copiamos nfs-pvc.yaml al directorio de master
+- name: Copy nfs-pvc.yaml to master
+  become: true
+  copy:
+    src: nfs-pvc.yaml
+    dest: ./
+  
+# aplicamos nfs-pvc.yaml
+- name: Apply nfs-pvc.yaml
+  become: true
+  shell: kubectl apply -f nfs-pvc.yaml
+
+
 # copiamos miweb-server.yaml al directorio de master
 - name: Copy miweb-server.yaml to master
   become: true

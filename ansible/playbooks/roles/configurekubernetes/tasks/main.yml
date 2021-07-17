@@ -55,7 +55,7 @@
   ignore_errors: yes
      
 # definimos la red de los pods mientras pueda conectarse
-- name: install CNI and define POD net
+- name: Define POD net cidr
   become: true
   command: "kubeadm init --pod-network-cidr 10.244.0.0/16"
   when: cluster_info.stderr | length > 0
@@ -97,7 +97,8 @@
 
 # instalar el CNI, flannel
 - name: install CNI
-  command: "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
+  shell: |
+    kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
 # obtenemos el join command para conectarnos al cluster, nos hará falta este token_join para enlazar en los workers
 - name: Get token

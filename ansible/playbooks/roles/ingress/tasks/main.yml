@@ -9,4 +9,4 @@
 - name: patch externalIp and LoadBalancer
   become: true
   shell: |
-     kubectl patch service haproxy-ingress -p '{"spec":{"externalIPs":["{{ private_ip_master }}"],"loadBalancerIP": "{{ private_ip_master }}", "type": "loadBalancer"}}' -n haproxy-controller  
+     kubectl patch service haproxy-ingress -p '{"spec":{"externalIPs":["{{ private_ip_master }}"],"loadBalancerIP": "{{ private_ip_master }}", "type": "LoadBalancer"}}' -n haproxy-controller  

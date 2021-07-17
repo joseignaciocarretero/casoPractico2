@@ -2,25 +2,25 @@
 # creamos un namespace
 - name: Create namespace 
   become: true
-  shell: kubectl create namespace miweb-apache
+  shell: kubectl create namespace miweb-server
   ignore_errors: yes
   
-# copiamos miweb-apache.yaml al directorio de master
-- name: Copy miweb-apache.yaml to master
+# copiamos miweb-server.yaml al directorio de master
+- name: Copy miweb-server.yaml to master
   become: true
   copy:
-    src: miweb-apache.yaml 
+    src: miweb-server.yaml 
     dest: ./
   
-# aplicamos miweb-apache.yaml
-- name: Apply miweb-apache.yaml
+# aplicamos miweb-server.yaml
+- name: Apply miweb-server.yaml
   become: true
-  shell: kubectl apply -f miweb-apache.yaml
+  shell: kubectl apply -f miweb-server.yaml
   
 # una vez aplicado, eliminamos el archivo para que no quede en el nodo 
-- name: Remove miweb-apache.yaml
+- name: Remove miweb-server.yaml
   file:
-    path: ./miweb-apache.yaml
+    path: ./miweb-server.yaml
     state: absent   
   
 # copiamos service.yaml al directorio de master

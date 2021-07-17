@@ -36,19 +36,5 @@ spec:
       - name: storage-webapp-routed
         hostPath:
           path: /srv/nfs
-     
----
-# creamos el servicio 
-apiVersion: v1
-kind: Service
-metadata:
-    name: webapp-service
-    namespace: webapp-routed
-spec:
-    selector:
-      app: webapp-routed
-    ports:
-    - name: http
-      protocol: TCP
-      port: 80
-      targetPort: 80
+   
+

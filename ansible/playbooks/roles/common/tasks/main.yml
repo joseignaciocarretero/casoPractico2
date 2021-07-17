@@ -26,12 +26,17 @@
    - pyyaml
      
 # actualizamos repositorio dnf
+#- name: Update dnf repository
+#  become: true
+#  ansible.builtin.dnf:
+#    update_only: yes 
+#    update_cache: yes
+#    state: latest
+
+# actualizamos    
 - name: Update dnf repository
-  become: true
-  ansible.builtin.dnf:
-    update_only: yes 
-    update_cache: yes
-    state: latest
+  become: true  
+  shell: dnf update -y
      
 # activamos chrony
 - name: Enable Chrony service
@@ -39,6 +44,7 @@
   ansible.builtin.systemd:  
     name: chronyd
     enabled: yes
+    state: started
 
 # arrancamos chrony
 - name: Started Chrony service

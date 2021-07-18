@@ -1,5 +1,7 @@
 ## Playbook para la gestión del usuario en kubernetes
 - hosts: master
+  vars_files:
+    - "group_vars/vars-cp2.yaml"
   gather_facts: false
   roles:
    - adduser

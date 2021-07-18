@@ -59,9 +59,8 @@ terraform plan
 terraform apply
 terraform destroy
 
-sh terraform/deploy-infraestructure.sh
+sh terraform/create-infraestructure.sh
 sh terraform/destroy-infraestructure.sh
-
 
 ansible:
 

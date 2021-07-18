@@ -33,7 +33,8 @@
   become: true
   vars:
       dns: '{{dns_namemaster}}'
-  debug: msg="{{hostvars[{{dns}}]['token_join'].stdout}}"
+  #debug: msg="{{hostvars[{{dns}}]['token_join'].stdout}}"
+  debug: msg='{{dns_namemaster}}'
      
 # ejecutamos el valor que hemos registrado del join command de master en los workers 
 # activamos ignore_errors, si el join ya se hubiera hecho que continúe la ejecución

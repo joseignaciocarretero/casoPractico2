@@ -42,9 +42,9 @@
     rich_rule: "{{item}}"
     state: enabled
   with_items:   
-   - 'rule family=ipv4 source address=10.0.1.50/32 accept'
-   - 'rule family=ipv4 source address=10.0.1.10/32 accept'
-   - 'rule family=ipv4 source address=10.0.1.11/32 accept'
+   - 'rule family=ipv4 source address={{ip_master}}/32 accept'
+   - 'rule family=ipv4 source address={{ip_worker01}}/32 accept'
+   - 'rule family=ipv4 source address={{ip_worker02}}/32 accept'
    - 'rule family=ipv4 source address=172.17.0.1/16 accept'
    - 'rule family=ipv4 source address=10.244.0.1/16 accept'
    - 'rule family=ipv4 source address=10.96.0.1/32 accept'
@@ -65,7 +65,7 @@
 # definimos la red de los pods mientras pueda conectarse
 - name: Define POD net cidr
   become: true
-  command: "kubeadm init --apiserver-advertise-address=10.0.1.50 --pod-network-cidr 10.244.0.0/16"
+  command: "kubeadm init --apiserver-advertise-address=10.0.1.50 --pod-network-cidr {{ip_cidr}}"
   when: cluster_info.stderr | length > 0
 
 # usuario root

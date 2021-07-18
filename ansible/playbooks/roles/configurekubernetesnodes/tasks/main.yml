@@ -31,11 +31,11 @@
 # mostramos que la variable guardada en el master la veo desde el worker
 - name: debug token
   become: true
-  debug: msg="{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"
+  debug: msg="{{hostvars[{{dns_namemaster}}]['token_join'].stdout}}"
      
 # ejecutamos el valor que hemos registrado del join command de master en los workers 
 # activamos ignore_errors, si el join ya se hubiera hecho que continúe la ejecución
 - name: execute join
   become: true  
-  command: "{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"     
+  command: "{{hostvars[{{dns_namemaster}}]['token_join'].stdout}}"     
   ignore_errors: yes

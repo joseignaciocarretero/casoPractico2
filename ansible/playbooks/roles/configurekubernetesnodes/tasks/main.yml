@@ -28,36 +28,42 @@
   become: true  
   shell: "firewall-cmd --reload" 
 
-# borrar si es necesari
-# ejecutamos el valor que hemos registrado del join command de master en los workers 
-# activamos ignore_errors, si el join ya se hubiera hecho que continúe la ejecución
-- name: save jinja join command execution
-  become: true
-  template:
-    src: joinTemplate.j2
-    dest: ./executeJoin.sh
-    owner: "{{ansible_user}}"
-    group: "{{ansible_user}}"
-    mode: u=rwx,g=rwx,o=rwx  
-
-- name: execute join
-  become: true
-  shell: ./executeJoin.sh
- 
-- name: delete join
-  ansible.builtin.file:
-    path: ./executeJoin.sh
-    state: absent
-    
 # mostramos que la variable guardada en el master la veo desde el worker
-#- name: debug token
-#  become: true
-#  debug: msg = "{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"
-  
+- name: debug token
+  become: true
+  debug: msg = "{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"
      
 # ejecutamos el valor que hemos registrado del join command de master en los workers 
 # activamos ignore_errors, si el join ya se hubiera hecho que continúe la ejecución
+- name: execute join
+  become: true  
+  command: "{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"     
+  ignore_errors: yes
+
+# Otra manera de ejecutar el join con templates de jinja2
+
+# ejecutamos el valor que hemos registrado del join command de master en los workers 
+# activamos ignore_errors, si el join ya se hubiera hecho que continúe la ejecución
+#- name: save jinja join command execution
+#  become: true
+#  template:
+#    src: joinTemplate.j2
+#    dest: ./executeJoin.sh
+#    owner: "{{ansible_user}}"
+#    group: "{{ansible_user}}"
+#    mode: u=rwx,g=rwx,o=rwx  
+
+# ejecutamos el valor que hemos registrado del join command de master en los workers 
+# activamos ignore_errors, si el join ya se hubiera hecho que continúe la ejecución
 #- name: execute join
-#  become: true  
-#  command: "{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"     
+#  become: true
+#  shell: ./executeJoin.sh
 #  ignore_errors: yes
+
+# borramos el join una vez ejecutado
+#- name: delete join
+#  ansible.builtin.file:
+#    path: ./executeJoin.sh
+#    state: absent
+
+

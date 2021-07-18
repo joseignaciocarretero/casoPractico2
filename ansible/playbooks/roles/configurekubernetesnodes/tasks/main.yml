@@ -34,7 +34,7 @@
   vars:
       dns: '{{dns_namemaster}}'
   debug: msg= | 
-  "{{hostvars[{{dns}}]['token_join'].stdout}}"
+          "{{hostvars[{{dns}}]['token_join'].stdout}}"
   
      
 # ejecutamos el valor que hemos registrado del join command de master en los workers 

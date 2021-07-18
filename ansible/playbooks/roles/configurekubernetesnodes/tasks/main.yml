@@ -44,10 +44,10 @@
   become: true
   shell: ./executeJoin.sh
  
-#- name: delete join
-#  become: true
-#  file: ./executeJoin.sh
-#    state: absent
+- name: delete join
+  ansible.builtin.file:
+    path: ./executeJoin.sh
+    state: absent
     
 # mostramos que la variable guardada en el master la veo desde el worker
 #- name: debug token

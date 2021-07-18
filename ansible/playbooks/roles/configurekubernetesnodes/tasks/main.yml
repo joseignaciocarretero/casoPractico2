@@ -40,9 +40,9 @@
 - name: execute join
   become: true
   shell: ./executeJoin.sh
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-    mode: "0600"
+  owner: "{{ ansible_user }}"
+  group: "{{ ansible_user }}"
+  mode: "0600"
 
 #- name: delete join
 #  become: true

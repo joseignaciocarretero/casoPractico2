@@ -1,5 +1,7 @@
 ## Playbook para tareas comunes en master y workers ##
 - hosts: all
+  vars_files:
+    - "group_vars/vars-cp2.yaml"
   gather_facts: false
   roles:
     - common

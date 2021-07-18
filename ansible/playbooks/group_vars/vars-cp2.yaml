@@ -3,6 +3,7 @@
 ip_master: '10.0.1.50'
 ip_worker01: '10.0.1.10'
 ip_worker02: '10.0.1.11'
+ip_cidr: '10.244.0.0/16'
 
 # nombre dns de los nodos
 dns_namemaster: 'mastercp2.westeurope.cloudapp.azure.com'

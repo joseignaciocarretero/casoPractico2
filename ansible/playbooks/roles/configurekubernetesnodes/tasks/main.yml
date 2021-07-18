@@ -31,7 +31,7 @@
 # mostramos que la variable guardada en el master la veo desde el worker
 - name: debug token
   become: true
-  debug: msg = "{{hostvars['{{ '{{' }}dns_namemaster{{ '}}' }}']['token_join'].stdout}}"
+  debug: msg = "{{hostvars['{{ '{{' }}'dns_namemaster'{{ '}}' }}']['token_join'].stdout}}"
   
      
 # ejecutamos el valor que hemos registrado del join command de master en los workers 

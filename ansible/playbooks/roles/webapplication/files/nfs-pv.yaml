@@ -1,4 +1,4 @@
-#-----------          
+# Monta el persistent volumen          
 apiVersion: v1
 kind: PersistentVolume
 metadata:

@@ -3,11 +3,15 @@
 # Hago que compartan playbook estos dos roles, porque en una de las tareas del rol se comparte una variable 'token_join'#
 
 - hosts: master
+  vars_files:
+    - "group_vars/vars-cp2.yaml"
   gather_facts: false
   roles:
    - configurekubernetes
           
 - hosts: workers
+  vars_files:
+    - "group_vars/vars-cp2.yaml"
   gather_facts: false
   roles:
    - configurekubernetesnodes

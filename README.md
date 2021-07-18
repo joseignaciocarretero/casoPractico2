@@ -67,9 +67,9 @@ ansible:
 ansible -i hosts -m ping all
 ansible-playbook -i hosts playbooks/xxxx.yml
 
-sh deploy-
+sh deploy.sh
 
-kubernetes
+kubernetes:
 
 kubectl get namespaces
 kubectl get svc -n miweb-server

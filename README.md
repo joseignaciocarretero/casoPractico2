@@ -50,10 +50,53 @@ En mi caso, tanto la creación de la infraestructura en azure como el despliegue
 - Página de ansible: https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
 - ....
 
-# Leyenda de instrucciones usadas en la práctica
-....
-....
+# Leyenda de algunas de las instrucciones usadas en la práctica
 
+terraform:
+
+terraform init
+terraform plan 
+terraform apply
+terraform destroy
+
+sh terraform/deploy-infraestructure.sh
+sh terraform/destroy-infraestructure.sh
+
+
+ansible:
+
+ansible -i hosts -m ping all
+ansible-playbook -i hosts playbooks/xxxx.yml
+
+kubernetes
+
+kubectl get namespaces
+kubectl get svc -n miweb-server
+kubectl get pod -n miweb-server
+kubectl get pod -n miweb-server -o wide
+kubectl get service --all-namespaces
+
+kubectl get nodes --all-namespaces
+kubectl get pods --all-namespaces
+kubectl describe ingress webapp-ingress --namespace=webapp-server
+kubectl describe ep webapp-service --namespace=webapp-server
+kubectl get svc --namespace=haproxy-controller -o wide
+kubectl get svc --namespace=webapp-server -o wide
+kubectl get pods --all-namespaces -o wide
+kubectl get pods -A -o wide
+kubectl exec -it -n webapp-routed webapp-routed-7448445cb6-mq66p sh
+kubeadm reset -f && iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
+kubectl describe svc webapp-service --namespace=webapp-server
+
+firewall
+
+firewall-cmd --list-all
+firewall-cmd --list-all
+
+curl
+
+curl -I http://mastercp2.westeurope.cloudapp.azure.com/miweb
+curl http://mastercp2.westeurope.cloudapp.azure.com/miweb
 
 # Corrección automática
 

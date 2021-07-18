@@ -96,7 +96,7 @@
   with_items:
   - /srv/nfs {{ip_worker01}}(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)
   - /srv/nfs {{ip_worker02}}(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)
-  - /srv/nfs {{ip_master}}rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)
+  - /srv/nfs {{ip_master}}(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)
   - /srv/nfs {{ip_cidr}}(rw,sync,insecure,fsid=0,no_subtree_check,no_root_squash)
   register: exportfs
   async: 10

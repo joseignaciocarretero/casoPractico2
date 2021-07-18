@@ -28,20 +28,15 @@
   become: true  
   shell: "firewall-cmd --reload" 
 
-- name: Get name_dns_master
-  become: true
-  debug: '{{dns_namemaster}}'
-  register: mastername
-
 # mostramos que la variable guardada en el master la veo desde el worker
 - name: debug token
   become: true
-  debug: msg = "{{hostvars['mastername']['token_join'].stdout}}"
+  debug: msg = "{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"
   
      
 # ejecutamos el valor que hemos registrado del join command de master en los workers 
 # activamos ignore_errors, si el join ya se hubiera hecho que continúe la ejecución
 #- name: execute join
 #  become: true  
-#  command: "{{hostvars['{{dns_namemaster}}']['token_join'].stdout}}"     
+#  command: "{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"     
 #  ignore_errors: yes

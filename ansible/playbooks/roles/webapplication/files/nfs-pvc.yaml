@@ -1,4 +1,4 @@
----
+#monta el persistentvolume claim
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

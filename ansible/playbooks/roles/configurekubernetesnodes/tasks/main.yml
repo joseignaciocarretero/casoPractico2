@@ -27,11 +27,16 @@
 - name: reload firewall
   become: true  
   shell: "firewall-cmd --reload" 
-  
+
+- name: Get name_dns_master
+  become: true
+  debug: {{dns_namemaster}}
+  register: mastername
+
 # mostramos que la variable guardada en el master la veo desde el worker
 - name: debug token
   become: true
-  debug: msg = "{{hostvars['{{ '{{' }}'dns_namemaster'{{ '}}' }}']['token_join'].stdout}}"
+  debug: msg = "{{hostvars['mastername']['token_join'].stdout}}"
   
      
 # ejecutamos el valor que hemos registrado del join command de master en los workers 

@@ -31,9 +31,8 @@
 # mostramos que la variable guardada en el master la veo desde el worker
 - name: debug token
   become: true
-  vars:
-      dns: '{{dns_namemaster}}'
-  debug: msg= {{vars.dns}} 
+  debug: '{{dns_namemaster}}' 
+  register: dns 
  # "{{hostvars[{{dns_namemaster}}]['token_join'].stdout}}"
   
      

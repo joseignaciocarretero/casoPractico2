@@ -33,7 +33,7 @@
   become: true
   vars:
       dns: '{{dns_namemaster}}'
-  debug: msg= {{dns}} 
+  debug: msg= {{vars.dns}} 
  # "{{hostvars[{{dns_namemaster}}]['token_join'].stdout}}"
   
      

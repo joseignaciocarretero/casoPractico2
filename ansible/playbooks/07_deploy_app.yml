@@ -1,5 +1,7 @@
 ## Playbook que despliega el servicio y la aplicación
 - hosts: master
+  vars_files:
+    - "group_vars/vars-cp2.yaml"
   gather_facts: false
   roles:
     - webapplication

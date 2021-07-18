@@ -28,10 +28,19 @@
   become: true  
   shell: "firewall-cmd --reload" 
 
-# mostramos que la variable guardada en el master la veo desde el worker
-- name: debug token
+# borrar si es necesari
+# ejecutamos el valor que hemos registrado del join command de master en los workers 
+# activamos ignore_errors, si el join ya se hubiera hecho que continúe la ejecución
+- name: execute join
   become: true
-  debug: msg = "{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"
+  
+
+
+
+# mostramos que la variable guardada en el master la veo desde el worker
+#- name: debug token
+#  become: true
+#  debug: msg = "{{hostvars['mastercp2.westeurope.cloudapp.azure.com']['token_join'].stdout}}"
   
      
 # ejecutamos el valor que hemos registrado del join command de master en los workers 

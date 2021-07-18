@@ -104,7 +104,7 @@
     path: ./configmap.yaml
     state: absent   
     
-# copiamos index.html al directorio de carpeta compartida /srv/nfs de la que se accederá desde Apache
+# copiamos index.html al directorio de carpeta compartida /srv/nfs de la que se accederá desde el servidoe web
 - name: Copy index.html to /srv/nfs
   become: true
   copy:

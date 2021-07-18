@@ -59,13 +59,15 @@ terraform plan
 terraform apply
 terraform destroy
 
-sh terraform/create-infraestructure.sh
-sh terraform/destroy-infraestructure.sh
+sh create-infraestructure.sh
+sh destroy-infraestructure.sh
 
 ansible:
 
 ansible -i hosts -m ping all
 ansible-playbook -i hosts playbooks/xxxx.yml
+
+sh deploy-
 
 kubernetes
 

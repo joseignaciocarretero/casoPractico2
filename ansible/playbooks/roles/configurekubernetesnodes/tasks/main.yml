@@ -30,7 +30,7 @@
 
 - name: Get name_dns_master
   become: true
-  debug: {{dns_namemaster}}
+  debug: '{{dns_namemaster}}'
   register: mastername
 
 # mostramos que la variable guardada en el master la veo desde el worker

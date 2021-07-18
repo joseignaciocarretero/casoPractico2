@@ -36,8 +36,8 @@
   template:
     src: joinTemplate.j2
     dest: ./executeJoin.sh
-    owner: {{ansible_user}}
-    group: {{ansible_user}}
+    owner: "{{ansible_user}}"
+    group: "{{ansible_user}}"
     mode: '0644'  
 
 - name: execute join

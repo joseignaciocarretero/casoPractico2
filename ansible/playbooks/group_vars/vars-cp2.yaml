@@ -1,1 +1,10 @@
+---
+# ips privadas de los nodos
+ip_master: '10.0.1.50'
+ip_worker01: '10.0.1.10'
+ip_worker02: '10.0.1.11'
 
+# nombre dns de los nodos
+dns_namemaster: 'mastercp2.westeurope.cloudapp.azure.com'
+dns_nameworker01: 'worker01cp2.westeurope.cloudapp.azure.com'
+dns_nameworker02: 'worker02cp2.westeurope.cloudapp.azure.com'

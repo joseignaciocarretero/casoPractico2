@@ -32,7 +32,7 @@
 - name: debug token
   become: true
   vars:
-      dns: {{dns_namemaster}}
+      dns: '{{dns_namemaster}}'
   debug: msg="{{hostvars[{{dns}}]['token_join'].stdout}}"
      
 # ejecutamos el valor que hemos registrado del join command de master en los workers 

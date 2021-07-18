@@ -1,3 +1,4 @@
+## Rol que se encarga de crear el disco nfs 
 # Lee información del device
 - name: Read device information
   become: true
